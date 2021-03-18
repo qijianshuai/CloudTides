@@ -13,6 +13,7 @@ import {
   POLICY_PATH_NAME,
   REGISTER_PATH_NAME,
   VENDOR_PATH_NAME,
+  VM_PATH_NAME,
 } from '@tide-config/path';
 
 import { AuthGuard } from '@tide-guard/auth.guard';
@@ -50,6 +51,10 @@ const routes: Routes = [
       {
         path: VENDOR_PATH_NAME,
         loadChildren: () => import('./vendor/vendor.module').then(m => m.VendorModule)
+      },
+      {
+        path: VM_PATH_NAME,
+        loadChildren: () => import('./vm/vm.module').then(m => m.VmModule)
       },
       {
         path: RESOURCE_PATH_NAME,

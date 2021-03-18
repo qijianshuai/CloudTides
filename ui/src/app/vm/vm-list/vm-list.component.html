@@ -1,0 +1,37 @@
+<div *ngIf="this.list$ | async as list">
+    <!--div class="clr-row" *ngFor="let item of list">
+    <div class="clr-col-12">
+      <tide-resource-card [item]="item"></tide-resource-card>
+    </div>
+  </div-->
+<clr-datagrid>
+  <clr-dg-column>
+    <div class="key">ID</div>
+  </clr-dg-column>
+  <clr-dg-column>
+    <div class="key">VM Name</div>
+  </clr-dg-column>
+  <clr-dg-column>
+    <div class="key">IP Address</div>
+  </clr-dg-column>
+  <clr-dg-column>
+    <div class="key">Template ID</div>
+  </clr-dg-column>
+  <clr-dg-column>
+    <div class="key">CPU Num</div>
+  </clr-dg-column>
+  <clr-dg-column>
+    <div class="key">Datacenter</div>
+  </clr-dg-column>
+
+  <clr-dg-row *ngFor="let item of list">
+    <clr-dg-cell><div class="value">{{item?.id}}</div></clr-dg-cell>
+    <clr-dg-cell><div class="value">{{item?.name}}</div></clr-dg-cell>
+    <clr-dg-cell><div class="value">{{item?.ipAddress}}</div></clr-dg-cell>
+    <clr-dg-cell><div class="value">{{item?.tempId}}</div></clr-dg-cell>
+    <clr-dg-cell><div class="value">{{item?.cpuNum}}</div></clr-dg-cell>
+    <clr-dg-cell><div class="value">{{item?.datacenter}}</div></clr-dg-cell>
+  </clr-dg-row>
+</clr-datagrid>
+</div>
+
