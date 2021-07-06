@@ -13,9 +13,9 @@ import (
 func RegisterOrgHandler(params user.RegisterUserParams) middleware.Responder {
 	body := params.ReqBody
 	db := config.GetDB()
-	var queryUser models.User
-	db.Where("username = ?", body.Username).First(&queryUser)
-	if queryUser.Username != "" {
+	var org models.Org
+	db.Where("username = ?", body.Username).First(&org)
+	if org.Username != "" {
 		return user.NewRegisterUserBadRequest().WithPayload(&user.RegisterUserBadRequestBody{Message: "Username already used!"})
 	}
 
