@@ -45,13 +45,13 @@ func NewVMMonitor(ID uint, Config *config.VcdConfig) *VMMonitor {
 }
 
 type VAppMonitor struct {
-	ID uint
+	ID   uint
 	Lock sync.Mutex
 }
 
 func NewVAppMonitor(ID uint) *VAppMonitor {
 	temp := VAppMonitor{
-		ID: ID,
+		ID:   ID,
 		Lock: sync.Mutex{},
 	}
 	return &temp
@@ -81,7 +81,7 @@ func (vm *VMMonitor) CheckStatus() {
 		return
 	}
 	var vcd models.Vcd
-	if db.Where("resource_id = ?", resource.ID).First(&vcd).RowsAffected == 0{
+	if db.Where("resource_id = ?", resource.ID).First(&vcd).RowsAffected == 0 {
 		return
 	}
 	client, err := vm.conf.Client()
@@ -156,9 +156,9 @@ func (vm *VMMonitor) CheckStatus() {
 }
 
 var (
-	letters  = []rune("abcdefghijklmnopqrstuvwxyz1234567890")
-	cronjobs map[uint]*cron.Cron
-	VMMonitors *MoniterStore
+	letters      = []rune("abcdefghijklmnopqrstuvwxyz1234567890")
+	cronjobs     map[uint]*cron.Cron
+	VMMonitors   *MoniterStore
 	VappMonitors *MoniterStore
 )
 

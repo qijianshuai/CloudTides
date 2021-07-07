@@ -26,7 +26,7 @@ func randSeqT(n int) string {
 	return string(b)
 }
 
-func GetVdc(resourceID uint) *govcd.Vdc{
+func GetVdc(resourceID uint) *govcd.Vdc {
 	var res models.Resource
 	var vendor models.Vendor
 	var vcd models.Vcd
@@ -39,16 +39,16 @@ func GetVdc(resourceID uint) *govcd.Vdc{
 		return nil
 	}
 
-	if db.Where("resource_id = ?", res.ID).First(&vcd).RowsAffected == 0{
+	if db.Where("resource_id = ?", res.ID).First(&vcd).RowsAffected == 0 {
 		return nil
 	}
 
 	conf := config.VcdConfig{
-		Href: vendor.URL,
+		Href:     vendor.URL,
 		Password: res.Password,
-		User: res.Username,
-		Org: vcd.Organization,
-		VDC: res.Datacenter,
+		User:     res.Username,
+		Org:      vcd.Organization,
+		VDC:      res.Datacenter,
 	}
 
 	client, err := conf.Client() // We now have a client
@@ -74,7 +74,7 @@ func GetVdc(resourceID uint) *govcd.Vdc{
 
 // New version of deploy VAPP
 func DeployVAPP(client *govcd.VCDClient, org *govcd.Org, vdc *govcd.Vdc, temName string, VMs []models.VMTemp,
-	cataName string, vAppName string, netName string, vAppID uint) (err error){
+	cataName string, vAppName string, netName string, vAppID uint) (err error) {
 	defer func() {
 		if err != nil {
 			var vappDB models.Vapp
@@ -207,7 +207,7 @@ func DeployVAPP(client *govcd.VCDClient, org *govcd.Org, vdc *govcd.Vdc, temName
 		}
 	}
 
-	if vApp != nil{
+	if vApp != nil {
 		vappDB.IPAddress = vApp.VApp.HREF
 		vappDB.IsDestroyed = false
 		vappDB.Name = vApp.VApp.Name
@@ -469,7 +469,7 @@ func AddVAPPHandler(params vapp.AddVappParams) middleware.Responder {
 			Message: "Datacenter not found",
 		})
 	}
-	if db.Where("resource_id = ?", res.ID).First(&vcd).RowsAffected == 0{
+	if db.Where("resource_id = ?", res.ID).First(&vcd).RowsAffected == 0 {
 		return vapp.NewAddVappNotFound().WithPayload(&vapp.AddVappNotFoundBody{
 			Message: "Vcd not found",
 		})
@@ -487,11 +487,11 @@ func AddVAPPHandler(params vapp.AddVappParams) middleware.Responder {
 	}
 
 	conf := config.VcdConfig{
-		Href: vendor.URL,
+		Href:     vendor.URL,
 		Password: res.Password,
-		User: res.Username,
-		Org: vcd.Organization,
-		VDC: res.Datacenter,
+		User:     res.Username,
+		Org:      vcd.Organization,
+		VDC:      res.Datacenter,
 	}
 	client, err := conf.Client() // We now have a client
 	if err != nil {
@@ -516,13 +516,13 @@ func AddVAPPHandler(params vapp.AddVappParams) middleware.Responder {
 	}
 
 	newVapp := models.Vapp{
-		UserId: uid,
+		UserId:      uid,
 		IsDestroyed: false,
 		PoweredOn:   false,
 		ResourceID:  res.ID,
-		Template: tem.Name,
-		Status: "Creating",
-		Name: body.Name,
+		Template:    tem.Name,
+		Status:      "Creating",
+		Name:        body.Name,
 	}
 
 	if db.Create(&newVapp).RowsAffected == 0 {
@@ -543,17 +543,17 @@ func AddVAPPHandler(params vapp.AddVappParams) middleware.Responder {
 			})
 		}
 		newVM := models.VMachine{
-			Name: VM.VMName,
-			VMem: VM.VMem,
-			VCPU: VM.VCPU,
-			VappID: newVapp.ID,
-			Disk: VM.Disk,
-			UsedMoney: 0,
-			IPAddress: "TBD",
+			Name:              VM.VMName,
+			VMem:              VM.VMem,
+			VCPU:              VM.VCPU,
+			VappID:            newVapp.ID,
+			Disk:              VM.Disk,
+			UsedMoney:         0,
+			IPAddress:         "TBD",
 			ExternalIPAddress: "TBD",
-			UserName: "TBD",
-			PassWord: "TBD",
-			Status: "Creating",
+			UserName:          "TBD",
+			PassWord:          "TBD",
+			Status:            "Creating",
 		}
 		db.Create(&newVM)
 		monitor := controller.NewVMMonitor(newVM.ID, &conf)
@@ -571,7 +571,7 @@ func AddVAPPHandler(params vapp.AddVappParams) middleware.Responder {
 
 	go DeployVAPP(client, org, vdc, tem.Name, tem.VMTemps, res.Catalog, body.Name, res.Network, newVapp.ID)
 	return vapp.NewAddVappOK().WithPayload(&vapp.AddVappOKBody{
-		ID: int64(uid),
+		ID:      int64(uid),
 		Message: "Create VApp success",
 	})
 }
@@ -601,7 +601,7 @@ func AddVappHandler(params vapp.AddVappParams) middleware.Responder {
 			Message: "Datacenter not found",
 		})
 	}
-	if db.Where("resource_id = ?", res.ID).First(&vcd).RowsAffected == 0{
+	if db.Where("resource_id = ?", res.ID).First(&vcd).RowsAffected == 0 {
 		return vapp.NewAddVappNotFound().WithPayload(&vapp.AddVappNotFoundBody{
 			Message: "Vcd not found",
 		})
@@ -619,11 +619,11 @@ func AddVappHandler(params vapp.AddVappParams) middleware.Responder {
 	}
 
 	conf := config.VcdConfig{
-		Href: vendor.URL,
+		Href:     vendor.URL,
 		Password: res.Password,
-		User: res.Username,
-		Org: vcd.Organization,
-		VDC: res.Datacenter,
+		User:     res.Username,
+		Org:      vcd.Organization,
+		VDC:      res.Datacenter,
 	}
 	client, err := conf.Client() // We now have a client
 	if err != nil {
@@ -648,20 +648,20 @@ func AddVappHandler(params vapp.AddVappParams) middleware.Responder {
 	}
 
 	Vapp := DeployVapp(org, vdc, tem.Name, tem.VMName, res.Catalog, body.Name, res.Network)
-	if Vapp != nil{
+	if Vapp != nil {
 		newVapp := models.Vapp{
-			UserId: uid,
+			UserId:      uid,
 			IPAddress:   Vapp.VApp.HREF,
 			IsDestroyed: false,
 			Name:        Vapp.VApp.Name,
 			PoweredOn:   true,
 			ResourceID:  res.ID,
-			Template: tem.Name,
+			Template:    tem.Name,
 		}
 		db.Create(&newVapp)
 	}
 	return vapp.NewAddVappOK().WithPayload(&vapp.AddVappOKBody{
-		ID: 1,
+		ID:      1,
 		Message: "Create VApp success",
 	})
 }
@@ -691,13 +691,13 @@ func ListVappHandler(params vapp.ListVappsParams) middleware.Responder {
 		db.Where("url = ?", res.HostAddress).First(&vendor)
 		newvapp := vapp.ListVappsOKBodyItems0{
 			Datacenter: res.Datacenter,
-			ID: int64(vap.ID),
-			Name: vap.Name,
-			Template: vap.Template,
-			Vendor: vendor.Name,
-			Ipaddress: vap.IPAddress,
-			Status: vap.Status,
-			PoweredOn: vap.PoweredOn,
+			ID:         int64(vap.ID),
+			Name:       vap.Name,
+			Template:   vap.Template,
+			Vendor:     vendor.Name,
+			Ipaddress:  vap.IPAddress,
+			Status:     vap.Status,
+			PoweredOn:  vap.PoweredOn,
 		}
 
 		response = append(response, &newvapp)
@@ -721,7 +721,7 @@ func DeleteVAPPHandler(params vapp.DeleteVappParams) middleware.Responder {
 
 	if VerifyAdmin(params.HTTPRequest) {
 	} else {
-		if(vApp.UserId != uid){
+		if vApp.UserId != uid {
 			return vapp.NewDeleteVappUnauthorized()
 		}
 	}
@@ -744,7 +744,7 @@ func DeleteVAPPHandler(params vapp.DeleteVappParams) middleware.Responder {
 		return vapp.NewDeleteVappNotFound()
 	}
 
-	if(vApp.Status == "Creating" || vApp.Status == "Deleting") {
+	if vApp.Status == "Creating" || vApp.Status == "Deleting" {
 		appMonitor.Lock.Unlock()
 		return vapp.NewDeleteVappForbidden()
 	}
@@ -775,7 +775,7 @@ func DeleteVappHandler(params vapp.DeleteVappParams) middleware.Responder {
 	}
 	if VerifyAdmin(params.HTTPRequest) {
 	} else {
-		if(vApp.UserId != uid){
+		if vApp.UserId != uid {
 			return vapp.NewDeleteVappUnauthorized()
 		}
 	}
