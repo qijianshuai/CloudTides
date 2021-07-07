@@ -148,6 +148,14 @@ func configureAPI(api *operations.CloudTidesAPI) http.Handler {
 
 	api.OrgDeleteOrgHandler= org.DeleteOrgHandlerFunc(handler.DeleteOrgHandler)
 
+	api.UserAddUserHandler = user.AddUserHandlerFunc(handler.AddUserHandler)
+
+	api.UserDeleteUserHandler = user.DeleteUserHandlerFunc(handler.DeleteUserHandler)
+
+	api.UserListUserHandler = user.ListUserHandlerFunc(handler.ListUserHandler)
+
+	api.UserModifyUserHandler = user.ModifyUserHandlerFunc(handler.ModifyUserHandler)
+
 	return setupGlobalMiddleware(api.Serve(setupMiddlewares))
 }
 

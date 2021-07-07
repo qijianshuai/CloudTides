@@ -1,12 +1,6 @@
 package models
 
 import (
-    "encoding/json"
-
-    "github.com/go-openapi/errors"
-    "github.com/go-openapi/strfmt"
-    "github.com/go-openapi/swag"
-    "github.com/go-openapi/validate"
     "gorm.io/gorm"
 )
 
@@ -14,20 +8,17 @@ import (
 type UserNew struct {
     gorm.Model
 
-    // user_id
-    UserID uint `gorm:"primary_key" json:"userID,omitempty"`
-
     // username
-    Username string `json:"username,omitempty"`
+    Username string `gorm:"uniqueIndex" json:"username,omitempty"`
 
     // password
     Password string `json:"password,omitempty"`
 
     // org_id
-    OrgID uint `json:"orgID,omitempty"`
+    OrgID uint `gorm:"index" json:"orgID,omitempty"`
     
     // org
-    Org Org `gorm:"foreignKey:OrgID,constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+    Org OrgNew `gorm:"foreignKey:OrgID,constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 
     // role
     Role string `json:"role,omitempty"`
