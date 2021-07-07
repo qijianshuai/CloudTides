@@ -1,25 +1,16 @@
 package models
 
 import (
-	"encoding/json"
-
-	"github.com/go-openapi/errors"
-	"github.com/go-openapi/strfmt"
-	"github.com/go-openapi/swag"
-	"github.com/go-openapi/validate"
-	"gorm.io/gorm"
 	"github.com/lib/pq"
+	"gorm.io/gorm"
 )
 
 
 type OrgNew struct {
 	gorm.Model
 
-	// org_id
-	OrgID uint `gorm:"primary_key" json:"orgID,omitempty"`
-
 	// orgname
-	Orgname string `json:"orgname,omitempty"`
+	OrgName string `json:"orgName,omitempty" gorm:"uniqueIndex"`
 
 	// own_res_id
 	OwnResID  pq.Int64Array `json:"ownResID,omitempty"`

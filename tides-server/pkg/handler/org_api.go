@@ -2,56 +2,56 @@ package handler
 
 import (
 	"github.com/go-openapi/runtime/middleware"
-
-	"tides-server/pkg/restapi/operations/user"
-
 	"tides-server/pkg/config"
 	"tides-server/pkg/models"
+	"tides-server/pkg/restapi/operations/org"
 )
 
 
-func RegisterOrgHandler(params user.RegisterUserParams) middleware.Responder {
+func AddOrgHandler(params org.AddOrgParams) middleware.Responder {
 	body := params.ReqBody
 	db := config.GetDB()
-	var org models.Org
-	db.Where("username = ?", body.Username).First(&org)
-	if org.Username != "" {
-		return user.NewRegisterUserBadRequest().WithPayload(&user.RegisterUserBadRequestBody{Message: "Username already used!"})
+
+	newOrg := models.OrgNew{
+		OrgName: body.Name,
 	}
 
-	newUser := models.Org{
-		City:        body.City,
-		CompanyName: body.CompanyName,
-		Country:     body.Country,
-		Email:       body.Email,
-		FirstName:   body.FirstName,
-		LastName:    body.LastName,
-		Password:    body.Password,
-		Phone:       body.Phone,
-		Position:    body.Position,
-		Priority:    models.UserPriorityLow,
-		Username:    body.Username,
-	}
-
-	err := db.Create(&newUser).Error
+	err := db.Create(&newOrg).Error
 	if err != nil {
-		return user.NewRegisterUserBadRequest()
+		return org.NewAddOrgUnauthorized()
 	}
 
-	res := &user.RegisterUserOKBodyUserInfo{
-		City:        body.City,
-		CompanyName: body.CompanyName,
-		Country:     body.Country,
-		Email:       body.Email,
-		FirstName:   body.FirstName,
-		LastName:    body.LastName,
-		Password:    body.Password,
-		Phone:       body.Phone,
-		Position:    body.Position,
-		Priority:    models.UserPriorityLow,
-		Username:    body.Username,
+	return org.NewAddOrgOK().WithPayload(&org.AddOrgOKBody{
+		Message: "succeed",
+	})
+}
+
+func ListOrgHandler(params org.ListOrgParams) middleware.Responder {
+	var orgs []*models.OrgNew
+	db := config.GetDB()
+	db.Find(&orgs)
+	var reponse []*org.ListOrgOKBodyItems0
+	for _, tmpOrg := range orgs {
+		newResult := org.ListOrgOKBodyItems0{
+			ID: int64(tmpOrg.ID),
+			Name: tmpOrg.OrgName,
+			//TODO: CPU info, etc not got yet.
+		}
+
+		reponse = append(reponse, &newResult)
+	}
+	return org.NewListOrgOK().WithPayload(reponse)
+}
+
+func DeleteOrgHandler(params org.DeleteOrgParams) middleware.Responder {
+	db := config.GetDB()
+	var pol models.OrgNew
+	if db.Unscoped().Where("id = ? ", params.ID).Delete(&pol).RowsAffected == 0 {
+		return org.NewDeleteOrgNotFound()
 	}
 
-	return user.NewRegisterUserOK().WithPayload(&user.RegisterUserOKBody{UserInfo: res})
+	return org.NewDeleteOrgOK().WithPayload(&org.DeleteOrgOKBody{
+		Message: "success",
+	})
 }
 

@@ -5,6 +5,7 @@ package restapi
 import (
 	"crypto/tls"
 	"net/http"
+	"tides-server/pkg/restapi/operations/org"
 	"tides-server/pkg/restapi/operations/port"
 	"tides-server/pkg/restapi/operations/vapp"
 	"tides-server/pkg/restapi/operations/vendor_swagger"
@@ -140,6 +141,12 @@ func configureAPI(api *operations.CloudTidesAPI) http.Handler {
 	api.PreServerShutdown = func() {}
 
 	api.ServerShutdown = func() {}
+
+	api.OrgAddOrgHandler = org.AddOrgHandlerFunc(handler.AddOrgHandler)
+
+	api.OrgListOrgHandler= org.ListOrgHandlerFunc(handler.ListOrgHandler)
+
+	api.OrgDeleteOrgHandler= org.DeleteOrgHandlerFunc(handler.DeleteOrgHandler)
 
 	return setupGlobalMiddleware(api.Serve(setupMiddlewares))
 }
