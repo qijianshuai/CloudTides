@@ -29,6 +29,7 @@ require (
 	github.com/joho/godotenv v1.3.0
 	github.com/justinas/nosurf v1.1.1 // indirect
 	github.com/kr/pretty v0.2.1 // indirect
+	github.com/lib/pq v1.3.0
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/meatballhat/negroni-logrus v1.1.0 // indirect
 	github.com/phyber/negroni-gzip v1.0.0 // indirect
