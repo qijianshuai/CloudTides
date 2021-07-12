@@ -118,6 +118,24 @@
         "DELETE": "删除"
       }
     },
+    "ORGNIZATION":{
+      "ORGNIZATION": "组织",
+      "ADD_ORGNIZATION": "添加组织",
+      "LIST": {
+        "TCPU": "处理器总量",
+        "TMEMORY": "内存总量",
+        "TDISK": "存储总量",
+        "CCPU": "CPU使用量",
+        "CMEMORY": "内存使用量",
+        "CDISK": "存储使用量"
+      }
+    },
+    "USER":{
+      "USER": "用户",
+      "ADD_USER": "添加用户",
+      "UPGRADE": "升级",
+      "DOWNGRADE": "降级"
+    },
     "PRODUCT_NAME": "云汐",
     "PROFILE": "个人信息",
     "LOGOUT": "登出"

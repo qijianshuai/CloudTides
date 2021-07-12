@@ -118,6 +118,24 @@
         "DELETE": "Delete"
       }
     },
+    "ORGNIZATION":{
+      "ORGNIZATION": "Organization",
+      "ADD_ORGNIZATION": "Add Org",
+      "LIST": {
+        "TCPU": "Total CPU",
+        "TMEMORY": "Total Memory",
+        "TDISK": "Total Disk",
+        "CCPU": "CPU Usage",
+        "CMEMORY": "Memory Usage",
+        "CDISK": "Disk Usage"
+      }
+    },
+    "USER":{
+      "USER": "User",
+      "ADD_USER": "Add User",
+      "UPGRADE": "Upgrade",
+      "DOWNGRADE": "Downgrade"
+    },
     "PRODUCT_NAME": "CloudTides",
     "PROFILE": "Profile",
     "LOGOUT": "Log out"
