@@ -10,9 +10,6 @@ type OrgNew struct {
 	gorm.Model
 
 	// orgname
-	OrgID string `json:"orgId,omitempty" gorm:"uniqueIndex"`
-
-	// orgname
 	OrgName string `json:"orgName,omitempty" gorm:"uniqueIndex"`
 
 	// own_res_id

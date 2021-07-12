@@ -15,10 +15,10 @@ type UserNew struct {
     Password string `json:"password,omitempty"`
 
     // org_id
-    OrgID uint `gorm:"index" json:"orgID,omitempty" sql:"type:uint REFERENCES OrgNew(OrgID)"`
+    OrgID uint `gorm:"index" json:"orgID,omitempty" sql:"type:uint REFERENCES OrgNew(ID)"`
     
     // org
-    Org OrgNew `gorm:"ForeignKey:OrgID;AssociationForeignKey:OrgID,constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+    Org OrgNew `gorm:"ForeignKey:ID;AssociationForeignKey:ID,constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 
     // role
     Role string `json:"role,omitempty"`
