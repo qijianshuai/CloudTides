@@ -10,7 +10,7 @@ type LogNew struct {
 	gorm.Model
 
 	// log_id
-	LogID uint `gorm:"primary_key" json:"logID,omitempty"`
+	LogID uint `gorm:"uniqueIndex" json:"logID,omitempty"`
 
 	// user_id
 	UserID uint `json:"userID,omitempty"`
