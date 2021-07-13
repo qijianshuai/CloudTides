@@ -34,8 +34,6 @@ export class UserDialogComponent implements OnInit {
         ]],
     });
   
-    
-
     this.orgmap = userList.orgList;
     this.orgNames = Object.keys(userList.orgList);
     this.roleTypeList = Object.keys(roleTypes);

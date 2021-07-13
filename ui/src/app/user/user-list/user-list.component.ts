@@ -78,7 +78,12 @@ export class UserListComponent implements OnInit, OnDestroy {
     this.orgList = Object(await this.userService.getOrgList())
   }
 
-  async displayDetail(id: number){
+  async displayDetail(id: number, name: string, role:string, email: string, phone: string){
+    this.UserId = id;
+    this.updateName = name;
+    this.updateRole = role;
+    this.updateEmail = email;
+    this.updatePhone = phone;
   }
 
   ngOnDestroy(): void {

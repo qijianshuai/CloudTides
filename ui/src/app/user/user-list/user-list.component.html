@@ -43,7 +43,7 @@
       <clr-dg-action-overflow>
         <button
           class="btn btn-sm btn-link"
-          (click)="this.displayDetail(item.id)"
+          (click)="this.displayDetail(item.id, item.name, item.role, item.email, item.phone)"
           *ngIf="this.loginService.inAdminView()"
         >Detail</button>
         <button
