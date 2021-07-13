@@ -31,12 +31,12 @@
 
 
       <clr-select-container>
-        <label for="org">Orgnization</label>
+        <label for="orgName">Orgnization</label>
         <select
           clrSelect
-          id="org"
+          id="orgName"
           class="clr-col-12 clr-col-md-8"
-          formControlName="org"
+          formControlName="orgName"
         >
           <option *ngFor="let item of orgNames"
             [ngValue]="item"> {{ item }}</option>

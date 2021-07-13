@@ -20,7 +20,7 @@ export class UserDialogComponent implements OnInit {
   ) {
     this.userForm = this.fb.group({
       name: ['', [Validators.required]],
-      org: ['', [Validators.required]],
+      orgName: ['', [Validators.required]],
       role: [defaultRoleType4Site, [Validators.required]],
       email: [
         '', [
