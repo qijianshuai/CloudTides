@@ -4,7 +4,6 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	"tides-server/pkg/config"
 	"tides-server/pkg/models"
-	"tides-server/pkg/restapi/operations/org"
 	"tides-server/pkg/restapi/operations/user"
 )
 
@@ -35,7 +34,12 @@ func AddUserHandler(params user.AddUserParams) middleware.Responder {
 		Phone:    body.Phone,
 		OrgName:    body.OrgName,
 	}
-
+	var userOld models.UserNew;
+	if db.Unscoped().Where("username = ?", body.Name).First(&userOld).RowsAffected == 1 {
+		//delete user permently when new user created
+		db.Unscoped().Delete(&userOld)
+	}
+	// SELECT * FROM users WHERE age = 20;
 	err := db.Create(&newUser).Error
 	if err != nil {
 		return user.NewAddUserUnauthorized()
@@ -102,7 +106,7 @@ func DeleteUserHandler(params user.DeleteUserParams) middleware.Responder {
 	db := config.GetDB()
 	var pol models.UserNew
 	if db.Where("id = ? ", params.ID).Delete(&pol).RowsAffected == 0 {
-		return org.NewDeleteOrgNotFound()
+		return user.NewDeleteUserNotFound()
 	}
 
 	return user.NewDeleteUserOK().WithPayload(&user.DeleteUserOKBody{
