@@ -63,11 +63,14 @@ func (o *ListOrg) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 // swagger:model ListOrgOKBodyItems0
 type ListOrgOKBodyItems0 struct {
 
-	// CPU percent
-	CPUPercent float64 `json:"CPUPercent,omitempty"`
+	// current CPU
+	CurrentCPU float64 `json:"CurrentCPU,omitempty"`
 
-	// RAM percent
-	RAMPercent float64 `json:"RAMPercent,omitempty"`
+	// current disk
+	CurrentDisk float64 `json:"CurrentDisk,omitempty"`
+
+	// current RAM
+	CurrentRAM float64 `json:"CurrentRAM,omitempty"`
 
 	// id
 	ID int64 `json:"id,omitempty"`

@@ -87,6 +87,11 @@ const AddUserForbiddenCode int = 403
 swagger:response addUserForbidden
 */
 type AddUserForbidden struct {
+
+	/*
+	  In: Body
+	*/
+	Payload *AddUserForbiddenBody `json:"body,omitempty"`
 }
 
 // NewAddUserForbidden creates AddUserForbidden with default headers values
@@ -95,10 +100,25 @@ func NewAddUserForbidden() *AddUserForbidden {
 	return &AddUserForbidden{}
 }
 
+// WithPayload adds the payload to the add user forbidden response
+func (o *AddUserForbidden) WithPayload(payload *AddUserForbiddenBody) *AddUserForbidden {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the add user forbidden response
+func (o *AddUserForbidden) SetPayload(payload *AddUserForbiddenBody) {
+	o.Payload = payload
+}
+
 // WriteResponse to the client
 func (o *AddUserForbidden) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
-	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
-
 	rw.WriteHeader(403)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
 }
