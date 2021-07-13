@@ -9,7 +9,7 @@ import (
 type ResTemplate struct {
 	gorm.Model
 
-	// Res_id
+	// res_id
 	ResID uint `json:"resID,omitempty"`
 
 	// template_id
@@ -18,6 +18,6 @@ type ResTemplate struct {
 	// Time
 	Time time.Time `json:"time,omitempty"`
 
-	
+
 
 }

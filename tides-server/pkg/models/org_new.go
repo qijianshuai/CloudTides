@@ -9,7 +9,7 @@ import (
 type OrgNew struct {
 	gorm.Model
 
-	// orgname
+	// org_name
 	OrgName string `json:"orgName,omitempty" gorm:"uniqueIndex"`
 
 	// own_res_id

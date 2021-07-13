@@ -32,10 +32,29 @@ func ListOrgHandler(params org.ListOrgParams) middleware.Responder {
 	db.Find(&orgs)
 	var reponse []*org.ListOrgOKBodyItems0
 	for _, tmpOrg := range orgs {
+		// get resource id  from resource new table
+		var resources []*models.ResourceNew
+		db.Where("org_id = ? ", tmpOrg.ID).Find(&resources)
+		var totalCpu, totalRAM, totalDisk, curCpu, curRAM, curDisk float64
+		for _, tmpRes :=  range resources{
+			var resUsages models.ResourceUsage
+			db.Where("id = ? ", tmpRes.ID).Find(&resUsages)
+			curCpu += resUsages.CurrentCPU
+			curRAM += resUsages.CurrentRAM
+			curDisk += resUsages.CurrentDisk
+			totalCpu += resUsages.TotalCPU
+			totalRAM += resUsages.TotalRAM
+			totalDisk += resUsages.TotalDisk
+		}
 		newResult := org.ListOrgOKBodyItems0{
 			ID: int64(tmpOrg.ID),
 			Name: tmpOrg.OrgName,
-			//TODO: CPU info, etc not got yet.
+			CurrentCPU: curCpu,
+			CurrentRAM: curRAM,
+			CurrentDisk: curDisk,
+			TotalCPU:  totalCpu,
+			TotalRAM:  totalRAM,
+			TotalDisk:  totalDisk,
 		}
 
 		reponse = append(reponse, &newResult)
@@ -46,9 +65,16 @@ func ListOrgHandler(params org.ListOrgParams) middleware.Responder {
 func DeleteOrgHandler(params org.DeleteOrgParams) middleware.Responder {
 	db := config.GetDB()
 	var pol models.OrgNew
-	if db.Unscoped().Where("id = ? ", params.ID).Delete(&pol).RowsAffected == 0 {
+	db.Where("id = ? ", params.ID).Find(&pol)
+	var orgName = pol.OrgName
+	if db.Where("id = ? ", params.ID).Delete(&pol).RowsAffected == 0 {
 		return org.NewDeleteOrgNotFound()
 	}
+
+	//Delete User in that org
+	var users []*models.UserNew
+	db.Where("org_name = ? ", orgName).Delete(&users)
+
 
 	return org.NewDeleteOrgOK().WithPayload(&org.DeleteOrgOKBody{
 		Message: "success",

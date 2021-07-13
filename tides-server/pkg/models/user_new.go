@@ -14,13 +14,11 @@ type UserNew struct {
     // password
     Password string `json:"password,omitempty"`
 
-    // org_id
-    OrgID uint `gorm:"index" json:"orgID,omitempty" sql:"type:uint REFERENCES OrgNew(ID)"`
-    
-    // org
-    Org OrgNew `gorm:"ForeignKey:ID;AssociationForeignKey:ID,constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+    // org_name
+    OrgName string `gorm:"index" json:"orgName,omitempty"`
 
-    // role
+
+    // role SITE_ADMIN/ ORG_ADMIN/ USER
     Role string `json:"role,omitempty"`
 
     // email
@@ -32,7 +30,7 @@ type UserNew struct {
     // phone
     Phone string `json:"phone,omitempty"`
 
-    // avatar
+    // avatar //TODO: NOT IMPLEMENTED
     Avatar string `json:"avatar,omitempty"`
 }
 
