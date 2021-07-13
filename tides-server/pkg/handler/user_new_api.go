@@ -12,14 +12,28 @@ import (
 func AddUserHandler(params user.AddUserParams) middleware.Responder {
 	body := params.ReqBody
 	db := config.GetDB()
+	//SITE_ADMIN/ ORG_ADMIN/ USER
+	if body.Role != "SITE_ADMIN" && body.Role != "ORG_ADMIN" && body.Role != "USER" {
+		// invalid org
+		return user.NewAddUserForbidden().WithPayload(&user.AddUserForbiddenBody{
+			Message: "User Role Invalid. Could only be SITE_ADMIN/ORG_ADMIN/USER",
+		})
+	}
 
-	//TODO retrive Org by name, user id generate
+	var orgNew models.OrgNew;
+	if db.Where("org_name = ?", body.OrgName).First(&orgNew).RowsAffected == 0 {
+		// invalid org
+		return user.NewAddUserForbidden().WithPayload(&user.AddUserForbiddenBody{
+			Message: "Org Name Invalid.",
+		})
+	}
 	newUser := models.UserNew{
 		Username: body.Name,
-		Role: body.Role,
-		Email: body.Email,
-		PwReset: false,
-		Phone: body.Phone,
+		Role:     body.Role,
+		Email:    body.Email,
+		PwReset:  false,
+		Phone:    body.Phone,
+		OrgName:    body.OrgName,
 	}
 
 	err := db.Create(&newUser).Error
@@ -36,39 +50,43 @@ func ListUserHandler(params user.ListUserParams) middleware.Responder {
 	var users []*models.UserNew
 	db := config.GetDB()
 	db.Find(&users)
-	var reponse []*user.ListUserOKBodyItems0
+	var response []*user.ListUserOKBodyItems0
 	for _, tmpUser := range users {
 		newResult := user.ListUserOKBodyItems0{
 			Email: tmpUser.Email,
 			ID: int64(tmpUser.ID),
 			Name: tmpUser.Username,
-			Org: tmpUser.Org.OrgName,
 			Phone: tmpUser.Phone,
 			Role: tmpUser.Role,
+			OrgName: tmpUser.OrgName,
 		}
 
-		reponse = append(reponse, &newResult)
+		response = append(response, &newResult)
 	}
-	return user.NewListUserOK().WithPayload(reponse)
+	return user.NewListUserOK().WithPayload(response)
 }
 
 
 func ModifyUserHandler(params user.ModifyUserParams) middleware.Responder {
 	//db := config.GetDB()
 	//var pol models.UserNew
-	userId, _ := ParseUserIDFromToken(params.HTTPRequest)
 	body := params.ReqBody
 	var pol models.UserNew
 	db := config.GetDB()
-	if db.Where("user_id = ?", userId).First(&pol).RowsAffected == 0 {
+	if db.Where("id = ?", params.ID).First(&pol).RowsAffected == 0 {
 		return user.NewModifyUserNotFound()
 	}
 
-	//pol.Org.OrgName = body.Org //TODO modify org name, need to change through
+	//pol.Org.OrgName = body.Org
+	if body.Role != "SITE_ADMIN" && body.Role != "ORG_ADMIN" && body.Role != "USER" {
+		return user.NewAddUserForbidden().WithPayload(&user.AddUserForbiddenBody{
+			Message: "User Role Invalid. Could only be SITE_ADMIN/ORG_ADMIN/USER",
+		})
+	}
+
 	pol.Phone = body.Phone
 	pol.Email = body.Email
 	pol.Role = body.Role
-
 	err := db.Save(&pol).Error
 	if err != nil {
 		return user.NewModifyUserForbidden()
@@ -83,7 +101,7 @@ func ModifyUserHandler(params user.ModifyUserParams) middleware.Responder {
 func DeleteUserHandler(params user.DeleteUserParams) middleware.Responder {
 	db := config.GetDB()
 	var pol models.UserNew
-	if db.Unscoped().Where("id = ? ", params.ID).Delete(&pol).RowsAffected == 0 {
+	if db.Where("id = ? ", params.ID).Delete(&pol).RowsAffected == 0 {
 		return org.NewDeleteOrgNotFound()
 	}
 

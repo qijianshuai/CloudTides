@@ -43,10 +43,13 @@ func init() {
               "items": {
                 "type": "object",
                 "properties": {
-                  "CPUPercent": {
+                  "CurrentCPU": {
                     "type": "number"
                   },
-                  "RAMPercent": {
+                  "CurrentDisk": {
+                    "type": "number"
+                  },
+                  "CurrentRAM": {
                     "type": "number"
                   },
                   "id": {
@@ -2158,7 +2161,7 @@ func init() {
                   "name": {
                     "type": "string"
                   },
-                  "org": {
+                  "orgName": {
                     "type": "string"
                   },
                   "phone": {
@@ -2201,7 +2204,7 @@ func init() {
                 "name": {
                   "type": "string"
                 },
-                "org": {
+                "orgName": {
                   "type": "string"
                 },
                 "phone": {
@@ -2230,7 +2233,15 @@ func init() {
             "description": "Unauthorized"
           },
           "403": {
-            "description": "Forbidden"
+            "description": "Forbidden",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       }
@@ -5474,7 +5485,7 @@ func init() {
                 "name": {
                   "type": "string"
                 },
-                "org": {
+                "orgName": {
                   "type": "string"
                 },
                 "phone": {
@@ -5503,7 +5514,15 @@ func init() {
             "description": "Unauthorized"
           },
           "403": {
-            "description": "Forbidden"
+            "description": "Forbidden",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       }
@@ -6657,10 +6676,13 @@ func init() {
     "ListOrgOKBodyItems0": {
       "type": "object",
       "properties": {
-        "CPUPercent": {
+        "CurrentCPU": {
           "type": "number"
         },
-        "RAMPercent": {
+        "CurrentDisk": {
+          "type": "number"
+        },
+        "CurrentRAM": {
           "type": "number"
         },
         "id": {
@@ -6768,7 +6790,7 @@ func init() {
         "name": {
           "type": "string"
         },
-        "org": {
+        "orgName": {
           "type": "string"
         },
         "phone": {

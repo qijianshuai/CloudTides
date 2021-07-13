@@ -69,8 +69,8 @@ type AddUserBody struct {
 	// name
 	Name string `json:"name,omitempty"`
 
-	// org
-	Org string `json:"org,omitempty"`
+	// org name
+	OrgName string `json:"orgName,omitempty"`
 
 	// phone
 	Phone string `json:"phone,omitempty"`
@@ -100,6 +100,43 @@ func (o *AddUserBody) MarshalBinary() ([]byte, error) {
 // UnmarshalBinary interface implementation
 func (o *AddUserBody) UnmarshalBinary(b []byte) error {
 	var res AddUserBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+// AddUserForbiddenBody add user forbidden body
+//
+// swagger:model AddUserForbiddenBody
+type AddUserForbiddenBody struct {
+
+	// message
+	Message string `json:"message,omitempty"`
+}
+
+// Validate validates this add user forbidden body
+func (o *AddUserForbiddenBody) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this add user forbidden body based on context it is used
+func (o *AddUserForbiddenBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *AddUserForbiddenBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *AddUserForbiddenBody) UnmarshalBinary(b []byte) error {
+	var res AddUserForbiddenBody
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}
