@@ -20,12 +20,20 @@ export class UserDialogComponent implements OnInit {
   ) {
     this.userForm = this.fb.group({
       name: ['', [Validators.required]],
-      org: ['', [Validators.required]],
+      orgName: ['', [Validators.required]],
       role: [defaultRoleType4Site, [Validators.required]],
-      email: ['', [Validators.required]],
-      phone: ['', [Validators.required]],
+      email: [
+        '', [
+          Validators.required,
+          Validators.email,
+        ]],
+      phone: [
+        '', [
+          Validators.required,
+          Validators.pattern("[0-9 ]{11}"),
+        ]],
     });
-
+  
     this.orgmap = userList.orgList;
     this.orgNames = Object.keys(userList.orgList);
     this.roleTypeList = Object.keys(roleTypes);

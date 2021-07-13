@@ -26,7 +26,7 @@ export class UserService {
       const TempItem: ItemUser = {
         id: tem.id,
         name: tem.name,
-        org: tem.org,
+        orgName: tem.orgName,
         role: tem.role,
         email: tem.email,
         phone: tem.phone,
@@ -51,6 +51,7 @@ export class UserService {
   }
 
   addUser(payload: ItemAddUser) {
+    console.log(payload)
     const body = {
       ...payload,
     };
@@ -65,7 +66,7 @@ export class UserService {
     });
   }
 
-  editItemUser(id: string, payload: ItemUpdateUser) {
+  editItemUser(id: number, payload: ItemUpdateUser) {
     const body = {
       ...payload,
     }
@@ -99,21 +100,21 @@ export class UserService {
 export interface ItemUser {
   id: number;
   name: string;
-  org: string;
+  orgName: string;
   role: string;
   email: string;
   phone: string;
 }
 export interface ItemAddUser {
   name: string;
-  org: string;
+  orgName: string;
   role: string;
   email: string;
   phone: string;
 }
 
 export interface ItemUpdateUser {
-  org: string;
+  name: string;
   role: string;
   email: string;
   phone: string;

@@ -24,6 +24,7 @@ export const declarations = [
   UserComponent,
   UserListComponent,
   UserDialogComponent,
+  UserCardComponent,
 ];
 
 export const providers = [

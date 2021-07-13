@@ -43,7 +43,7 @@
       <clr-dg-action-overflow>
         <button
           class="btn btn-sm btn-link"
-          (click)="this.displayDetail(item.id)"
+          (click)="this.displayDetail(item.id, item.name, item.role, item.email, item.phone)"
           *ngIf="this.loginService.inAdminView()"
         >Detail</button>
         <button
@@ -53,14 +53,10 @@
       </clr-dg-action-overflow>
       <clr-dg-cell><div class="value">{{item?.id}}</div></clr-dg-cell>
       <clr-dg-cell><div class="value">{{item?.name}}</div></clr-dg-cell>
-      <clr-dg-cell><div class="value">{{item?.org}}</div></clr-dg-cell>
+      <clr-dg-cell><div class="value">{{item?.orgName}}</div></clr-dg-cell>
       <clr-dg-cell><div class="value">{{item?.role}}</div></clr-dg-cell>
       <clr-dg-cell><div class="value">{{item?.email}}</div></clr-dg-cell>
       <clr-dg-cell><div class="value">{{item?.phone}}</div></clr-dg-cell>
-      <!-- <clr-dg-cell><div class="value">{{item?.disk}} GB</div></clr-dg-cell>
-      <clr-dg-cell><div class="value">{{item?.usage["cpu"]}}GHz ({{ item?.usage ? item?.usage["cpu%"] : "-" }}%)</div></clr-dg-cell>
-      <clr-dg-cell><div class="value">{{item?.usage["mem"]}}GB ({{ item?.usage ? item?.usage["mem%"] : "-"  }}%)</div></clr-dg-cell>
-      <clr-dg-cell><div class="value">{{item?.usage["disk"]}}GB ({{ item?.usage ? item?.usage["disk%"] : "-"  }}%)</div></clr-dg-cell> -->
     </clr-dg-row>
   </clr-datagrid>
 </div>
@@ -71,12 +67,12 @@
   (save)="this.save()"
   (cancel)="this.cancel()">
 </tide-user-dialog>
-<!-- 
+
 <tide-user-card
-  *ngIf="this.opened"
+  *ngIf="this.UpdateOpened"
   [opened]="this.UpdateOpened"
   [userid]="this.UserId"
   (save)="this.save()"
   (cancel)="this.cancel()">
-</tide-user-card> -->
+</tide-user-card>
 
