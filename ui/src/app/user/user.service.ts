@@ -65,7 +65,7 @@ export class UserService {
     });
   }
 
-  editItemUser(id: string, payload: ItemUpdateUser) {
+  editItemUser(id: number, payload: ItemUpdateUser) {
     const body = {
       ...payload,
     }
@@ -113,7 +113,7 @@ export interface ItemAddUser {
 }
 
 export interface ItemUpdateUser {
-  org: string;
+  name: string;
   role: string;
   email: string;
   phone: string;

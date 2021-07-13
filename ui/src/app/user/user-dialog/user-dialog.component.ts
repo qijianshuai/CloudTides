@@ -22,9 +22,19 @@ export class UserDialogComponent implements OnInit {
       name: ['', [Validators.required]],
       org: ['', [Validators.required]],
       role: [defaultRoleType4Site, [Validators.required]],
-      email: ['', [Validators.required]],
-      phone: ['', [Validators.required]],
+      email: [
+        '', [
+          Validators.required,
+          Validators.email,
+        ]],
+      phone: [
+        '', [
+          Validators.required,
+          Validators.pattern("[0-9 ]{11}"),
+        ]],
     });
+  
+    
 
     this.orgmap = userList.orgList;
     this.orgNames = Object.keys(userList.orgList);

@@ -50,6 +50,12 @@ export class UserListComponent implements OnInit, OnDestroy {
   refreshInterval: number;
   // selected: Observable<Item[]> = of([])
   orgList: Object = {};
+  UpdateOpened = false;
+  UserId = 1;
+  updateName: string;
+  updateRole: string;
+  updateEmail: string;
+  updatePhone: string;
 
 
   async save() {
