@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"strconv"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -152,6 +153,155 @@ func UpdateUserProfileHandler(params user.UpdateUserProfileParams) middleware.Re
 	}
 
 	return user.NewUpdateUserProfileOK().WithPayload(&user.UpdateUserProfileOKBody{
+		Message: "success",
+	})
+}
+
+func AddUserHandler(params user.AddUserParams) middleware.Responder {
+	if !VerifyUser(params.HTTPRequest) {
+		return user.NewAddUserUnauthorized()
+	}
+	uid, _ := ParseUserIDFromToken(params.HTTPRequest)
+	body := params.ReqBody
+	db := config.GetDB()
+	//SITE_ADMIN/ ORG_ADMIN/ USER
+	if body.Role != "SITE_ADMIN" && body.Role != "ORG_ADMIN" && body.Role != "USER" {
+		// invalid org
+		return user.NewAddUserForbidden().WithPayload(&user.AddUserForbiddenBody{
+			Message: "User Role Invalid. Could only be SITE_ADMIN/ORG_ADMIN/USER",
+		})
+	}
+
+	var orgNew models.Org;
+	if db.Where("org_name = ?", body.OrgName).First(&orgNew).RowsAffected == 0 {
+		// invalid org
+		return user.NewAddUserForbidden().WithPayload(&user.AddUserForbiddenBody{
+			Message: "Org Name Invalid.",
+		})
+	}
+	newUser := models.User{
+		Username: body.Name,
+		Role:     body.Role,
+		Email:    body.Email,
+		PwReset:  false,
+		Phone:    body.Phone,
+		OrgName:    body.OrgName,
+	}
+	var userOld models.User;
+	if db.Unscoped().Where("username = ?", body.Name).First(&userOld).RowsAffected == 1 {
+		//delete user permently when new user created
+		db.Unscoped().Delete(&userOld)
+	}
+	// SELECT * FROM users WHERE age = 20;
+	err := db.Create(&newUser).Error
+	if err != nil {
+		return user.NewAddUserUnauthorized()
+	}
+
+	newLog := models.Log{
+		UserID: uid,
+		Operation: "Add User:" + body.Name,
+		Time: time.Now(),
+		Status: "Succeed",
+	}
+	if db.Create(&newLog).Error != nil {
+		return user.NewModifyUserForbidden()
+	}
+
+	return user.NewAddUserOK().WithPayload(&user.AddUserOKBody{
+		Message: "succeed",
+	})
+}
+
+func ListUserHandler(params user.ListUserParams) middleware.Responder {
+	if !VerifyUser(params.HTTPRequest) {
+		return user.NewListUserUnauthorized()
+	}
+	var users []*models.User
+	db := config.GetDB()
+	db.Find(&users)
+	var response []*user.ListUserOKBodyItems0
+	for _, tmpUser := range users {
+		newResult := user.ListUserOKBodyItems0{
+			Email: tmpUser.Email,
+			ID: int64(tmpUser.ID),
+			Name: tmpUser.Username,
+			Phone: tmpUser.Phone,
+			Role: tmpUser.Role,
+			OrgName: tmpUser.OrgName,
+		}
+
+		response = append(response, &newResult)
+	}
+	return user.NewListUserOK().WithPayload(response)
+}
+
+
+func ModifyUserHandler(params user.ModifyUserParams) middleware.Responder {
+	if !VerifyUser(params.HTTPRequest) {
+		return user.NewModifyUserUnauthorized()
+	}
+	uid, _ := ParseUserIDFromToken(params.HTTPRequest)
+	body := params.ReqBody
+	var pol models.User
+	db := config.GetDB()
+	if db.Where("id = ?", params.ID).First(&pol).RowsAffected == 0 {
+		return user.NewModifyUserNotFound()
+	}
+
+	//pol.Org.OrgName = body.Org
+	if body.Role != "SITE_ADMIN" && body.Role != "ORG_ADMIN" && body.Role != "USER" {
+		return user.NewAddUserForbidden().WithPayload(&user.AddUserForbiddenBody{
+			Message: "User Role Invalid. Could only be SITE_ADMIN/ORG_ADMIN/USER",
+		})
+	}
+	pol.Username = body.Name
+	pol.Phone = body.Phone
+	pol.Email = body.Email
+	pol.Role = body.Role
+	err := db.Save(&pol).Error
+	if err != nil {
+		return user.NewModifyUserForbidden()
+	}
+
+	newLog := models.Log{
+		UserID: uid,
+		Operation: "Modify User:" + body.Name,
+		Time: time.Now(),
+		Status: "Succeed",
+	}
+	if db.Create(&newLog).Error != nil {
+		return user.NewModifyUserForbidden()
+	}
+
+	return user.NewModifyUserOK().WithPayload(&user.ModifyUserOKBody{
+		Message: "success",
+	})
+
+}
+
+func DeleteUserHandler(params user.DeleteUserParams) middleware.Responder {
+	if !VerifyUser(params.HTTPRequest) {
+		return user.NewDeleteUserUnauthorized()
+	}
+	uid, _ := ParseUserIDFromToken(params.HTTPRequest)
+	db := config.GetDB()
+	var pol models.User
+	if db.Where("id = ? ", params.ID).Delete(&pol).RowsAffected == 0 {
+		return user.NewDeleteUserNotFound()
+	}
+
+	newLog := models.Log{
+		UserID: uid,
+		Operation: "Delete User with Id: " + strconv.FormatInt(params.ID, 10),
+		Time: time.Now(),
+		Status: "Succeed",
+	}
+	if db.Create(&newLog).Error != nil {
+		return user.NewDeleteUserForbidden()
+	}
+
+	return user.NewDeleteUserOK().WithPayload(&user.DeleteUserOKBody{
 		Message: "success",
 	})
 }

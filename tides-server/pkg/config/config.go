@@ -79,12 +79,11 @@ func StartDB() {
 	db.AutoMigrate(&models.Vapp{})
 	db.AutoMigrate(&models.Port{})
 
-	db.AutoMigrate(&models.UserNew{})
-	db.AutoMigrate(&models.OrgNew{})
-	db.AutoMigrate(&models.CloudProviderNew{})
+	db.AutoMigrate(&models.Org{})
+	db.AutoMigrate(&models.CloudProvider{})
 	db.AutoMigrate(&models.ResourceNew{})
 	db.AutoMigrate(&models.TemplateNew{})
-	db.AutoMigrate(&models.LogNew{})
+	db.AutoMigrate(&models.Log{})
 	db.AutoMigrate(&models.ResVapp{})
 	db.AutoMigrate(&models.ResTemplate{})
 

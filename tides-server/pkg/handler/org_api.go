@@ -5,24 +5,38 @@ import (
 	"tides-server/pkg/config"
 	"tides-server/pkg/models"
 	"tides-server/pkg/restapi/operations/org"
+	"time"
 )
 
 
 func AddOrgHandler(params org.AddOrgParams) middleware.Responder {
+	if !VerifyUser(params.HTTPRequest) {
+		return org.NewAddOrgUnauthorized()
+	}
+	uid, _ := ParseUserIDFromToken(params.HTTPRequest)
 	body := params.ReqBody
 	db := config.GetDB()
 
-	newOrg := models.OrgNew{
+	newOrg := models.Org{
 		OrgName: body.Name,
 	}
-	var orgOld models.OrgNew;
+	var orgOld models.Org;
 	if db.Unscoped().Where("org_name = ?", body.Name).First(&orgOld).RowsAffected == 1 {
 		//delete user permently when new user created
 		db.Unscoped().Delete(&orgOld)
 	}
-	err := db.Create(&newOrg).Error
-	if err != nil {
+	if db.Create(&newOrg).Error != nil {
 		return org.NewAddOrgUnauthorized()
+	}
+
+	newLog := models.Log{
+		UserID: uid,
+		Operation: "Add Org:" + body.Name,
+		Time: time.Now(),
+		Status: "Succeed",
+	}
+	if db.Create(&newLog).Error != nil {
+		return org.NewAddOrgForbidden()
 	}
 
 	return org.NewAddOrgOK().WithPayload(&org.AddOrgOKBody{
@@ -31,7 +45,10 @@ func AddOrgHandler(params org.AddOrgParams) middleware.Responder {
 }
 
 func ListOrgHandler(params org.ListOrgParams) middleware.Responder {
-	var orgs []*models.OrgNew
+	if !VerifyUser(params.HTTPRequest) {
+		return org.NewListOrgUnauthorized()
+	}
+	var orgs []*models.Org
 	db := config.GetDB()
 	db.Find(&orgs)
 	var reponse []*org.ListOrgOKBodyItems0
@@ -67,8 +84,12 @@ func ListOrgHandler(params org.ListOrgParams) middleware.Responder {
 }
 
 func DeleteOrgHandler(params org.DeleteOrgParams) middleware.Responder {
+	if !VerifyUser(params.HTTPRequest) {
+		return org.NewDeleteOrgUnauthorized()
+	}
+	uid, _ := ParseUserIDFromToken(params.HTTPRequest)
 	db := config.GetDB()
-	var pol models.OrgNew
+	var pol models.Org
 	db.Where("id = ? ", params.ID).Find(&pol)
 	var orgName = pol.OrgName
 	if db.Where("id = ? ", params.ID).Delete(&pol).RowsAffected == 0 {
@@ -76,9 +97,18 @@ func DeleteOrgHandler(params org.DeleteOrgParams) middleware.Responder {
 	}
 
 	//Delete User in that org
-	var users []*models.UserNew
+	var users []*models.User
 	db.Where("org_name = ? ", orgName).Delete(&users)
 
+	newLog := models.Log{
+		UserID: uid,
+		Operation: "Delete Org:" + orgName,
+		Time: time.Now(),
+		Status: "Succeed",
+	}
+	if db.Create(&newLog).Error != nil {
+		return org.NewAddOrgForbidden()
+	}
 
 	return org.NewDeleteOrgOK().WithPayload(&org.DeleteOrgOKBody{
 		Message: "success",

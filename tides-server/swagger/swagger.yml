@@ -2149,6 +2149,8 @@ paths:
           schema:
             type: object
             properties:
+              name:
+                type: string
               org:
                 type: string
               role:

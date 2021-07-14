@@ -6,7 +6,7 @@ import (
 )
 
 
-type OrgNew struct {
+type Org struct {
 	gorm.Model
 
 	// org_name

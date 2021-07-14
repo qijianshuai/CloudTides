@@ -21,9 +21,9 @@ type ResourceNew struct {
 	ResStatus string `json:"resStatus,omitempty"`
 
 	// cloudprovider_id
-	CloudProviderID uint `json:"cloudProviderID,omitempty" sql:"type:uint REFERENCES CloudProviderNew(CloudProviderID)"`
+	CloudProviderID uint `json:"cloudProviderID,omitempty" sql:"type:uint REFERENCES CloudProvider(CloudProviderID)"`
 
 	// cloudProvider
-	CloudProvider CloudProviderNew `gorm:"ForeignKey:CloudProviderID;AssociationForeignKey:CloudProviderID,constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	CloudProvider CloudProvider `gorm:"ForeignKey:CloudProviderID;AssociationForeignKey:CloudProviderID,constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 
 }
