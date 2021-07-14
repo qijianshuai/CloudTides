@@ -64,6 +64,7 @@ export class UserListComponent implements OnInit, OnDestroy {
 
   cancel() {
     this.opened = false;
+    this.UpdateOpened = false;
   }
 
   async ngOnInit() {
@@ -84,6 +85,7 @@ export class UserListComponent implements OnInit, OnDestroy {
     this.updateRole = role;
     this.updateEmail = email;
     this.updatePhone = phone;
+    this.UpdateOpened = true;
   }
 
   ngOnDestroy(): void {

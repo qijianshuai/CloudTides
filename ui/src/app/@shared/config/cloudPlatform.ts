@@ -11,9 +11,9 @@ export const resTypes = {
 };
 
 export const roleTypes = {
-  SiteAdmin: 'SiteAdmin',
-  OrgAdmin: 'OrgAdmin',
-  User: 'User',
+  SiteAdmin: 'SITE_ADMIN',
+  OrgAdmin: 'ORG_ADMIN',
+  User: 'USER',
 };
 
 export const defaultResType = resTypes.Fixed;

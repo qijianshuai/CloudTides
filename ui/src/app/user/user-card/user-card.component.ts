@@ -82,7 +82,6 @@ export class UserCardComponent implements OnInit {
   private close() {
     this.cancel.emit();
   }
-
   private resetModal() {
     this.vo.serverError = '';
     this.vo.spinning = false;
