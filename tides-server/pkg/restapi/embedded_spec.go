@@ -2272,6 +2272,9 @@ func init() {
                 "email": {
                   "type": "string"
                 },
+                "name": {
+                  "type": "string"
+                },
                 "org": {
                   "type": "string"
                 },
@@ -5551,6 +5554,9 @@ func init() {
               "type": "object",
               "properties": {
                 "email": {
+                  "type": "string"
+                },
+                "name": {
                   "type": "string"
                 },
                 "org": {

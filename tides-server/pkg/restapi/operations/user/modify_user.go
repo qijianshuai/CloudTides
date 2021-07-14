@@ -66,6 +66,9 @@ type ModifyUserBody struct {
 	// email
 	Email string `json:"email,omitempty"`
 
+	// name
+	Name string `json:"name,omitempty"`
+
 	// org
 	Org string `json:"org,omitempty"`
 

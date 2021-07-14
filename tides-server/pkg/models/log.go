@@ -6,11 +6,8 @@ import (
 )
 
 
-type LogNew struct {
+type Log struct {
 	gorm.Model
-
-	// log_id
-	LogID uint `gorm:"uniqueIndex" json:"logID,omitempty"`
 
 	// user_id
 	UserID uint `json:"userID,omitempty"`
