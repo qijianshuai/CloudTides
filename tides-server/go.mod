@@ -3,6 +3,7 @@ module tides-server
 go 1.13
 
 require (
+	github.com/aliyun/alibaba-cloud-sdk-go v1.61.1181
 	github.com/araddon/dateparse v0.0.0-20201001162425-8aadafed4dc4 // indirect
 	github.com/asaskevich/govalidator v0.0.0-20200907205600-7a23bdc65eef // indirect
 	github.com/carbocation/handlers v0.0.0-20140528190747-c939c6d9ef31 // indirect
