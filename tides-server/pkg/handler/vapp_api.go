@@ -197,7 +197,7 @@ func DeployVAPP(client *govcd.VCDClient, org *govcd.Org, vdc *govcd.Vdc, temName
 	for _, VM := range VMs {
 		if VM.VMName == "Deploy" {
 			script := fmt.Sprintf("cd /root && ./client/client %s %s %s '%s' %s %d",
-				os.Getenv("POSTGRES_HOST"), os.Getenv("POSTGRES_PORT"), os.Getenv("POSTGRES_USER"),
+				os.Getenv("POSTGRES_PUB_HOST"), os.Getenv("POSTGRES_PORT"), os.Getenv("POSTGRES_USER"),
 				os.Getenv("POSTGRES_PASSWORD"), os.Getenv("POSTGRES_DB"), vappDB.ID)
 			err := CusVM(vApp, &VM, script)
 			if err != nil {
