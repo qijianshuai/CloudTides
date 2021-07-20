@@ -44,7 +44,6 @@
         <button
           class="btn btn-sm btn-link"
           (click)="this.displayDetail(item.id, item.name, item.role, item.email, item.phone)"
-          *ngIf="this.loginService.inAdminView()"
         >Detail</button>
         <button
           class="btn btn-sm btn-link"
@@ -54,7 +53,7 @@
       <clr-dg-cell><div class="value">{{item?.id}}</div></clr-dg-cell>
       <clr-dg-cell><div class="value">{{item?.name}}</div></clr-dg-cell>
       <clr-dg-cell><div class="value">{{item?.orgName}}</div></clr-dg-cell>
-      <clr-dg-cell><div class="value">{{item?.role}}</div></clr-dg-cell>
+      <clr-dg-cell><div class="value">{{roleTypes[item?.role]}}</div></clr-dg-cell>
       <clr-dg-cell><div class="value">{{item?.email}}</div></clr-dg-cell>
       <clr-dg-cell><div class="value">{{item?.phone}}</div></clr-dg-cell>
     </clr-dg-row>

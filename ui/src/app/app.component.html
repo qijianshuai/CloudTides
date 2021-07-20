@@ -78,14 +78,14 @@
               {{ "HOME.TEMPLATE.TEMPLATE" | translate:{} }}
             </a>
           </li> 
-          <li class="nav-item">
+          <li *ngIf=this.loginService.inSiteAdminView() class="nav-item">
             <a class="nav-link"
               routerLink="/org"
               routerLinkActive="active">
               {{ "HOME.ORGNIZATION.ORGNIZATION" | translate:{} }}
             </a>
           </li> 
-          <li class="nav-item">
+          <li *ngIf=this.loginService.inSiteAdminView()||this.loginService.inOrgAdminView() class="nav-item">
             <a class="nav-link"
               routerLink="/user"
               routerLinkActive="active">

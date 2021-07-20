@@ -92,7 +92,21 @@ export class LoginService {
   }
 
   inAdminView() {
+    // return true;
     return this.session.priority === 'High';
+  }
+
+  inSiteAdminView() {
+    return true;
+    // return this.session.priority === 'High';
+  }
+
+  inOrgAdminView() {
+    return false;
+  }
+
+  inUserView() {
+    return false;
   }
 }
 

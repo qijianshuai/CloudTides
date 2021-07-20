@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { UserService } from '../user.service';
 import { TranslateService } from '@ngx-translate/core';
-import { cloudPlatform, defaultCloudPlatformURL, defaultResType, resTypes, defaultRoleType4Site, roleTypes } from '@tide-config/cloudPlatform';
+import { defaultRoleType4Site, roleTypes } from '@tide-config/cloudPlatform';
 import { UserListComponent } from '../user-list/user-list.component';
 
 @Component({

@@ -4,6 +4,7 @@ import { Item, UserService } from '../user.service';
 import { TranslateService } from '@ngx-translate/core';
 import { NOTIFICATION_EXIST_TIME, RESOURCE_USAGE_REFRESH_PERIOD } from '@tide-config/const';
 import { LoginService } from 'src/app/login/login.service';
+import { roleTypes } from '@tide-config/cloudPlatform';
 
 @Component({
   selector: 'tide-user-list',
@@ -17,6 +18,7 @@ export class UserListComponent implements OnInit, OnDestroy {
     public readonly translate: TranslateService,
     public readonly loginService: LoginService,
   ) {
+    this.roleTypes = roleTypes;
 
   }
 
@@ -56,6 +58,8 @@ export class UserListComponent implements OnInit, OnDestroy {
   updateRole: string;
   updateEmail: string;
   updatePhone: string;
+  roleTypes: any;
+
 
 
   async save() {
