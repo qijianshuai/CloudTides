@@ -63,8 +63,9 @@ export class LoginService {
   }
 
   async logout() {
+    console.log('logout')
     this.removeToken();
-    await this.router.navigate([LOGIN_PATH]);
+    await this.router.navigate(['home']);
   }
 
   storeToken(token: string) {

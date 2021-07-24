@@ -19,24 +19,10 @@ import {
 
 import { AuthGuard } from '@tide-guard/auth.guard';
 import { RegisterService } from './register/register.service';
-import { LandingComponent } from './landing/landing.component';
 
 const routes: Routes = [
-  { 
-    path: '', 
-    pathMatch: 'full',
-    redirectTo: 'home'
-  },
   {
-    path: 'home',
-    component: LandingComponent
-  },
-  {
-    path: LOGIN_PATH_NAME,
-    component: LoginComponent
-  },
-  {
-    path: 'cloudtides',
+    path: '',
     canActivateChild: [AuthGuard],
     children: [
       {
@@ -83,14 +69,13 @@ const routes: Routes = [
         path: TEMPLATE_PATH_NAME,
         loadChildren: () => import('./template/template.module').then(m => m.TemplateModule),
       },
-    ]
-  }
+    ],
+  },
 ];
 
 export const declarations = [
   LoginComponent,
   RegisterComponent,
-  LandingComponent,
 ];
 
 export const providers = [

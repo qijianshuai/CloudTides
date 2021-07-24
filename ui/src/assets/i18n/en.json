@@ -1,4 +1,39 @@
 {
+  "language-name":{
+    "name" : "English",
+    "cn" : "简体中文",
+    "en" : "英语"
+  },  
+  "nav": {
+    "title":"OpenCloudService",
+    "first": "Home",
+    "second": "VCPP",
+    "third" : "VIN",
+    "fourth" : "CloudTides",
+    "fifth" : "News",
+    "sixth" : "About Us"
+  },
+  "home-main": {
+    "main-1":"提升VCPP云端资源",
+    "main-2":"加速VIN伙伴事业",
+    "main-3":"助力公益 持续发展",
+    "card-1": "了解更多VCPP",
+    "card-2": "了解更多VIN创新网络",
+    "card-3": "了解更多企云公益",
+    "part1-title": "为VCPP提供更多云端服务",
+    "part1-card1": "丰富企业级应用目录",
+    "part1-card2": "加速数字化转型",
+    "part1-card3": "触及更多新客户新行业",
+    "part2-card1": "企业级应用快速上云",
+    "part2-card2": "一键部署演示环境",
+    "part2-card3": "拓展销售渠道",
+    "part3-card1": "提升资源利用率",
+    "part3-card2": "参与公益科研",
+    "part3-card3": "ESG",
+    "part2-title": "加快VIN合作伙伴的业务发展",
+    "part3-title": "助力公益 提升企业社会形象",
+    "readnow": "了解更多"
+  },
   "LOGIN": {
     "SUBMITTING": "Submitting...",
     "LOGIN": "Login",

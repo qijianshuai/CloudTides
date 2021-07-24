@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     )
     .subscribe(res => {
       // this.document.location.href = '/'
-      this.router.navigate(['/']);
+      this.router.navigate(['/cloudtides']);
     })
   ;
 
