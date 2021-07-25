@@ -4,7 +4,7 @@ import { Item, UserService } from '../user.service';
 import { TranslateService } from '@ngx-translate/core';
 import { NOTIFICATION_EXIST_TIME, RESOURCE_USAGE_REFRESH_PERIOD } from '@tide-config/const';
 import { LoginService } from 'src/app/login/login.service';
-import { roleTypes } from '@tide-config/cloudPlatform';
+import { roleTypes, roleTypes4Org } from '@tide-config/cloudPlatform';
 
 @Component({
   selector: 'tide-user-list',
@@ -18,7 +18,7 @@ export class UserListComponent implements OnInit, OnDestroy {
     public readonly translate: TranslateService,
     public readonly loginService: LoginService,
   ) {
-    this.roleTypes = roleTypes;
+    this.roleTypes = loginService.inSiteAdminView ? roleTypes: roleTypes4Org;
 
   }
 
@@ -76,11 +76,13 @@ export class UserListComponent implements OnInit, OnDestroy {
   }
 
   async refreshList() {
-    this.list$ = of(await this.userService.getUserList());
+    this.list$ = this.loginService.inSiteAdminView() ? of(await this.userService.getUserList()) : of(await this.userService.getUserList4Org(this.loginService.session.orgName));
     this.refreshInterval = window.setInterval(async () => {
-      this.list$ = of(await this.userService.getUserList());
+      this.list$ = this.loginService.inSiteAdminView() ? of(await this.userService.getUserList()) : of(await this.userService.getUserList4Org(this.loginService.session.orgName));
     }, RESOURCE_USAGE_REFRESH_PERIOD);
-    this.orgList = Object(await this.userService.getOrgList())
+    if (this.loginService.inSiteAdminView()){
+      this.orgList = Object(await this.userService.getOrgList());
+    }
   }
 
   async displayDetail(id: number, name: string, role:string, email: string, phone: string){

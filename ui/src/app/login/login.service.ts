@@ -31,6 +31,8 @@ export class LoginService {
       tap(serverUserInfo => {
         this.storeToken(serverUserInfo.token);
         this.session$.next({ ...serverUserInfo.userInfo });
+        this.session.orgName = "SITE";
+        console.log(this.session$.value);
       }),
     );
   }
@@ -108,6 +110,7 @@ export class LoginService {
   inUserView() {
     return false;
   }
+
 }
 
 export interface UserInfo {
@@ -121,6 +124,9 @@ export interface UserInfo {
   position: boolean;
   email: string,
   phone: string,
+  role: string,
+  pwReset: boolean,
+  orgName: string,
 }
 
 export interface ServerUserInfo {

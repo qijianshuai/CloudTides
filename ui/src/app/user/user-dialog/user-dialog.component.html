@@ -41,8 +41,10 @@
           <option *ngFor="let item of orgNames"
             [ngValue]="item"> {{ item }}</option>
         </select>
-        <clr-control-error>{{ "HOME.RESOURCE.DIALOG.REQUIRED" | translate:{item: 'Username'} }}</clr-control-error>
+        <clr-control-error>{{ "HOME.RESOURCE.DIALOG.REQUIRED" | translate:{item: 'Orgnization'} }}</clr-control-error>
       </clr-select-container>
+
+     
 
       <clr-select-container>
         <label for="role">Role</label>
@@ -53,9 +55,9 @@
           formControlName="role"
         >
         <option *ngFor="let role of roleTypeList"
-          [ngValue]="role"> {{ roleType[role] }}</option>
+          [ngValue]=role> {{ roleType[role] }}</option>
         </select>
-        <clr-control-error>{{ "HOME.RESOURCE.DIALOG.REQUIRED" | translate:{item: 'orgnization'} }}</clr-control-error>
+        <clr-control-error>{{ "HOME.RESOURCE.DIALOG.REQUIRED" | translate:{item: 'Role'} }}</clr-control-error>
       </clr-select-container>
 
       <clr-input-container>

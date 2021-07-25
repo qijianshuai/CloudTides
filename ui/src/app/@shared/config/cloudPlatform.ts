@@ -22,5 +22,5 @@ export const roleTypes4Org = {
 };
 
 export const defaultResType = resTypes.Fixed;
-export const defaultRoleType4Site = roleTypes.ORG_ADMIN;
-export const defaultRoleType4Org = roleTypes.USER;
+export const defaultRoleType4Site = 'ORG_ADMIN';
+export const defaultRoleType4Org = 'USER';
