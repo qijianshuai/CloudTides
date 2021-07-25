@@ -48,7 +48,6 @@ type User struct {
 	// username
 	Username string `gorm:"unique;not null"`
 
-
 	// pw_reset
 	PwReset bool `json:"pwReset,omitempty"`
 
