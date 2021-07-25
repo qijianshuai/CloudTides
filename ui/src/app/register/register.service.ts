@@ -32,7 +32,7 @@ export class RegisterService {
   }
 
   inRegisterPage() {
-    return this.document.location.pathname === REGISTER_PATH;
+    return this.document.location.pathname === '/cloudtides' + REGISTER_PATH;
   }
 }
 

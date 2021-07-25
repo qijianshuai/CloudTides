@@ -44,6 +44,7 @@ export class LoginService {
         });
     } else {
       if (!this.inLoginPage() && !this.registerService.inRegisterPage()) {
+        console.log('hahaha')
         await this.logout();
       }
     }
@@ -63,8 +64,27 @@ export class LoginService {
   }
 
   async logout() {
+    console.log('logout')
     this.removeToken();
-    await this.router.navigate([LOGIN_PATH]);
+    // await this.router.navigate(['home']);
+    await this.router.navigate(['home'])
+    .then(() => {
+      console.log('home navigate is called')
+      // window.location.reload();
+    });
+    // await location.href('home')
+  }
+
+  async cloudtides_logout() {
+    console.log('cloudtides logout')
+    this.removeToken();
+    // await this.router.navigate(['home']);
+    await this.router.navigate(['home'])
+    .then(() => {
+      console.log('home navigate is called')
+      window.location.reload();
+    });
+    // await location.href('home')
   }
 
   storeToken(token: string) {

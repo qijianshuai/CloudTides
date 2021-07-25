@@ -18,12 +18,40 @@ import {
   USER_PATH_NAME
 } from '@tide-config/path';
 
+
 import { AuthGuard } from '@tide-guard/auth.guard';
 import { RegisterService } from './register/register.service';
+import { LandingComponent } from './landing/landing.component';
+import { VinComponent } from './vin/vin.component';
+import { VcppComponent } from './vcpp/vcpp.component';
 
 const routes: Routes = [
+  { 
+    path: '', 
+    pathMatch: 'full',
+    redirectTo: 'home'
+  },
   {
-    path: '',
+    path: 'home',
+    component: LandingComponent
+  },
+  {
+    path: 'vin',
+    component: VinComponent
+  },
+  {
+    path: 'vcpp',
+    component: VcppComponent
+  },
+  {
+    path: LOGIN_PATH_NAME,
+    component: LoginComponent,
+    data: {
+      anonymous: true,
+    } as RouterData,
+  },
+  {
+    path: 'cloudtides',
     canActivateChild: [AuthGuard],
     children: [
       {
@@ -32,13 +60,13 @@ const routes: Routes = [
         // redirectTo: HOME_PATH_NAME,
         redirectTo: RESOURCE_PATH_NAME
       },
-      {
-        path: LOGIN_PATH_NAME,
-        component: LoginComponent,
-        data: {
-          anonymous: true,
-        } as RouterData,
-      },
+      // {
+      //   path: LOGIN_PATH_NAME,
+      //   component: LoginComponent,
+      //   data: {
+      //     anonymous: true,
+      //   } as RouterData,
+      // },
       {
         path: REGISTER_PATH_NAME,
         component: RegisterComponent,
@@ -85,6 +113,7 @@ const routes: Routes = [
 export const declarations = [
   LoginComponent,
   RegisterComponent,
+  LandingComponent,
 ];
 
 export const providers = [

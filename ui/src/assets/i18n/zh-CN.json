@@ -1,4 +1,59 @@
 {
+  "language-name":{
+    "name" : "简体中文",
+    "cn" : "简体中文",
+    "en" : "英语"
+  },
+  "nav": {
+    "title":"OpenCloudService",
+    "first": "首页",
+    "second": "VCPP",
+    "third" : "VIN 创新网络",
+    "fourth" : "云汐",
+    "fifth" : "新闻",
+    "sixth" : "关于我们"
+  },
+  "home-main": {
+    "main-1":"提升VCPP云端资源",
+    "main-2":"加速VIN伙伴事业",
+    "main-3":"助力公益 持续发展",
+    "card-1": "了解更多VCPP",
+    "card-2": "了解更多VIN创新网络",
+    "card-3": "了解更多企云公益",
+    "part1-title": "为VCPP提供更多云端服务",
+    "part1-card1": "丰富企业级应用目录",
+    "part1-card2": "加速数字化转型",
+    "part1-card3": "触及更多新客户新行业",
+    "part2-card1": "企业级应用快速上云",
+    "part2-card2": "一键部署演示环境",
+    "part2-card3": "拓展销售渠道",
+    "part3-card1": "提升资源利用率",
+    "part3-card2": "参与公益科研",
+    "part3-card3": "ESG",
+    "part2-title": "加快VIN合作伙伴的业务发展",
+    "part3-title": "助力公益 提升企业社会形象",
+    "readnow": "了解更多"
+  },
+  "vin-main": {
+    "part1-title": "VIN - Vmware创新网路",
+    "part1-content": "VIN简介",
+    "part1-list1": "VIN文案",
+    "part1-list2": "VIN指南",
+    "part1-list3": "VIN Link",
+    "part2-title": "VIN合作伙伴名录",
+    "part2-learnmore": "更多名录"
+  },
+  "vcpp-main":{
+    "part1-title": "VCPP - Vmware云服务商项目",
+    "part1-content": "VMware Cloud Provider计划由VMware软件即服务”产品和我们的全球VMware服务提供商合作伙伴生态系统组成。对于所有致力于为第三方提供托管服务的公司（包括“基础架构即服务”(IaaS)提供商、云计算服务提供商(CSP)、应用服务提供商(ASP)、Internet服务提供商(ISP)以及“平台即服务”(PaaS)提供商）而言，它是理想的解决方案。",
+    "part1-list1": "VCPP概览（英文）",
+    "part1-list2": "VCPP指南（英文）",
+    "part1-list3": "VCPP托管服务提供商",
+    "part2-title": "Vmware认证云服务商",
+    "part2-content": "在您的市场推广活动和内容中突出展现 VMware Cloud Verified 徽标，向您的客户和潜在客户表示：您的基础云技术和服务都基于 VMware Cloud Infrastructure。",
+    "part3-title": "大中华区VCPP名录",
+    "part3-learnmore": "更多名录"
+  },
   "LOGIN": {
     "SUBMITTING": "正在登录...",
     "LOGIN": "登录",
