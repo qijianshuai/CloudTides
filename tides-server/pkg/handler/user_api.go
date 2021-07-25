@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"strconv"
 	"time"
 
@@ -85,7 +86,8 @@ func UserLoginHandler(params user.UserLoginParams) middleware.Responder {
 	secretKey := config.GetConfig().SecretKey
 	signedToken, _ := token.SignedString([]byte(secretKey))
 
-	res := user.UserLoginOKBodyUserInfo{Priority: queryUser.Priority, Username: queryUser.Username}
+	res := user.UserLoginOKBodyUserInfo{Priority: queryUser.Priority, Username: queryUser.Username,
+		Orgname: queryUser.OrgName, PwReset: fmt.Sprintf("%t", queryUser.PwReset), Role: queryUser.Role}
 
 	return user.NewUserLoginOK().WithPayload(&user.UserLoginOKBody{Token: signedToken, UserInfo: &res})
 }
@@ -220,6 +222,29 @@ func ListUserHandler(params user.ListUserParams) middleware.Responder {
 	var users []*models.User
 	db := config.GetDB()
 	db.Find(&users)
+	var response []*user.ListUserOKBodyItems0
+	for _, tmpUser := range users {
+		newResult := user.ListUserOKBodyItems0{
+			Email: tmpUser.Email,
+			ID: int64(tmpUser.ID),
+			Name: tmpUser.Username,
+			Phone: tmpUser.Phone,
+			Role: tmpUser.Role,
+			OrgName: tmpUser.OrgName,
+		}
+
+		response = append(response, &newResult)
+	}
+	return user.NewListUserOK().WithPayload(response)
+}
+
+func ListUserOfOrgHandler(params user.ListUserOfOrgParams) middleware.Responder {
+	if !VerifyUser(params.HTTPRequest) {
+		return user.NewListUserUnauthorized()
+	}
+	var users []*models.User
+	db := config.GetDB()
+	db.Find(&users).Where("org_name = ?", params.OrgName)
 	var response []*user.ListUserOKBodyItems0
 	for _, tmpUser := range users {
 		newResult := user.ListUserOKBodyItems0{

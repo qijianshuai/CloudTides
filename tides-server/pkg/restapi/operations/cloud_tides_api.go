@@ -152,6 +152,9 @@ func NewCloudTidesAPI(spec *loads.Document) *CloudTidesAPI {
 		ResourceGetVcdResourceHandler: resource.GetVcdResourceHandlerFunc(func(params resource.GetVcdResourceParams) middleware.Responder {
 			return middleware.NotImplemented("operation resource.GetVcdResource has not yet been implemented")
 		}),
+		UserListUserOfOrgHandler: user.ListUserOfOrgHandlerFunc(func(params user.ListUserOfOrgParams) middleware.Responder {
+			return middleware.NotImplemented("operation user.ListUserOfOrg has not yet been implemented")
+		}),
 		OrgListOrgHandler: org.ListOrgHandlerFunc(func(params org.ListOrgParams) middleware.Responder {
 			return middleware.NotImplemented("operation org.ListOrg has not yet been implemented")
 		}),
@@ -321,6 +324,8 @@ type CloudTidesAPI struct {
 	UserGetUserProfileHandler user.GetUserProfileHandler
 	// ResourceGetVcdResourceHandler sets the operation handler for the get vcd resource operation
 	ResourceGetVcdResourceHandler resource.GetVcdResourceHandler
+	// UserListUserOfOrgHandler sets the operation handler for the list user of org operation
+	UserListUserOfOrgHandler user.ListUserOfOrgHandler
 	// OrgListOrgHandler sets the operation handler for the list org operation
 	OrgListOrgHandler org.ListOrgHandler
 	// PolicyListPolicyHandler sets the operation handler for the list policy operation
@@ -540,6 +545,9 @@ func (o *CloudTidesAPI) Validate() error {
 	}
 	if o.ResourceGetVcdResourceHandler == nil {
 		unregistered = append(unregistered, "resource.GetVcdResourceHandler")
+	}
+	if o.UserListUserOfOrgHandler == nil {
+		unregistered = append(unregistered, "user.ListUserOfOrgHandler")
 	}
 	if o.OrgListOrgHandler == nil {
 		unregistered = append(unregistered, "org.ListOrgHandler")
@@ -825,6 +833,10 @@ func (o *CloudTidesAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/resource/vcd/{id}"] = resource.NewGetVcdResource(o.context, o.ResourceGetVcdResourceHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/user/{orgName}"] = user.NewListUserOfOrg(o.context, o.UserListUserOfOrgHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
