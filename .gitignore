@@ -17,3 +17,4 @@ server/venv/
 .DS_Store
 .env
 .env.backup
+ui/node_modules
