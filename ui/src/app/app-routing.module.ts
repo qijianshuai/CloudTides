@@ -20,6 +20,8 @@ import {
 import { AuthGuard } from '@tide-guard/auth.guard';
 import { RegisterService } from './register/register.service';
 import { LandingComponent } from './landing/landing.component';
+import { VinComponent } from './vin/vin.component';
+import { VcppComponent } from './vcpp/vcpp.component';
 
 const routes: Routes = [
   { 
@@ -30,6 +32,14 @@ const routes: Routes = [
   {
     path: 'home',
     component: LandingComponent
+  },
+  {
+    path: 'vin',
+    component: VinComponent
+  },
+  {
+    path: 'vcpp',
+    component: VcppComponent
   },
   {
     path: LOGIN_PATH_NAME,
