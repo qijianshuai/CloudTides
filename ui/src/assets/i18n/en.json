@@ -34,6 +34,17 @@
     "part3-title": "助力公益 提升企业社会形象",
     "readnow": "了解更多"
   },
+  "vcpp-main":{
+    "part1-title": "VCPP - Vmware Cloud Provider Program",
+    "part1-content": "The VMware Cloud Provider Program is comprised of VMware software-as-a-service offerings and our global ecosystem of VMware Service Provider Partners. It is the ideal solution for all companies that offer hosted services to third parties, including infrastructure as a service (IaaS) providers, cloud service providers (CSPs), application service providers (ASPs), Internet service providers (ISPs) and platform as a service (PaaS) providers.",
+    "part1-list1": "VMware Cloud Provider Program Overview",
+    "part1-list2": "VMware Cloud Provider Program Guide",
+    "part1-list3": "VMware Cloud Provider Managed Services Provider",
+    "part2-title": "Vmware Cloud Verified Provider",
+    "part2-content": "Featuring the VMware Cloud Verified logo in your marketing campaigns and content signals to your customers and prospects that your foundational cloud technologies and services are based on VMware Cloud Infrastructure.",
+    "part3-title": "大中华区VCPP名录",
+    "part3-learnmore": "more.."
+  },
   "LOGIN": {
     "SUBMITTING": "Submitting...",
     "LOGIN": "Login",
