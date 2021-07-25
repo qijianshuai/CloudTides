@@ -154,6 +154,8 @@ func configureAPI(api *operations.CloudTidesAPI) http.Handler {
 
 	api.UserListUserHandler = user.ListUserHandlerFunc(handler.ListUserHandler)
 
+	api.UserListUserOfOrgHandler = user.ListUserOfOrgHandlerFunc(handler.ListUserOfOrgHandler)
+
 	api.UserModifyUserHandler = user.ModifyUserHandlerFunc(handler.ModifyUserHandler)
 
 	return setupGlobalMiddleware(api.Serve(setupMiddlewares))

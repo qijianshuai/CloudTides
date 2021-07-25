@@ -195,9 +195,18 @@ func (o *UserLoginOKBody) UnmarshalBinary(b []byte) error {
 // swagger:model UserLoginOKBodyUserInfo
 type UserLoginOKBodyUserInfo struct {
 
+	// orgname
+	Orgname string `json:"orgname,omitempty"`
+
 	// priority
 	// Enum: [Low Medium High]
 	Priority string `json:"priority,omitempty"`
+
+	// pw reset
+	PwReset string `json:"pwReset,omitempty"`
+
+	// role
+	Role string `json:"role,omitempty"`
 
 	// username
 	Username string `json:"username,omitempty"`

@@ -631,6 +631,12 @@ paths:
                       - 'High'
                   username:
                     type: string
+                  orgname:
+                    type: string
+                  pwReset:
+                    type: string
+                  role:
+                    type: string
               token:
                 type: string
         401:
@@ -1959,9 +1965,11 @@ paths:
                   type: number
                 totalDisk:
                   type: number
-                CPUPercent:
+                CurrentCPU:
                   type: number
-                RAMPercent:
+                CurrentRAM:
+                  type: number
+                CurrentDisk:
                   type: number
         401:
           description: 'Unauthorized'
@@ -2046,7 +2054,7 @@ paths:
                   type: integer
                 name:
                   type: string
-                org:
+                orgName:
                   type: string
                 role:
                   type: string
@@ -2073,7 +2081,7 @@ paths:
             properties:
               name:
                 type: string
-              org:
+              orgName:
                 type: string
               role:
                 type: string
@@ -2089,6 +2097,48 @@ paths:
             properties:
               message:
                 type: string
+        401:
+          description: 'Unauthorized'
+        403:
+          description: 'Forbidden'
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+  /user/{orgName}:
+    get:
+      operationId: 'list User of org'
+      description: 'list User of Org'
+      tags:
+        - 'user'
+      produces:
+        - 'application/json'
+      parameters:
+        - type: string
+          in: path
+          name: orgName
+          required: true
+      responses:
+        200:
+          description: 'OK'
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                name:
+                  type: string
+                orgName:
+                  type: string
+                role:
+                  type: string
+                email:
+                  type: string
+                phone:
+                  type: string
         401:
           description: 'Unauthorized'
         403:
@@ -2142,6 +2192,8 @@ paths:
           schema:
             type: object
             properties:
+              name:
+                type: string
               org:
                 type: string
               role:

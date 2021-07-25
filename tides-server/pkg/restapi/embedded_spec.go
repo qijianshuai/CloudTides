@@ -43,10 +43,13 @@ func init() {
               "items": {
                 "type": "object",
                 "properties": {
-                  "CPUPercent": {
+                  "CurrentCPU": {
                     "type": "number"
                   },
-                  "RAMPercent": {
+                  "CurrentDisk": {
+                    "type": "number"
+                  },
+                  "CurrentRAM": {
                     "type": "number"
                   },
                   "id": {
@@ -2158,7 +2161,7 @@ func init() {
                   "name": {
                     "type": "string"
                   },
-                  "org": {
+                  "orgName": {
                     "type": "string"
                   },
                   "phone": {
@@ -2201,7 +2204,7 @@ func init() {
                 "name": {
                   "type": "string"
                 },
-                "org": {
+                "orgName": {
                   "type": "string"
                 },
                 "phone": {
@@ -2230,7 +2233,15 @@ func init() {
             "description": "Unauthorized"
           },
           "403": {
-            "description": "Forbidden"
+            "description": "Forbidden",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       }
@@ -2259,6 +2270,9 @@ func init() {
               "type": "object",
               "properties": {
                 "email": {
+                  "type": "string"
+                },
+                "name": {
                   "type": "string"
                 },
                 "org": {
@@ -2354,6 +2368,63 @@ func init() {
         }
       }
     },
+    "/user/{orgName}": {
+      "get": {
+        "description": "list User of Org",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "user"
+        ],
+        "operationId": "list User of org",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "orgName",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "id": {
+                    "type": "integer"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "orgName": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  },
+                  "role": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
     "/users/login": {
       "post": {
         "description": "user login",
@@ -2396,6 +2467,9 @@ func init() {
                 "userInfo": {
                   "type": "object",
                   "properties": {
+                    "orgname": {
+                      "type": "string"
+                    },
                     "priority": {
                       "type": "string",
                       "enum": [
@@ -2403,6 +2477,12 @@ func init() {
                         "Medium",
                         "High"
                       ]
+                    },
+                    "pwReset": {
+                      "type": "string"
+                    },
+                    "role": {
+                      "type": "string"
                     },
                     "username": {
                       "type": "string"
@@ -5474,7 +5554,7 @@ func init() {
                 "name": {
                   "type": "string"
                 },
-                "org": {
+                "orgName": {
                   "type": "string"
                 },
                 "phone": {
@@ -5503,7 +5583,15 @@ func init() {
             "description": "Unauthorized"
           },
           "403": {
-            "description": "Forbidden"
+            "description": "Forbidden",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       }
@@ -5532,6 +5620,9 @@ func init() {
               "type": "object",
               "properties": {
                 "email": {
+                  "type": "string"
+                },
+                "name": {
                   "type": "string"
                 },
                 "org": {
@@ -5627,6 +5718,43 @@ func init() {
         }
       }
     },
+    "/user/{orgName}": {
+      "get": {
+        "description": "list User of Org",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "user"
+        ],
+        "operationId": "list User of org",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "orgName",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ListUserOfOrgOKBodyItems0"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
     "/users/login": {
       "post": {
         "description": "user login",
@@ -5669,6 +5797,9 @@ func init() {
                 "userInfo": {
                   "type": "object",
                   "properties": {
+                    "orgname": {
+                      "type": "string"
+                    },
                     "priority": {
                       "type": "string",
                       "enum": [
@@ -5676,6 +5807,12 @@ func init() {
                         "Medium",
                         "High"
                       ]
+                    },
+                    "pwReset": {
+                      "type": "string"
+                    },
+                    "role": {
+                      "type": "string"
                     },
                     "username": {
                       "type": "string"
@@ -6657,10 +6794,13 @@ func init() {
     "ListOrgOKBodyItems0": {
       "type": "object",
       "properties": {
-        "CPUPercent": {
+        "CurrentCPU": {
           "type": "number"
         },
-        "RAMPercent": {
+        "CurrentDisk": {
+          "type": "number"
+        },
+        "CurrentRAM": {
           "type": "number"
         },
         "id": {
@@ -6768,7 +6908,30 @@ func init() {
         "name": {
           "type": "string"
         },
-        "org": {
+        "orgName": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        }
+      }
+    },
+    "ListUserOfOrgOKBodyItems0": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "orgName": {
           "type": "string"
         },
         "phone": {
@@ -7148,6 +7311,9 @@ func init() {
     "UserLoginOKBodyUserInfo": {
       "type": "object",
       "properties": {
+        "orgname": {
+          "type": "string"
+        },
         "priority": {
           "type": "string",
           "enum": [
@@ -7155,6 +7321,12 @@ func init() {
             "Medium",
             "High"
           ]
+        },
+        "pwReset": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
         },
         "username": {
           "type": "string"

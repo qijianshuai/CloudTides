@@ -72,8 +72,8 @@ type ListUserOKBodyItems0 struct {
 	// name
 	Name string `json:"name,omitempty"`
 
-	// org
-	Org string `json:"org,omitempty"`
+	// org name
+	OrgName string `json:"orgName,omitempty"`
 
 	// phone
 	Phone string `json:"phone,omitempty"`

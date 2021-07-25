@@ -10,4 +10,12 @@ export const resTypes = {
   Dynamic: 'Dynamic',
 };
 
+export const roleTypes = {
+  SiteAdmin: 'SITE_ADMIN',
+  OrgAdmin: 'ORG_ADMIN',
+  User: 'USER',
+};
+
 export const defaultResType = resTypes.Fixed;
+export const defaultRoleType4Site = roleTypes.OrgAdmin;
+export const defaultRoleType4Org = roleTypes.User;

@@ -47,6 +47,18 @@ type User struct {
 
 	// username
 	Username string `gorm:"unique;not null"`
+
+	// pw_reset
+	PwReset bool `json:"pwReset,omitempty"`
+
+	// org_name
+	OrgName string `gorm:"index" json:"orgName,omitempty"`
+
+	// role SITE_ADMIN/ ORG_ADMIN/ USER
+	Role string `json:"role,omitempty"`
+
+	// avatar //TODO: NOT IMPLEMENTED
+	Avatar string `json:"avatar,omitempty"`
 }
 
 // Validate validates this user

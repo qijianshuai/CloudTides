@@ -10,6 +10,8 @@ export const VENDOR_PATH_NAME = 'vendors'
 export const VAPP_PATH_NAME = 'vapp'
 export const VM_PATH_NAME = 'vm'
 export const PORT_PATH_NAME = 'ports'
+export const ORG_PATH_NAME = 'org'
+export const USER_PATH_NAME = 'user'
 
 // Path
 export const BASE_PATH = `/`;
@@ -35,3 +37,7 @@ export const TEMPLATEVM_PATH = `/${TEMPLATEVM_PATH_NAME}`
 export const VENDOR_PATH = `/${VENDOR_PATH_NAME}`;
 
 export const VAPP_PATH = `/${VAPP_PATH_NAME}`;
+
+export const ORG_PATH = `/${ORG_PATH_NAME}`;
+
+export const USER_PATH = `/${USER_PATH_NAME}`;

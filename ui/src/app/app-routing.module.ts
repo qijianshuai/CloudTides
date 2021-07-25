@@ -14,6 +14,8 @@ import {
   REGISTER_PATH_NAME,
   VENDOR_PATH_NAME,
   VAPP_PATH_NAME,
+  ORG_PATH_NAME,
+  USER_PATH_NAME
 } from '@tide-config/path';
 
 
@@ -96,8 +98,16 @@ const routes: Routes = [
         path: TEMPLATE_PATH_NAME,
         loadChildren: () => import('./template/template.module').then(m => m.TemplateModule),
       },
-    ]
-  }
+      {
+        path: ORG_PATH_NAME,
+        loadChildren: () => import('./org/org.module').then(m => m.OrgModule),
+      },
+      {
+        path: USER_PATH_NAME,
+        loadChildren: () => import('./user/user.module').then(m => m.UserModule),
+      }
+    ],
+  },
 ];
 
 export const declarations = [
