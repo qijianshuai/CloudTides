@@ -33,7 +33,10 @@ const routes: Routes = [
   },
   {
     path: LOGIN_PATH_NAME,
-    component: LoginComponent
+    component: LoginComponent,
+    data: {
+      anonymous: true,
+    } as RouterData,
   },
   {
     path: 'cloudtides',
@@ -45,13 +48,13 @@ const routes: Routes = [
         // redirectTo: HOME_PATH_NAME,
         redirectTo: RESOURCE_PATH_NAME
       },
-      {
-        path: LOGIN_PATH_NAME,
-        component: LoginComponent,
-        data: {
-          anonymous: true,
-        } as RouterData,
-      },
+      // {
+      //   path: LOGIN_PATH_NAME,
+      //   component: LoginComponent,
+      //   data: {
+      //     anonymous: true,
+      //   } as RouterData,
+      // },
       {
         path: REGISTER_PATH_NAME,
         component: RegisterComponent,

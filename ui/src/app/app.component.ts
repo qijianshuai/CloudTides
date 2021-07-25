@@ -9,6 +9,7 @@ import { Observable, Subject } from 'rxjs';
 import { RegisterService } from './register/register.service';
 
 import { Location } from '@angular/common';
+import { NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'tide-root',
@@ -31,13 +32,32 @@ export class AppComponent implements OnInit {
 
     this.router.events.subscribe((val) => {
       this.path = this.location.path();
+      // if (this.path == '/login') {
+      //   window.location.reload();
+      // }
     });
+
   }
   
   // useLanguage(language: string): void {
   //   this.translate.use(language);
   // }
 
+  // redirectTo(uri:string){
+  //   this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+  //   this.router.navigate([uri]));
+  //   }
+
+  redirectToLogin() {
+    this.router.navigate(['/login'])
+    .then(() => {
+      window.location.reload()
+    })
+  }
+
+  reloadCurrentPage() {
+    window.location.reload();
+    }
   readonly vo = {
     title: PRODUCT_NAME,
   };
@@ -46,6 +66,10 @@ export class AppComponent implements OnInit {
 
   signOut() {
     this.loginService.logout();
+  }
+
+  cloudtides_logout() {
+    this.loginService.cloudtides_logout()
   }
 
   ngOnInit() {
