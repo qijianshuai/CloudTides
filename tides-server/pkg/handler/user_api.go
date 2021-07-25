@@ -244,7 +244,7 @@ func ListUserOfOrgHandler(params user.ListUserOfOrgParams) middleware.Responder 
 	}
 	var users []*models.User
 	db := config.GetDB()
-	db.Find(&users).Where("org_name = ?", params.OrgName)
+	db.Where("org_name = ?", params.OrgName).Find(&users)
 	var response []*user.ListUserOKBodyItems0
 	for _, tmpUser := range users {
 		newResult := user.ListUserOKBodyItems0{
