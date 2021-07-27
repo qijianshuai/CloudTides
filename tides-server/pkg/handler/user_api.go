@@ -12,7 +12,13 @@ import (
 
 	"tides-server/pkg/config"
 	"tides-server/pkg/models"
+
+	"crypto/tls"
+	gomail "gopkg.in/mail.v2"
+	"github.com/sethvargo/go-password/password"
 )
+const OFFICIAL_EMAIL = "cloudtest2021abc@gmail.com"
+const OFFICIAL_PASSWORD = "cloudtides"
 
 // RegisterUserHandler is API handler for /users/register POST
 func RegisterUserHandler(params user.RegisterUserParams) middleware.Responder {
@@ -181,6 +187,9 @@ func AddUserHandler(params user.AddUserParams) middleware.Responder {
 			Message: "Org Name Invalid.",
 		})
 	}
+	
+	pw, _ := password.Generate(10, 4, 0, false, false)
+	fmt.Println("password generated!!!")
 	newUser := models.User{
 		Username: body.Name,
 		Role:     body.Role,
@@ -188,6 +197,7 @@ func AddUserHandler(params user.AddUserParams) middleware.Responder {
 		PwReset:  false,
 		Phone:    body.Phone,
 		OrgName:    body.OrgName,
+		Password:	pw,
 	}
 	var userOld models.User;
 	if db.Unscoped().Where("username = ?", body.Name).First(&userOld).RowsAffected == 1 {
@@ -206,10 +216,23 @@ func AddUserHandler(params user.AddUserParams) middleware.Responder {
 		Time: time.Now(),
 		Status: "Succeed",
 	}
+	fmt.Println("start send!!!")
+	m := gomail.NewMessage()
+	m.SetHeader("From", OFFICIAL_EMAIL)
+	m.SetHeader("To", body.Email)
+	m.SetHeader("Subject", "Gomail test subject")
+	m.SetBody("text/plain", "Your login password for CloudTides is: " + pw + "\nPlease login to CloudTides platform and reset the password.")
+	d := gomail.NewDialer("smtp.gmail.com", 587, OFFICIAL_EMAIL, OFFICIAL_PASSWORD)
+	d.TLSConfig = &tls.Config{InsecureSkipVerify: true}
+	if err := d.DialAndSend(m); err != nil {
+		fmt.Println(err)
+		panic(err)
+	}
+	fmt.Println("success!!!")
+
 	if db.Create(&newLog).Error != nil {
 		return user.NewModifyUserForbidden()
 	}
-
 	return user.NewAddUserOK().WithPayload(&user.AddUserOKBody{
 		Message: "succeed",
 	})

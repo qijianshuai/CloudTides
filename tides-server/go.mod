@@ -35,6 +35,7 @@ require (
 	github.com/phyber/negroni-gzip v1.0.0 // indirect
 	github.com/robfig/cron/v3 v3.0.0
 	github.com/rs/cors v1.7.0
+	github.com/sethvargo/go-password v0.2.0 // indirect
 	github.com/sirupsen/logrus v1.6.0
 	github.com/vmware/go-vcloud-director/v2 v2.10.0-alpha.3
 	github.com/vmware/govmomi v0.23.1
@@ -43,7 +44,9 @@ require (
 	golang.org/x/net v0.0.0-20210614182718-04defd469f4e
 	golang.org/x/sys v0.0.0-20210630005230-0f9fa26af87c // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
+	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
 	gopkg.in/check.v1 v1.0.0-20200902074654-038fdea0a05b // indirect
+	gopkg.in/mail.v2 v2.3.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0
 	gorm.io/driver/postgres v1.0.5
 	gorm.io/gorm v1.20.5
