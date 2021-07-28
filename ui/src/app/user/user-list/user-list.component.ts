@@ -55,6 +55,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   UpdateOpened = false;
   UserId = 1;
   updateName: string;
+  updateOrg: string;
   updateRole: string;
   updateEmail: string;
   updatePhone: string;
@@ -76,18 +77,19 @@ export class UserListComponent implements OnInit, OnDestroy {
   }
 
   async refreshList() {
-    this.list$ = this.loginService.inSiteAdminView() ? of(await this.userService.getUserList()) : of(await this.userService.getUserList4Org(this.loginService.session.orgName));
+    this.list$ = this.loginService.inSiteAdminView() ? of(await this.userService.getUserList()) : of(await this.userService.getUserList4Org(localStorage.getItem('orgName')));
     this.refreshInterval = window.setInterval(async () => {
-      this.list$ = this.loginService.inSiteAdminView() ? of(await this.userService.getUserList()) : of(await this.userService.getUserList4Org(this.loginService.session.orgName));
+      this.list$ = this.loginService.inSiteAdminView() ? of(await this.userService.getUserList()) : of(await this.userService.getUserList4Org(localStorage.getItem('orgName')));
     }, RESOURCE_USAGE_REFRESH_PERIOD);
     if (this.loginService.inSiteAdminView()){
       this.orgList = Object(await this.userService.getOrgList());
     }
   }
 
-  async displayDetail(id: number, name: string, role:string, email: string, phone: string){
+  async displayDetail(id: number, name: string, org: string, role:string, email: string, phone: string){
     this.UserId = id;
     this.updateName = name;
+    this.updateOrg = org;
     this.updateRole = role;
     this.updateEmail = email;
     this.updatePhone = phone;

@@ -56,25 +56,20 @@ export class UserService {
   }
 
   async getOrgList() {
-    if (this.loginService.inSiteAdminView()) {
-      const OrgList = await this.http
-        .get<ItemOrg[]>(environment.apiPrefix + ORG_PATH, {
-          headers: {
-            Authorization: `Bearer ${this.loginService.token}`,
-          },
-        })
-        .toPromise();
-      const OrgObject: Object = {};
-      OrgObject["SITE"] = "SITE";
-      for (let item of OrgList) {
-        OrgObject[item.name] = item.name;
-      }
-      return OrgObject;
-    } else if (this.loginService.inOrgAdminView()) {
-      const OrgObject: Object = {};
-      OrgObject[this.loginService.session.orgName] = this.loginService.session.orgName;
-      return OrgObject;
+    console.log("getOrgList");
+    const OrgList = await this.http
+      .get<ItemOrg[]>(environment.apiPrefix + ORG_PATH, {
+        headers: {
+          Authorization: `Bearer ${this.loginService.token}`,
+        },
+      })
+      .toPromise();
+    const OrgObject: Object = {};
+    OrgObject["SITE"] = "SITE";
+    for (let item of OrgList) {
+      OrgObject[item.name] = item.name;
     }
+    return OrgObject;
   }
 
   addUser(payload: ItemAddUser) {

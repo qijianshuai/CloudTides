@@ -30,9 +30,10 @@ export class LoginService {
     return this.http.post<ServerUserInfo>(environment.apiPrefix + LOGIN_API_URL, { username, password }).pipe(
       tap(serverUserInfo => {
         this.storeToken(serverUserInfo.token);
-        this.session$.next({ ...serverUserInfo.userInfo });
-        this.session.orgName = "SITE";
-        console.log(this.session$.value);
+        this.session$.next({ ...serverUserInfo.userInfo});
+        this.storeRole(this.session.role);
+        this.storeOrgName(this.session.orgName);
+        console.log(localStorage.getItem("role"));
       }),
     );
   }
@@ -66,11 +67,25 @@ export class LoginService {
 
   async logout() {
     this.removeToken();
+    this.removeInfo();
     await this.router.navigate([LOGIN_PATH]);
   }
 
   storeToken(token: string) {
     localStorage.setItem(LOCAL_STORAGE_KEY.TOKEN, token);
+  }
+
+  storeRole(role: string) {
+    localStorage.setItem('role', role);
+  }
+
+  storeOrgName(org: string){
+    localStorage.setItem('orgName', org);
+  }
+
+  removeInfo() {
+    localStorage.removeItem('role');
+    localStorage.removeItem('orgName');
   }
 
   removeToken() {
@@ -99,16 +114,15 @@ export class LoginService {
   }
 
   inSiteAdminView() {
-    return true;
-    // return this.session.priority === 'High';
+    return localStorage.getItem('role') === 'SITE_ADMIN';
   }
 
   inOrgAdminView() {
-    return false;
+    return localStorage.getItem('role') === 'ORG_ADMIN';
   }
 
   inUserView() {
-    return false;
+    return localStorage.getItem('role') === 'USER';
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from "@angular/core";
 import { FormBuilder, Validators, FormGroup } from "@angular/forms";
 import { UserService } from "../user.service";
 import { TranslateService } from "@ngx-translate/core";
@@ -21,31 +21,33 @@ export class UserDialogComponent implements OnInit {
   ) {
     this.userForm = this.fb.group({
       name: ["", [Validators.required]],
-      orgName: [this.defaultOrg, [Validators.required]],
+      orgName: [
+        loginService.inSiteAdminView()? "":localStorage.getItem('orgName'), 
+        [Validators.required]
+      ],
       // role: ['', [Validators.required]],
-      role: [this.defaultRole, [Validators.required]],
+      role: ["", [Validators.required]],
       email: ["", [Validators.required, Validators.email]],
       phone: ["", [Validators.required, Validators.pattern("[0-9 ]{11}")]],
     });
     if (loginService.inSiteAdminView()) {
-      this.userForm.statusChanges.subscribe((status) => {
-        if (this.userForm.value.orgName === "SITE") {
+      this.userForm.controls['orgName'].valueChanges.subscribe((newForm) => {
+        if (newForm === "SITE") {
           this.roleTypeList = ["SITE_ADMIN"];
-          this.defaultRole = "SITE_ADMIN";
+          this.userForm.patchValue({role:"SITE_ADMIN"});
         } else {
           this.roleTypeList = Object.keys(roleTypes4Org);
-          this.defaultRole = "ORG_ADMIN";
+          this.userForm.patchValue({role:"ORG_ADMIN"});
         }
-        // console.log(this.userForm.value.orgName);
       });
     }
+  
 
     this.orgmap = userList.orgList;
     this.orgNames = Object.keys(userList.orgList);
     this.roleTypeList = Object.keys(roleTypes4Org);
     this.roleType = this.loginService.inSiteAdminView() ? roleTypes : roleTypes4Org;
-    this.defaultRole = "ORG_ADMIN";
-    this.defaultOrg = this.loginService.inSiteAdminView() ? '':this.loginService.session.orgName;
+
   }
 
   @Input() opened = false;
@@ -71,18 +73,11 @@ export class UserDialogComponent implements OnInit {
     this.close();
   }
 
-  updateOrg(item: string) {
-    console.log(item);
-    if (item === "SITE" || !item) {
-      this.roleTypeList = ["SITE_ADMIN"];
-    } else {
-      this.roleTypeList = Object.keys(roleTypes4Org);
-    }
-    return item;
-  }
+  // ngOnChanges(changes: any) {
+  //   console.log(changes)
+  // }
 
   async onSave() {
-    console.log(this.userForm);
     const { value } = this.userForm;
     this.resetModal();
     this.vo.spinning = true;
