@@ -38,13 +38,13 @@ export class ResetComponent implements OnInit {
     private fb: FormBuilder,
   ) {
     this.resetForm = this.fb.group({
-      // username: [
-      //   '', [
-      //     Validators.required,
-      //     Validators.minLength(4),
-      //     Validators.maxLength(12),
-      //   ],
-      // ],
+      username: [
+        '', [
+          Validators.required,
+          Validators.minLength(4),
+          Validators.maxLength(12),
+        ],
+      ],
       password: [
         '', [
           Validators.required,
@@ -92,9 +92,9 @@ export class ResetComponent implements OnInit {
        this.vo.submitting = true;
        this.vo.resetError = '';
      }),
-     switchMap(({ password, newPassword }) => {
+     switchMap(({ username, password, newPassword }) => {
        return this.resetService
-         .reset(password, newPassword)
+         .reset(username, password, newPassword)
          .pipe(
            tap(() => {
              this.vo.submitting = false;
@@ -131,6 +131,7 @@ export class ResetComponent implements OnInit {
 }
 
 interface ResetForm {
+  username: string;
   password: string;
   newPassword: string;
 }

@@ -87,6 +87,7 @@
   },
   "RESET": {
     "RESET": "重置密码",
+    "USERNAME": "用户名",
     "PASSWORD": "密码",
     "NEW_PASSWORD": "新密码",
     "CONFIRMED_PASSWORD": "确认密码",

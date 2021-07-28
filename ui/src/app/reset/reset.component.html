@@ -14,7 +14,7 @@
       <br>
       <br>
       <div id="res-account">
-        <!-- <h3>{{ "REGISTER.ACCOUNT" | translate:{} }}</h3>
+        <!-- <h3>{{ "REGISTER.ACCOUNT" | translate:{} }}</h3> -->
         <clr-input-container>
           <label>{{ 'REGISTER.USERNAME' | translate:{} }}</label>
           <input clrInput formControlName="username" />
@@ -22,7 +22,7 @@
             *clrIfError="'required'">{{ 'REGISTER.USERNAME_MISSING' | translate:{} }}</clr-control-error>
           <clr-control-error
             *clrIfError="'minlength'">{{ 'REGISTER.USERNAME_TOO_SHORT' | translate:{} }}</clr-control-error>
-        </clr-input-container> -->
+        </clr-input-container>
         <clr-password-container>
           <label>{{ 'RESET.PASSWORD' | translate:{} }}</label>
           <input clrPassword formControlName="password" />

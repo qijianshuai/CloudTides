@@ -22,9 +22,34 @@ const OFFICIAL_PASSWORD = "cloudtides"
 
 // ResetPasswordHandler is the API for /users/reset POST
 func ResetPasswordHandler(params user.ResetPasswordParams) middleware.Responder {
+  fmt.Println("entered!")
   body := params.ReqBody
   db := config.GetDB()
-  var queryUser models.User
+  var u models.User
+  fmt.Println(body.Username + ", " + body.Password + ", " + body.NewPassword)
+  if db.Where("username = ?", body.Username).First(&u).RowsAffected == 0 {
+		return user.NewResetPasswordBadRequest().WithPayload(&user.ResetPasswordBadRequestBody{
+      Message: "null user",
+    })
+	}
+
+  if u.Password != body.Password {
+    return user.NewResetPasswordBadRequest().WithPayload(&user.ResetPasswordBadRequestBody{
+      Message: "wrong password",
+    })
+  }
+
+	u.Password = body.NewPassword
+  u.PwReset = true
+  err := db.Save(&u).Error
+	if err != nil {
+		return user.NewResetPasswordBadRequest().WithPayload(&user.ResetPasswordBadRequestBody{
+			Message: err.Error(),
+		})
+	}
+  return user.NewResetPasswordOK().WithPayload(&user.ResetPasswordOKBody{
+    Message: "success",
+  })
 }
 
 // RegisterUserHandler is API handler for /users/register POST

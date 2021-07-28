@@ -78,6 +78,7 @@
   },
   "RESET": {
     "RESET": "Reset Password",
+    "USERNAME": "Username",
     "PASSWORD": "Password",
     "NEW_PASSWORD": "New Password",
     "CONFIRMED_PASSWORD": "Confirm Password",
