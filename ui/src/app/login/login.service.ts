@@ -33,13 +33,26 @@ export class LoginService {
         this.session$.next({ ...serverUserInfo.userInfo});
         this.storeRole(this.session.role);
         this.storeOrgName(this.session.orgName);
+        // this.storePwReset(this.session.pwReset);
         console.log(localStorage.getItem("role"));
+        console.log(this.session.pwReset);
+        
+        if (this.session.pwReset == true) {
+          console.log("inside");
+          console.log(this.session.pwReset);
+        }
+        console.log("outside");
       }),
     );
   }
 
   async loginNavigate() {
+    console.log(this.session.pwReset)
     if (this.hasLoggedIn) {
+      
+      // if (!this.session.pwReset) {
+      //   this.router.navigate(['cloudtides/reset'])
+      // }
       this.current().subscribe(
         () => {},
         async error => {
@@ -47,9 +60,12 @@ export class LoginService {
         });
     } else {
       if (!this.inLoginPage() && !this.registerService.inRegisterPage()) {
-        console.log('hahaha')
+        console.log("hahaha")
         await this.logout();
       }
+      // else if (!this.inLoginPage() && !this.registerService.inRegisterPage() && !this.session.pwReset) {
+      //   this.router.navigate(['cloudtides/reset'])
+      // }
     }
   }
 
@@ -103,9 +119,14 @@ export class LoginService {
     localStorage.setItem('orgName', org);
   }
 
+  // storePwReset(pwReset: boolean){
+  //   localStorage.setItem('pwReset', new Boolean(pwReset));
+  // }
+
   removeInfo() {
     localStorage.removeItem('role');
     localStorage.removeItem('orgName');
+    // localStorage.removeItem('pwReset');
   }
 
   removeToken() {

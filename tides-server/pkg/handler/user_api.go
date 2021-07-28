@@ -74,6 +74,7 @@ func RegisterUserHandler(params user.RegisterUserParams) middleware.Responder {
 		Position:    body.Position,
 		Priority:    models.UserPriorityLow,
 		Username:    body.Username,
+    PwReset:     false,
 	}
 
 	err := db.Create(&newUser).Error
