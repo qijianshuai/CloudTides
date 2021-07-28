@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { LoginService } from './login/login.service';
 import { RegisterComponent } from './register/register.component';
+import { ResetComponent } from './reset/reset.component';
 
 import {
   LOGIN_PATH_NAME,
@@ -12,6 +13,7 @@ import {
   TEMPLATE_PATH_NAME,
   POLICY_PATH_NAME,
   REGISTER_PATH_NAME,
+  RESET_PATH_NAME,
   VENDOR_PATH_NAME,
   VAPP_PATH_NAME,
   ORG_PATH_NAME,
@@ -21,6 +23,7 @@ import {
 
 import { AuthGuard } from '@tide-guard/auth.guard';
 import { RegisterService } from './register/register.service';
+import { ResetService } from './reset/reset.service';
 import { LandingComponent } from './landing/landing.component';
 import { VinComponent } from './vin/vin.component';
 import { VcppComponent } from './vcpp/vcpp.component';
@@ -75,6 +78,13 @@ const routes: Routes = [
         } as RouterData,
       },
       {
+        path: RESET_PATH_NAME,
+        component: ResetComponent,
+        data: {
+          anonymous: true,
+        } as RouterData,
+      },
+      {
         path: HOME_PATH_NAME,
         loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
       },
@@ -114,12 +124,14 @@ export const declarations = [
   LoginComponent,
   RegisterComponent,
   LandingComponent,
+  ResetComponent,
 ];
 
 export const providers = [
   AuthGuard,
   LoginService,
   RegisterService,
+  ResetService,
 ];
 
 @NgModule({

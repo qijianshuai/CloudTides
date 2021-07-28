@@ -76,6 +76,18 @@
     "COMPANY_MISSING": "Company Name is required",
     "SUBMITTING": "Register"
   },
+  "RESET": {
+    "RESET": "Reset Password",
+    "PASSWORD": "Password",
+    "NEW_PASSWORD": "New Password",
+    "CONFIRMED_PASSWORD": "Confirm Password",
+    "PASSWORD_MISSING": "Password is required",
+    "PASSWORD_TOO_SHORT": "Password is too short",
+    "PASSWORD_TOO_LONG": "Password is too long",
+    "PASSWORD_CONFIRM": "Confirm Password",
+    "PASSWORD_NOT_MATCH": "Password does not match",
+    "SUBMITTING": "Reset"
+  },
   "HOME": {
     "RESOURCE": {
       "RESOURCE": "Resource",

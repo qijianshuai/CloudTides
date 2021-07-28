@@ -14,6 +14,7 @@ import { LandingComponent } from './landing/landing.component';
 import { MyLandingFooterComponent } from './layout/my-landing-footer/my-landing-footer.component';
 import { VinComponent } from './vin/vin.component';
 import { VcppComponent } from './vcpp/vcpp.component';
+import { ResetComponent } from './reset/reset.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -21,14 +22,15 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [
+  declarations: [	
     AppComponent,
     ...declarations,
     LandingComponent,
     MyLandingFooterComponent,
     VinComponent,
     VcppComponent,
-  ],
+      ResetComponent
+   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

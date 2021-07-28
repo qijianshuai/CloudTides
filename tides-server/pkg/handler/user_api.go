@@ -20,6 +20,13 @@ import (
 const OFFICIAL_EMAIL = "cloudtest2021abc@gmail.com"
 const OFFICIAL_PASSWORD = "cloudtides"
 
+// ResetPasswordHandler is the API for /users/reset POST
+func ResetPasswordHandler(params user.ResetPasswordParams) middleware.Responder {
+  body := params.ReqBody
+  db := config.GetDB()
+  var queryUser models.User
+}
+
 // RegisterUserHandler is API handler for /users/register POST
 func RegisterUserHandler(params user.RegisterUserParams) middleware.Responder {
 	body := params.ReqBody

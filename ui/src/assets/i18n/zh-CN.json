@@ -85,6 +85,18 @@
     "COMPANY_MISSING": "请填写公司名称",
     "SUBMITTING": "注册"
   },
+  "RESET": {
+    "RESET": "重置密码",
+    "PASSWORD": "密码",
+    "NEW_PASSWORD": "新密码",
+    "CONFIRMED_PASSWORD": "确认密码",
+    "PASSWORD_MISSING": "请填写密码",
+    "PASSWORD_TOO_SHORT": "密码长度过短",
+    "PASSWORD_TOO_LONG": "密码长度过长",
+    "PASSWORD_CONFIRM": "确认密码",
+    "PASSWORD_NOT_MATCH": "两次密码填写不一致",
+    "SUBMITTING": "重置"
+  },
   "HOME": {
     "RESOURCE": {
       "RESOURCE": "资源",
