@@ -5,7 +5,7 @@ import { NOTIFICATION_EXIST_TIME } from '@tide-config/const';
 import { LoginService } from '../../login/login.service';
 import { UserListComponent } from '../user-list/user-list.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { roleTypes } from '@tide-config/cloudPlatform';
+import { roleTypes4Org } from '@tide-config/cloudPlatform';
 @Component({
   selector: 'tide-user-card',
   templateUrl: './user-card.component.html',
@@ -23,6 +23,7 @@ export class UserCardComponent implements OnInit {
     this.userUpdateForm = this.fb.group({
       id: [],
       name: [userList.updateName, Validators.required],
+      orgName: [userList.updateOrg],
       role: [userList.updateRole, Validators.required],
       email: [
         userList.updateEmail, [
@@ -36,8 +37,8 @@ export class UserCardComponent implements OnInit {
         ]],
       //templateID: ['', Validators.required],
     })
-    this.roleTypeList = Object.keys(roleTypes);
-    this.roleType = roleTypes;
+    this.roleTypeList = Object.keys(roleTypes4Org);
+    this.roleType = roleTypes4Org;
   }
 
   @Input() userid: number;
@@ -49,7 +50,9 @@ export class UserCardComponent implements OnInit {
   roleTypeList: string[];
   roleType: any;
 
-
+  updateSITE() {
+    return this.userList.updateOrg === "SITE";
+  }
   
   readonly vo = {
     serverError: '',
@@ -57,7 +60,7 @@ export class UserCardComponent implements OnInit {
   };
 
   ngOnInit(): void {
-
+    this.userUpdateForm.get('orgName').disable();
   }
 
   onCancel() {

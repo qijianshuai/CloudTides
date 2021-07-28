@@ -27,7 +27,30 @@
           formControlName="name"
           clrInput />
       </clr-input-container>
-<clr-select-container>
+
+      <clr-input-container>
+        <label for="orgName1">Orgnization</label>
+        <input id="orgName1"
+          class="clr-col-12 clr-col-md-8"
+          type="text"
+          formControlName="orgName"
+          clrInput 
+          />
+      </clr-input-container>
+
+
+      <clr-input-container *ngIf=this.updateSITE()>
+        <label for="role1">Role</label>
+        <input id="role1"
+          class="clr-col-12 clr-col-md-8"
+          type="text"
+          formControlName="role"
+          clrInput
+          readonly="readonly"
+          />
+      </clr-input-container>
+
+      <clr-select-container *ngIf=!this.updateSITE()>
         <label for="role">Role</label>
         <select
           clrSelect
@@ -36,7 +59,7 @@
           formControlName="role"
         >
         <option *ngFor="let role of roleTypeList"
-          [ngValue]="roleType[role]"> {{ role }}</option>
+          [ngValue]="role"> {{ roleType[role] }}</option>
         </select>
         <clr-control-error>{{ "HOME.RESOURCE.DIALOG.REQUIRED" | translate:{item: 'orgnization'} }}</clr-control-error>
       </clr-select-container>
