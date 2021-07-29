@@ -65,12 +65,17 @@ export class LoginComponent implements OnInit, OnDestroy {
       // this.document.location.href = '/'
       
       console.log("here")
-      if (this.session.value.pwReset) {
-        this.router.navigate(['/cloudtides/reset']); 
+      console.log("222:"+localStorage.getItem("pwReset"))
+      
+      this.router.navigate(['/cloudtides']);
+      console.log("333:"+localStorage.getItem("pwReset"))
+      if (localStorage.getItem("pwReset") === "false") {
+        console.log("entered!!!")
+        this.router.navigate(['/cloudtides/reset']);
+        console.log("111111")
+        // this.router.navigate(['/cloudtides/resource']);
       }
-      else {
-        this.router.navigate(['/cloudtides']);
-      }
+
     })
   ;
 

@@ -1,3 +1,4 @@
+import { ResetService } from './../reset/reset.service';
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DOCUMENT } from '@angular/common';
@@ -16,6 +17,7 @@ export class LoginService {
     private readonly http: HttpClient,
     private readonly router: Router,
     private readonly registerService: RegisterService,
+    private readonly resetService: ResetService,
     @Inject(DOCUMENT) private readonly document: Document,
   ) {
     this.loginNavigate();
@@ -33,21 +35,23 @@ export class LoginService {
         this.session$.next({ ...serverUserInfo.userInfo});
         this.storeRole(this.session.role);
         this.storeOrgName(this.session.orgName);
+        this.storePwReset(this.session.pwReset);
+        this.storeUsername(this.session.username);
         // this.storePwReset(this.session.pwReset);
         console.log(localStorage.getItem("role"));
         console.log(this.session.pwReset);
         
-        if (this.session.pwReset == true) {
-          console.log("inside");
-          console.log(this.session.pwReset);
-        }
-        console.log("outside");
+        // if (this.session.pwReset == true) {
+        //   console.log("inside");
+        //   console.log(this.session.pwReset);
+        // }
+        // console.log("outside");
       }),
     );
   }
 
   async loginNavigate() {
-    console.log(this.session.pwReset)
+    console.log("line53")
     if (this.hasLoggedIn) {
       
       // if (!this.session.pwReset) {
@@ -56,10 +60,11 @@ export class LoginService {
       this.current().subscribe(
         () => {},
         async error => {
+          console.log("line62")
           await this.logout();
         });
     } else {
-      if (!this.inLoginPage() && !this.registerService.inRegisterPage()) {
+      if (!this.inLoginPage() && !this.registerService.inRegisterPage() && !this.resetService.inResetPage()) {
         console.log("hahaha")
         await this.logout();
       }
@@ -86,6 +91,7 @@ export class LoginService {
     console.log('logout')
     this.removeToken();
     this.removeInfo();
+
     // await this.router.navigate(['home']);
     await this.router.navigate(['home'])
     .then(() => {
@@ -119,14 +125,22 @@ export class LoginService {
     localStorage.setItem('orgName', org);
   }
 
-  // storePwReset(pwReset: boolean){
-  //   localStorage.setItem('pwReset', new Boolean(pwReset));
-  // }
+  storeUsername(username: string){
+    localStorage.setItem('username', username);
+  }
+
+
+  storePwReset(pwReset: string){
+    console.log("555: "+pwReset)
+    localStorage.setItem('pwReset', pwReset);
+    console.log("444: "+localStorage.getItem("pwReset"));
+  }
 
   removeInfo() {
     localStorage.removeItem('role');
     localStorage.removeItem('orgName');
-    // localStorage.removeItem('pwReset');
+    localStorage.removeItem('pwReset');
+    localStorage.removeItem('username');
   }
 
   removeToken() {
@@ -180,7 +194,7 @@ export interface UserInfo {
   email: string,
   phone: string,
   role: string,
-  pwReset: boolean,
+  pwReset: string,
   orgName: string,
 }
 

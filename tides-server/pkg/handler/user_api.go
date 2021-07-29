@@ -44,7 +44,7 @@ func SendVerificationHandler(params user.SendVerificationParams) middleware.Resp
   m := gomail.NewMessage()
 	m.SetHeader("From", OFFICIAL_EMAIL)
 	// m.SetHeader("To", u.Email)
-  m.SetHeader("To", "wynn.yao.2018@gmail.com")
+  m.SetHeader("To", u.email)
   fmt.Println(code)
 	m.SetHeader("Subject", "CloudTides Verification Code")
 	m.SetBody("text/plain", "Your are resetting your password. Your verification code is: " + code)
@@ -271,6 +271,7 @@ func AddUserHandler(params user.AddUserParams) middleware.Responder {
 	}
 	
 	pw, _ := password.Generate(10, 4, 0, false, false)
+  code, _ := password.Generate(6,6,0,false,false)
 	fmt.Println("password generated!!!")
 	newUser := models.User{
 		Username: body.Name,
@@ -280,6 +281,7 @@ func AddUserHandler(params user.AddUserParams) middleware.Responder {
 		Phone:    body.Phone,
 		OrgName:    body.OrgName,
 		Password:	pw,
+    Temp:     code,
 	}
 	var userOld models.User;
 	if db.Unscoped().Where("username = ?", body.Name).First(&userOld).RowsAffected == 1 {
@@ -303,7 +305,7 @@ func AddUserHandler(params user.AddUserParams) middleware.Responder {
 	m.SetHeader("From", OFFICIAL_EMAIL)
 	m.SetHeader("To", body.Email)
 	m.SetHeader("Subject", "CloudTides Default Password")
-	m.SetBody("text/plain", "CloudTides has registered an account for you. Your login password for CloudTides is: " + pw + "\nPlease login to CloudTides platform and reset the password.")
+	m.SetBody("text/plain", "CloudTides has registered an account for you. Your login password for CloudTides is: " + pw + "\nPlease login to CloudTides platform and reset the password. Your verification code is: " + code)
 	d := gomail.NewDialer("smtp.gmail.com", 587, OFFICIAL_EMAIL, OFFICIAL_PASSWORD)
 	d.TLSConfig = &tls.Config{InsecureSkipVerify: true}
 	if err := d.DialAndSend(m); err != nil {

@@ -39,7 +39,7 @@ export class ResetComponent implements OnInit {
   ) {
     this.resetForm = this.fb.group({
       username: [
-        '', [
+        localStorage.getItem("username"), [
           Validators.required,
           Validators.minLength(4),
           Validators.maxLength(12),
@@ -122,10 +122,10 @@ export class ResetComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.loginService.session.priority !== 'High') {
-      // this.document.location.href = '/';
-      this.router.navigate(['/']);
-    }
+    // if (this.loginService.session.priority !== 'High') {
+    //   // this.document.location.href = '/';
+    //   this.router.navigate(['/']);
+    // }
   }
 
   ngOnDestroy() {
