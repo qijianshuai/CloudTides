@@ -18,6 +18,8 @@ SERVER_PORT=80
 ADMIN_USER=
 ADMIN_PASSWORD=
 SECRET_KEY=
+OFFICIAL_EMAIL=
+OFFICIAL_PASSWORD=
 ```
 
 `POSTGRES_HOST` should be the IP address of your computer in your connected network.
