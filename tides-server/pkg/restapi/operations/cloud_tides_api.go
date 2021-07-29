@@ -200,6 +200,9 @@ func NewCloudTidesAPI(spec *loads.Document) *CloudTidesAPI {
 		UserResetPasswordHandler: user.ResetPasswordHandlerFunc(func(params user.ResetPasswordParams) middleware.Responder {
 			return middleware.NotImplemented("operation user.ResetPassword has not yet been implemented")
 		}),
+		UserSendVerificationHandler: user.SendVerificationHandlerFunc(func(params user.SendVerificationParams) middleware.Responder {
+			return middleware.NotImplemented("operation user.SendVerification has not yet been implemented")
+		}),
 		PolicyUpdatePolicyHandler: policy.UpdatePolicyHandlerFunc(func(params policy.UpdatePolicyParams) middleware.Responder {
 			return middleware.NotImplemented("operation policy.UpdatePolicy has not yet been implemented")
 		}),
@@ -359,6 +362,8 @@ type CloudTidesAPI struct {
 	PolicyRemovePolicyHandler policy.RemovePolicyHandler
 	// UserResetPasswordHandler sets the operation handler for the reset password operation
 	UserResetPasswordHandler user.ResetPasswordHandler
+	// UserSendVerificationHandler sets the operation handler for the send verification operation
+	UserSendVerificationHandler user.SendVerificationHandler
 	// PolicyUpdatePolicyHandler sets the operation handler for the update policy operation
 	PolicyUpdatePolicyHandler policy.UpdatePolicyHandler
 	// ProjectUpdateProjectHandler sets the operation handler for the update project operation
@@ -598,6 +603,9 @@ func (o *CloudTidesAPI) Validate() error {
 	}
 	if o.UserResetPasswordHandler == nil {
 		unregistered = append(unregistered, "user.ResetPasswordHandler")
+	}
+	if o.UserSendVerificationHandler == nil {
+		unregistered = append(unregistered, "user.SendVerificationHandler")
 	}
 	if o.PolicyUpdatePolicyHandler == nil {
 		unregistered = append(unregistered, "policy.UpdatePolicyHandler")
@@ -905,6 +913,10 @@ func (o *CloudTidesAPI) initHandlerCache() {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/users/reset"] = user.NewResetPassword(o.context, o.UserResetPasswordHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/users/reset/verify"] = user.NewSendVerification(o.context, o.UserSendVerificationHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}

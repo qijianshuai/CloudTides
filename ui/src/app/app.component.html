@@ -91,7 +91,8 @@
             </button>
             <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
               <a routerLink="/cloudtides/register" clrDropdownItem >{{ "LOGIN.SIGNUP" | translate:{} }}</a>
-              <a routerLink="/cloudtides/reset" clrDropdownItem >{{ "RESET.RESET" | translate:{} }}</a>
+              <a (click)="this.cloudtides_reset_code()" clrDropdownItem>{{ "RESET.RESET" | translate:{} }}</a>
+              <!-- <a routerLink="/cloudtides/reset" clrDropdownItem >{{ "RESET.RESET" | translate:{} }}</a> -->
               <a routerLink="/cloudtides/profile" clrDropdownItem>{{ "HOME.PROFILE" | translate:{} }}</a>
               <a (click)="this.cloudtides_logout()" clrDropdownItem>{{ "HOME.LOGOUT" | translate:{} }}</a>
             </clr-dropdown-menu>

@@ -64,6 +64,10 @@ export class ResetComponent implements OnInit {
           Validators.maxLength(16),
           passwordMatchValidator('newPassword'),
         ]],
+      verificationCode: [
+        '', [
+          Validators.required,
+        ]],
       // email: [
       //   '', [
       //     Validators.required,
@@ -92,9 +96,9 @@ export class ResetComponent implements OnInit {
        this.vo.submitting = true;
        this.vo.resetError = '';
      }),
-     switchMap(({ username, password, newPassword }) => {
+     switchMap(({ username, password, newPassword, verificationCode }) => {
        return this.resetService
-         .reset(username, password, newPassword)
+         .reset(username, password, newPassword, verificationCode)
          .pipe(
            tap(() => {
              this.vo.submitting = false;
@@ -134,4 +138,5 @@ interface ResetForm {
   username: string;
   password: string;
   newPassword: string;
+  verificationCode: string;
 }

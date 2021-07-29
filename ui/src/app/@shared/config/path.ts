@@ -25,6 +25,7 @@ export const REGISTER_API_URL = `/users/register`;
 
 export const RESET_PATH = `/reset`;
 export const RESET_API_URL = `/users/reset`;
+export const RESET_VERIFY_API_URL = `/users/reset/verify`;
 
 export const PROFILE_API_URL = `/users/profile`;
 

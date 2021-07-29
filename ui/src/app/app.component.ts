@@ -7,6 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { I18nService } from '@tide-shared/service/i18n';
 import { Observable, Subject } from 'rxjs';
 import { RegisterService } from './register/register.service';
+import { ResetService } from './reset/reset.service';
 
 import { Location } from '@angular/common';
 import { NavigationEnd } from '@angular/router';
@@ -20,6 +21,7 @@ export class AppComponent implements OnInit {
   path = '';
   constructor(
     readonly loginService: LoginService,
+    readonly resetService: ResetService,
     readonly registerService: RegisterService,
     private readonly router: Router,
     translate: TranslateService,
@@ -70,6 +72,13 @@ export class AppComponent implements OnInit {
 
   cloudtides_logout() {
     this.loginService.cloudtides_logout()
+  }
+
+  cloudtides_reset_code() {
+    this.resetService.cloud_reset_code(this.loginService.session.username);
+    console.log("here!");
+    this.router.navigate(['/cloudtides/reset']);
+    
   }
 
   ngOnInit() {

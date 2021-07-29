@@ -79,6 +79,8 @@
   "RESET": {
     "RESET": "Reset Password",
     "USERNAME": "Username",
+    "USERNAME_MISSING": "Username is required",
+    "USERNAME_TOO_SHORT": "Username is too short",
     "PASSWORD": "Password",
     "NEW_PASSWORD": "New Password",
     "CONFIRMED_PASSWORD": "Confirm Password",
@@ -87,6 +89,8 @@
     "PASSWORD_TOO_LONG": "Password is too long",
     "PASSWORD_CONFIRM": "Confirm Password",
     "PASSWORD_NOT_MATCH": "Password does not match",
+    "VERIFICATION_CODE": "Verification code emailed",
+    "VERIFICATION_MISSING": "Verification code is required",
     "SUBMITTING": "Reset"
   },
   "HOME": {

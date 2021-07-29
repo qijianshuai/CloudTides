@@ -16,12 +16,12 @@
       <div id="res-account">
         <!-- <h3>{{ "REGISTER.ACCOUNT" | translate:{} }}</h3> -->
         <clr-input-container>
-          <label>{{ 'REGISTER.USERNAME' | translate:{} }}</label>
+          <label>{{ 'RESET.USERNAME' | translate:{} }}</label>
           <input clrInput formControlName="username" />
           <clr-control-error
-            *clrIfError="'required'">{{ 'REGISTER.USERNAME_MISSING' | translate:{} }}</clr-control-error>
+            *clrIfError="'required'">{{ 'RESET.USERNAME_MISSING' | translate:{} }}</clr-control-error>
           <clr-control-error
-            *clrIfError="'minlength'">{{ 'REGISTER.USERNAME_TOO_SHORT' | translate:{} }}</clr-control-error>
+            *clrIfError="'minlength'">{{ 'RESET.USERNAME_TOO_SHORT' | translate:{} }}</clr-control-error>
         </clr-input-container>
         <clr-password-container>
           <label>{{ 'RESET.PASSWORD' | translate:{} }}</label>
@@ -57,6 +57,15 @@
           <clr-control-error
             *clrIfError="'mismatch'">{{ 'RESET.PASSWORD_NOT_MATCH' | translate:{} }}</clr-control-error>
         </clr-password-container>
+
+        <clr-input-container>
+          <label>{{ 'RESET.VERIFICATION_CODE' | translate:{} }}</label>
+          <input clrInput formControlName="verificationCode" />
+          <clr-control-error
+            *clrIfError="'required'">{{ 'RESET.VERIFICATION_MISSING' | translate:{} }}</clr-control-error>
+          <!-- <clr-control-error
+            *clrIfError="'minlength'">{{ 'RESET.USERNAME_TOO_SHORT' | translate:{} }}</clr-control-error> -->
+        </clr-input-container>
       </div>
       <br>
       <br>

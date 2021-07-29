@@ -59,6 +59,9 @@ type User struct {
 
 	// avatar //TODO: NOT IMPLEMENTED
 	Avatar string `json:"avatar,omitempty"`
+
+	// temp
+	Temp string `json:"temp,omitempty"`
 }
 
 // Validate validates this user

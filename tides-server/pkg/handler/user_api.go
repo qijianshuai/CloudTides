@@ -20,13 +20,56 @@ import (
 const OFFICIAL_EMAIL = "cloudtest2021abc@gmail.com"
 const OFFICIAL_PASSWORD = "cloudtides"
 
+func SendVerificationHandler(params user.SendVerificationParams) middleware.Responder {
+	fmt.Println("verification entered!")
+	// uid, _ := ParseUserIDFromToken(params.HTTPRequest)
+	body := params.ReqBody
+  fmt.Println(body.Message)
+	db := config.GetDB()
+	var u models.User
+	if db.Where("username = ?", body.Message).First(&u).RowsAffected == 0 {
+		return user.NewSendVerificationBadRequest().WithPayload(&user.SendVerificationBadRequestBody {
+			Message: "null user",
+		})
+	}
+	code, _ := password.Generate(6,6,0,false,false)
+	u.Temp = code
+	err := db.Save(&u).Error
+	if err != nil {
+		return user.NewSendVerificationBadRequest().WithPayload(&user.SendVerificationBadRequestBody{
+			Message: err.Error(),
+		})
+	}
+  
+  m := gomail.NewMessage()
+	m.SetHeader("From", OFFICIAL_EMAIL)
+	// m.SetHeader("To", u.Email)
+  m.SetHeader("To", "wynn.yao.2018@gmail.com")
+  fmt.Println(code)
+	m.SetHeader("Subject", "CloudTides Verification Code")
+	m.SetBody("text/plain", "Your are resetting your password. Your verification code is: " + code)
+	d := gomail.NewDialer("smtp.gmail.com", 587, OFFICIAL_EMAIL, OFFICIAL_PASSWORD)
+	d.TLSConfig = &tls.Config{InsecureSkipVerify: true}
+	if err := d.DialAndSend(m); err != nil {
+		fmt.Println(err)
+		panic(err)
+	}
+	fmt.Println("success!!!")
+
+	return user.NewSendVerificationOK().WithPayload(&user.SendVerificationOKBody {
+		Message:"success",
+	})
+
+
+}
+
 // ResetPasswordHandler is the API for /users/reset POST
 func ResetPasswordHandler(params user.ResetPasswordParams) middleware.Responder {
   fmt.Println("entered!")
   body := params.ReqBody
   db := config.GetDB()
   var u models.User
-  fmt.Println(body.Username + ", " + body.Password + ", " + body.NewPassword)
+//   fmt.Println(body.Username + ", " + body.Password + ", " + body.NewPassword)
   if db.Where("username = ?", body.Username).First(&u).RowsAffected == 0 {
 		return user.NewResetPasswordBadRequest().WithPayload(&user.ResetPasswordBadRequestBody{
       Message: "null user",
@@ -38,8 +81,14 @@ func ResetPasswordHandler(params user.ResetPasswordParams) middleware.Responder 
       Message: "wrong password",
     })
   }
+  // u.Temp = "111111"
+  if u.Temp != body.VerificationCode {
+    return user.NewResetPasswordBadRequest().WithPayload(&user.ResetPasswordBadRequestBody{
+      Message: "wrong verification code",
+    })
+  }
 
-	u.Password = body.NewPassword
+  u.Password = body.NewPassword
   u.PwReset = true
   err := db.Save(&u).Error
 	if err != nil {
@@ -253,8 +302,8 @@ func AddUserHandler(params user.AddUserParams) middleware.Responder {
 	m := gomail.NewMessage()
 	m.SetHeader("From", OFFICIAL_EMAIL)
 	m.SetHeader("To", body.Email)
-	m.SetHeader("Subject", "Gomail test subject")
-	m.SetBody("text/plain", "Your login password for CloudTides is: " + pw + "\nPlease login to CloudTides platform and reset the password.")
+	m.SetHeader("Subject", "CloudTides Default Password")
+	m.SetBody("text/plain", "CloudTides has registered an account for you. Your login password for CloudTides is: " + pw + "\nPlease login to CloudTides platform and reset the password.")
 	d := gomail.NewDialer("smtp.gmail.com", 587, OFFICIAL_EMAIL, OFFICIAL_PASSWORD)
 	d.TLSConfig = &tls.Config{InsecureSkipVerify: true}
 	if err := d.DialAndSend(m); err != nil {

@@ -108,6 +108,9 @@ type ResetPasswordBody struct {
 
 	// username
 	Username string `json:"username,omitempty"`
+
+	// verification code
+	VerificationCode string `json:"verificationCode,omitempty"`
 }
 
 // Validate validates this reset password body

@@ -88,6 +88,8 @@
   "RESET": {
     "RESET": "重置密码",
     "USERNAME": "用户名",
+    "USERNAME_MISSING": "请填写用户名",
+    "USERNAME_TOO_SHORT": "用户名长度过短",
     "PASSWORD": "密码",
     "NEW_PASSWORD": "新密码",
     "CONFIRMED_PASSWORD": "确认密码",
@@ -96,6 +98,8 @@
     "PASSWORD_TOO_LONG": "密码长度过长",
     "PASSWORD_CONFIRM": "确认密码",
     "PASSWORD_NOT_MATCH": "两次密码填写不一致",
+    "VERIFICATION_CODE": "邮箱验证码",
+    "VERIFICATION_MISSING": "请输入验证码",
     "SUBMITTING": "重置"
   },
   "HOME": {
