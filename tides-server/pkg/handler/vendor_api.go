@@ -19,13 +19,13 @@ func ListVendorsHandler(params vendor_swagger.ListVendorParams) middleware.Respo
 	db.Find(&vendors)
 
 	var responses []*vendor_swagger.ListVendorOKBodyItems0
-	for _, vendor := range vendors{
+	for _, vendor := range vendors {
 		newven := vendor_swagger.ListVendorOKBodyItems0{
-			ID: int64(vendor.Id),
-			Name: vendor.Name,
-			URL: vendor.URL,
+			ID:         int64(vendor.Id),
+			Name:       vendor.Name,
+			URL:        vendor.URL,
 			VendorType: vendor.Type,
-			Version: vendor.Version,
+			Version:    vendor.Version,
 		}
 		responses = append(responses, &newven)
 	}
@@ -54,10 +54,10 @@ func AddVendorHandler(params vendor_swagger.AddVendorParams) middleware.Responde
 	id := int(db.Find(&vendors).RowsAffected)
 
 	newvendor := models.Vendor{
-		Name: body.Name,
-		Id: id + 1,
-		URL: body.URL,
-		Type: body.VendorType,
+		Name:    body.Name,
+		Id:      id + 1,
+		URL:     body.URL,
+		Type:    body.VendorType,
 		Version: body.Version,
 	}
 
@@ -65,7 +65,7 @@ func AddVendorHandler(params vendor_swagger.AddVendorParams) middleware.Responde
 
 	return vendor_swagger.NewAddVendorOK().WithPayload(&vendor_swagger.AddVendorOKBody{
 		Message: "Add Vendor Success",
-		ID: int64(id + 1),
+		ID:      int64(id + 1),
 	})
 }
 

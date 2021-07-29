@@ -19,6 +19,7 @@ import (
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 
+	"tides-server/pkg/restapi/operations/org"
 	"tides-server/pkg/restapi/operations/policy"
 	"tides-server/pkg/restapi/operations/port"
 	"tides-server/pkg/restapi/operations/project"
@@ -55,8 +56,14 @@ func NewCloudTidesAPI(spec *loads.Document) *CloudTidesAPI {
 
 		JSONProducer: runtime.JSONProducer(),
 
+		UserModifyUserHandler: user.ModifyUserHandlerFunc(func(params user.ModifyUserParams) middleware.Responder {
+			return middleware.NotImplemented("operation user.ModifyUser has not yet been implemented")
+		}),
 		ResourceActivateResourceHandler: resource.ActivateResourceHandlerFunc(func(params resource.ActivateResourceParams) middleware.Responder {
 			return middleware.NotImplemented("operation resource.ActivateResource has not yet been implemented")
+		}),
+		OrgAddOrgHandler: org.AddOrgHandlerFunc(func(params org.AddOrgParams) middleware.Responder {
+			return middleware.NotImplemented("operation org.AddOrg has not yet been implemented")
 		}),
 		PolicyAddPolicyHandler: policy.AddPolicyHandlerFunc(func(params policy.AddPolicyParams) middleware.Responder {
 			return middleware.NotImplemented("operation policy.AddPolicy has not yet been implemented")
@@ -69,6 +76,9 @@ func NewCloudTidesAPI(spec *loads.Document) *CloudTidesAPI {
 		}),
 		TemplateAddTemplateHandler: template.AddTemplateHandlerFunc(func(params template.AddTemplateParams) middleware.Responder {
 			return middleware.NotImplemented("operation template.AddTemplate has not yet been implemented")
+		}),
+		UserAddUserHandler: user.AddUserHandlerFunc(func(params user.AddUserParams) middleware.Responder {
+			return middleware.NotImplemented("operation user.AddUser has not yet been implemented")
 		}),
 		VmtempAddVMTempHandler: vmtemp.AddVMTempHandlerFunc(func(params vmtemp.AddVMTempParams) middleware.Responder {
 			return middleware.NotImplemented("operation vmtemp.AddVMTemp has not yet been implemented")
@@ -93,6 +103,12 @@ func NewCloudTidesAPI(spec *loads.Document) *CloudTidesAPI {
 		}),
 		ResourceContributeResourceHandler: resource.ContributeResourceHandlerFunc(func(params resource.ContributeResourceParams) middleware.Responder {
 			return middleware.NotImplemented("operation resource.ContributeResource has not yet been implemented")
+		}),
+		OrgDeleteOrgHandler: org.DeleteOrgHandlerFunc(func(params org.DeleteOrgParams) middleware.Responder {
+			return middleware.NotImplemented("operation org.DeleteOrg has not yet been implemented")
+		}),
+		UserDeleteUserHandler: user.DeleteUserHandlerFunc(func(params user.DeleteUserParams) middleware.Responder {
+			return middleware.NotImplemented("operation user.DeleteUser has not yet been implemented")
 		}),
 		ProjectDeleteProjectHandler: project.DeleteProjectHandlerFunc(func(params project.DeleteProjectParams) middleware.Responder {
 			return middleware.NotImplemented("operation project.DeleteProject has not yet been implemented")
@@ -136,6 +152,12 @@ func NewCloudTidesAPI(spec *loads.Document) *CloudTidesAPI {
 		ResourceGetVcdResourceHandler: resource.GetVcdResourceHandlerFunc(func(params resource.GetVcdResourceParams) middleware.Responder {
 			return middleware.NotImplemented("operation resource.GetVcdResource has not yet been implemented")
 		}),
+		UserListUserOfOrgHandler: user.ListUserOfOrgHandlerFunc(func(params user.ListUserOfOrgParams) middleware.Responder {
+			return middleware.NotImplemented("operation user.ListUserOfOrg has not yet been implemented")
+		}),
+		OrgListOrgHandler: org.ListOrgHandlerFunc(func(params org.ListOrgParams) middleware.Responder {
+			return middleware.NotImplemented("operation org.ListOrg has not yet been implemented")
+		}),
 		PolicyListPolicyHandler: policy.ListPolicyHandlerFunc(func(params policy.ListPolicyParams) middleware.Responder {
 			return middleware.NotImplemented("operation policy.ListPolicy has not yet been implemented")
 		}),
@@ -147,6 +169,9 @@ func NewCloudTidesAPI(spec *loads.Document) *CloudTidesAPI {
 		}),
 		TemplateListTemplateHandler: template.ListTemplateHandlerFunc(func(params template.ListTemplateParams) middleware.Responder {
 			return middleware.NotImplemented("operation template.ListTemplate has not yet been implemented")
+		}),
+		UserListUserHandler: user.ListUserHandlerFunc(func(params user.ListUserParams) middleware.Responder {
+			return middleware.NotImplemented("operation user.ListUser has not yet been implemented")
 		}),
 		VMListVMHandler: vm.ListVMHandlerFunc(func(params vm.ListVMParams) middleware.Responder {
 			return middleware.NotImplemented("operation vm.ListVM has not yet been implemented")
@@ -171,6 +196,12 @@ func NewCloudTidesAPI(spec *loads.Document) *CloudTidesAPI {
 		}),
 		PolicyRemovePolicyHandler: policy.RemovePolicyHandlerFunc(func(params policy.RemovePolicyParams) middleware.Responder {
 			return middleware.NotImplemented("operation policy.RemovePolicy has not yet been implemented")
+		}),
+		UserResetPasswordHandler: user.ResetPasswordHandlerFunc(func(params user.ResetPasswordParams) middleware.Responder {
+			return middleware.NotImplemented("operation user.ResetPassword has not yet been implemented")
+		}),
+		UserSendVerificationHandler: user.SendVerificationHandlerFunc(func(params user.SendVerificationParams) middleware.Responder {
+			return middleware.NotImplemented("operation user.SendVerification has not yet been implemented")
 		}),
 		PolicyUpdatePolicyHandler: policy.UpdatePolicyHandlerFunc(func(params policy.UpdatePolicyParams) middleware.Responder {
 			return middleware.NotImplemented("operation policy.UpdatePolicy has not yet been implemented")
@@ -235,8 +266,12 @@ type CloudTidesAPI struct {
 	//   - application/json
 	JSONProducer runtime.Producer
 
+	// UserModifyUserHandler sets the operation handler for the modify user operation
+	UserModifyUserHandler user.ModifyUserHandler
 	// ResourceActivateResourceHandler sets the operation handler for the activate resource operation
 	ResourceActivateResourceHandler resource.ActivateResourceHandler
+	// OrgAddOrgHandler sets the operation handler for the add org operation
+	OrgAddOrgHandler org.AddOrgHandler
 	// PolicyAddPolicyHandler sets the operation handler for the add policy operation
 	PolicyAddPolicyHandler policy.AddPolicyHandler
 	// ProjectAddProjectHandler sets the operation handler for the add project operation
@@ -245,6 +280,8 @@ type CloudTidesAPI struct {
 	UsageAddResourceUsageHandler usage.AddResourceUsageHandler
 	// TemplateAddTemplateHandler sets the operation handler for the add template operation
 	TemplateAddTemplateHandler template.AddTemplateHandler
+	// UserAddUserHandler sets the operation handler for the add user operation
+	UserAddUserHandler user.AddUserHandler
 	// VmtempAddVMTempHandler sets the operation handler for the add VM temp operation
 	VmtempAddVMTempHandler vmtemp.AddVMTempHandler
 	// UsageAddVMUsageHandler sets the operation handler for the add VM usage operation
@@ -261,6 +298,10 @@ type CloudTidesAPI struct {
 	ResourceAssignPolicyHandler resource.AssignPolicyHandler
 	// ResourceContributeResourceHandler sets the operation handler for the contribute resource operation
 	ResourceContributeResourceHandler resource.ContributeResourceHandler
+	// OrgDeleteOrgHandler sets the operation handler for the delete org operation
+	OrgDeleteOrgHandler org.DeleteOrgHandler
+	// UserDeleteUserHandler sets the operation handler for the delete user operation
+	UserDeleteUserHandler user.DeleteUserHandler
 	// ProjectDeleteProjectHandler sets the operation handler for the delete project operation
 	ProjectDeleteProjectHandler project.DeleteProjectHandler
 	// UsageDeleteResourceUsageHandler sets the operation handler for the delete resource usage operation
@@ -289,6 +330,10 @@ type CloudTidesAPI struct {
 	UserGetUserProfileHandler user.GetUserProfileHandler
 	// ResourceGetVcdResourceHandler sets the operation handler for the get vcd resource operation
 	ResourceGetVcdResourceHandler resource.GetVcdResourceHandler
+	// UserListUserOfOrgHandler sets the operation handler for the list user of org operation
+	UserListUserOfOrgHandler user.ListUserOfOrgHandler
+	// OrgListOrgHandler sets the operation handler for the list org operation
+	OrgListOrgHandler org.ListOrgHandler
 	// PolicyListPolicyHandler sets the operation handler for the list policy operation
 	PolicyListPolicyHandler policy.ListPolicyHandler
 	// PortListPortsHandler sets the operation handler for the list ports operation
@@ -297,6 +342,8 @@ type CloudTidesAPI struct {
 	ProjectListProjectHandler project.ListProjectHandler
 	// TemplateListTemplateHandler sets the operation handler for the list template operation
 	TemplateListTemplateHandler template.ListTemplateHandler
+	// UserListUserHandler sets the operation handler for the list user operation
+	UserListUserHandler user.ListUserHandler
 	// VMListVMHandler sets the operation handler for the list VM operation
 	VMListVMHandler vm.ListVMHandler
 	// VmtempListVMTempHandler sets the operation handler for the list VM temp operation
@@ -313,6 +360,10 @@ type CloudTidesAPI struct {
 	UserRegisterUserHandler user.RegisterUserHandler
 	// PolicyRemovePolicyHandler sets the operation handler for the remove policy operation
 	PolicyRemovePolicyHandler policy.RemovePolicyHandler
+	// UserResetPasswordHandler sets the operation handler for the reset password operation
+	UserResetPasswordHandler user.ResetPasswordHandler
+	// UserSendVerificationHandler sets the operation handler for the send verification operation
+	UserSendVerificationHandler user.SendVerificationHandler
 	// PolicyUpdatePolicyHandler sets the operation handler for the update policy operation
 	PolicyUpdatePolicyHandler policy.UpdatePolicyHandler
 	// ProjectUpdateProjectHandler sets the operation handler for the update project operation
@@ -409,8 +460,14 @@ func (o *CloudTidesAPI) Validate() error {
 		unregistered = append(unregistered, "JSONProducer")
 	}
 
+	if o.UserModifyUserHandler == nil {
+		unregistered = append(unregistered, "user.ModifyUserHandler")
+	}
 	if o.ResourceActivateResourceHandler == nil {
 		unregistered = append(unregistered, "resource.ActivateResourceHandler")
+	}
+	if o.OrgAddOrgHandler == nil {
+		unregistered = append(unregistered, "org.AddOrgHandler")
 	}
 	if o.PolicyAddPolicyHandler == nil {
 		unregistered = append(unregistered, "policy.AddPolicyHandler")
@@ -423,6 +480,9 @@ func (o *CloudTidesAPI) Validate() error {
 	}
 	if o.TemplateAddTemplateHandler == nil {
 		unregistered = append(unregistered, "template.AddTemplateHandler")
+	}
+	if o.UserAddUserHandler == nil {
+		unregistered = append(unregistered, "user.AddUserHandler")
 	}
 	if o.VmtempAddVMTempHandler == nil {
 		unregistered = append(unregistered, "vmtemp.AddVMTempHandler")
@@ -447,6 +507,12 @@ func (o *CloudTidesAPI) Validate() error {
 	}
 	if o.ResourceContributeResourceHandler == nil {
 		unregistered = append(unregistered, "resource.ContributeResourceHandler")
+	}
+	if o.OrgDeleteOrgHandler == nil {
+		unregistered = append(unregistered, "org.DeleteOrgHandler")
+	}
+	if o.UserDeleteUserHandler == nil {
+		unregistered = append(unregistered, "user.DeleteUserHandler")
 	}
 	if o.ProjectDeleteProjectHandler == nil {
 		unregistered = append(unregistered, "project.DeleteProjectHandler")
@@ -490,6 +556,12 @@ func (o *CloudTidesAPI) Validate() error {
 	if o.ResourceGetVcdResourceHandler == nil {
 		unregistered = append(unregistered, "resource.GetVcdResourceHandler")
 	}
+	if o.UserListUserOfOrgHandler == nil {
+		unregistered = append(unregistered, "user.ListUserOfOrgHandler")
+	}
+	if o.OrgListOrgHandler == nil {
+		unregistered = append(unregistered, "org.ListOrgHandler")
+	}
 	if o.PolicyListPolicyHandler == nil {
 		unregistered = append(unregistered, "policy.ListPolicyHandler")
 	}
@@ -501,6 +573,9 @@ func (o *CloudTidesAPI) Validate() error {
 	}
 	if o.TemplateListTemplateHandler == nil {
 		unregistered = append(unregistered, "template.ListTemplateHandler")
+	}
+	if o.UserListUserHandler == nil {
+		unregistered = append(unregistered, "user.ListUserHandler")
 	}
 	if o.VMListVMHandler == nil {
 		unregistered = append(unregistered, "vm.ListVMHandler")
@@ -525,6 +600,12 @@ func (o *CloudTidesAPI) Validate() error {
 	}
 	if o.PolicyRemovePolicyHandler == nil {
 		unregistered = append(unregistered, "policy.RemovePolicyHandler")
+	}
+	if o.UserResetPasswordHandler == nil {
+		unregistered = append(unregistered, "user.ResetPasswordHandler")
+	}
+	if o.UserSendVerificationHandler == nil {
+		unregistered = append(unregistered, "user.SendVerificationHandler")
 	}
 	if o.PolicyUpdatePolicyHandler == nil {
 		unregistered = append(unregistered, "policy.UpdatePolicyHandler")
@@ -643,7 +724,15 @@ func (o *CloudTidesAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
+	o.handlers["PUT"]["/user/{id}"] = user.NewModifyUser(o.context, o.UserModifyUserHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
 	o.handlers["PUT"]["/resource/activate/{id}"] = resource.NewActivateResource(o.context, o.ResourceActivateResourceHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/org"] = org.NewAddOrg(o.context, o.OrgAddOrgHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
@@ -660,6 +749,10 @@ func (o *CloudTidesAPI) initHandlerCache() {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/template"] = template.NewAddTemplate(o.context, o.TemplateAddTemplateHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/user"] = user.NewAddUser(o.context, o.UserAddUserHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
@@ -692,6 +785,14 @@ func (o *CloudTidesAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/resource/contribute/{id}"] = resource.NewContributeResource(o.context, o.ResourceContributeResourceHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/org/{id}"] = org.NewDeleteOrg(o.context, o.OrgDeleteOrgHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/user/{id}"] = user.NewDeleteUser(o.context, o.UserDeleteUserHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
@@ -751,6 +852,14 @@ func (o *CloudTidesAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/user/{orgName}"] = user.NewListUserOfOrg(o.context, o.UserListUserOfOrgHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/org"] = org.NewListOrg(o.context, o.OrgListOrgHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/policy"] = policy.NewListPolicy(o.context, o.PolicyListPolicyHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -764,6 +873,10 @@ func (o *CloudTidesAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/template"] = template.NewListTemplate(o.context, o.TemplateListTemplateHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/user"] = user.NewListUser(o.context, o.UserListUserHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -796,6 +909,14 @@ func (o *CloudTidesAPI) initHandlerCache() {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
 	o.handlers["DELETE"]["/policy/{id}"] = policy.NewRemovePolicy(o.context, o.PolicyRemovePolicyHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/users/reset"] = user.NewResetPassword(o.context, o.UserResetPasswordHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/users/reset/verify"] = user.NewSendVerification(o.context, o.UserSendVerificationHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}

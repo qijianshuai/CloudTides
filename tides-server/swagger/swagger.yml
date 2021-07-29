@@ -594,6 +594,39 @@ paths:
             properties:
               message:
                 type: string
+  /users/reset/verify:
+    post:
+      operationId: 'sendVerification'
+      description: 'send verification'
+      tags:
+        - 'user'
+      produces:
+        - 'application/json'
+      consumes:
+        - 'application/json'
+      parameters:
+        - in: body
+          name: reqBody
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+      responses:
+        200:
+          description: 'OK'
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+        400:
+          description: 'bad request'
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
   /users/login:
     post:
       operationId: 'userLogin'
@@ -631,6 +664,12 @@ paths:
                       - 'High'
                   username:
                     type: string
+                  orgname:
+                    type: string
+                  pwReset:
+                    type: string
+                  role:
+                    type: string
               token:
                 type: string
         401:
@@ -642,6 +681,46 @@ paths:
                 type: string
                 enum:
                   - 'Unauthorized'
+
+  /users/reset:
+    post:
+      operationId: 'resetPassword'
+      description: 'reset password'
+      tags:
+        - 'user'
+      produces:
+        - 'application/json'
+      consumes:
+        - 'application/json'
+      parameters:
+        - in: body
+          name: reqBody
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+              password:
+                type: string
+              newPassword:
+                type: string
+              verificationCode:
+                type: string
+      responses:
+        200:
+          description: 'OK'
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+        400:
+          description: 'bad request'
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
   /users/register:
     post:
       operationId: 'registerUser'
@@ -1933,6 +2012,288 @@ paths:
                   type: string
         401:
           description: 'Unauthorized'
+  /org:
+    get:
+      operationId: 'listOrg'
+      description: 'list Org'
+      tags:
+        - 'org'
+      produces:
+        - 'application/json'
+      responses:
+        200:
+          description: 'OK'
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                name:
+                  type: string
+                totalCPU:
+                  type: number
+                totalRAM:
+                  type: number
+                totalDisk:
+                  type: number
+                CurrentCPU:
+                  type: number
+                CurrentRAM:
+                  type: number
+                CurrentDisk:
+                  type: number
+        401:
+          description: 'Unauthorized'
+        403:
+          description: 'Forbidden'
+    post:
+      operationId: 'addOrg'
+      description: 'add Org'
+      tags:
+        - 'org'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: body
+          name: reqBody
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+      responses:
+        200:
+          description: 'create success'
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+        401:
+          description: 'Unauthorized'
+        403:
+          description: 'Forbidden'
+  /org/{id}:
+    delete:
+      operationId: 'delete Org'
+      description: 'delete Org'
+      tags:
+        - 'org'
+      produces:
+        - 'application/json'
+      parameters:
+        - type: integer
+          in: path
+          name: id
+          required: true
+      responses:
+        200:
+          description: 'deletion success'
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+        401:
+          description: 'Unauthorized'
+        403:
+          description: 'Forbidden'
+        404:
+          description: 'resource not found'
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+  /user:
+    get:
+      operationId: 'listUser'
+      description: 'list User'
+      tags:
+        - 'user'
+      produces:
+        - 'application/json'
+      responses:
+        200:
+          description: 'OK'
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                name:
+                  type: string
+                orgName:
+                  type: string
+                role:
+                  type: string
+                email:
+                  type: string
+                phone:
+                  type: string
+        401:
+          description: 'Unauthorized'
+        403:
+          description: 'Forbidden'
+    post:
+      operationId: 'addUser'
+      description: 'add User'
+      tags:
+        - 'user'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: body
+          name: reqBody
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              orgName:
+                type: string
+              role:
+                type: string
+              email:
+                type: string
+              phone:
+                type: string
+      responses:
+        200:
+          description: 'create success'
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+        401:
+          description: 'Unauthorized'
+        403:
+          description: 'Forbidden'
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+  /user/{orgName}:
+    get:
+      operationId: 'list User of org'
+      description: 'list User of Org'
+      tags:
+        - 'user'
+      produces:
+        - 'application/json'
+      parameters:
+        - type: string
+          in: path
+          name: orgName
+          required: true
+      responses:
+        200:
+          description: 'OK'
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                name:
+                  type: string
+                orgName:
+                  type: string
+                role:
+                  type: string
+                email:
+                  type: string
+                phone:
+                  type: string
+        401:
+          description: 'Unauthorized'
+        403:
+          description: 'Forbidden'
+  /user/{id}:
+    delete:
+      operationId: 'delete User'
+      description: 'delete User'
+      tags:
+        - 'user'
+      produces:
+        - 'application/json'
+      parameters:
+        - type: integer
+          in: path
+          name: id
+          required: true
+      responses:
+        200:
+          description: 'deletion success'
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+        401:
+          description: 'Unauthorized'
+        403:
+          description: 'Forbidden'
+        404:
+          description: 'resource not found'
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+    put:
+      operationId: 'Modify User'
+      description: 'Modify User'
+      tags:
+        - 'user'
+      produces:
+        - 'application/json'
+      parameters:
+        - type: integer
+          in: path
+          name: id
+          required: true
+        - in: body
+          name: reqBody
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              org:
+                type: string
+              role:
+                type: string
+              email:
+                type: string
+              phone:
+                type: string
+      responses:
+        200:
+          description: 'deletion success'
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+        401:
+          description: 'Unauthorized'
+        403:
+          description: 'Forbidden'
+        404:
+          description: 'resource not found'
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
 
 definitions:
   ResourceAddItem:
@@ -2031,3 +2392,5 @@ definitions:
         type: string
       name:
         type: string
+
+

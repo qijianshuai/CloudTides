@@ -75,15 +75,15 @@ func GetVcdConfig(vapp *models.Vapp) *VcdConfig {
 	if db.Where("id = ?", vapp.ResourceID).First(&res).RowsAffected == 0 {
 		return nil
 	}
-	if db.Where("resource_id = ?", res.ID).First(&vcd).RowsAffected == 0{
+	if db.Where("resource_id = ?", res.ID).First(&vcd).RowsAffected == 0 {
 		return nil
 	}
 	conf := VcdConfig{
-		Href: res.HostAddress,
+		Href:     res.HostAddress,
 		Password: res.Password,
-		User: res.Username,
-		Org: vcd.Organization,
-		VDC: res.Datacenter,
+		User:     res.Username,
+		Org:      vcd.Organization,
+		VDC:      res.Datacenter,
 	}
 	return &conf
 }

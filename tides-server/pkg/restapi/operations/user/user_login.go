@@ -48,7 +48,7 @@ type UserLogin struct {
 func (o *UserLogin) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
-		r = rCtx
+		*r = *rCtx
 	}
 	var Params = NewUserLoginParams()
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -195,9 +195,18 @@ func (o *UserLoginOKBody) UnmarshalBinary(b []byte) error {
 // swagger:model UserLoginOKBodyUserInfo
 type UserLoginOKBodyUserInfo struct {
 
+	// orgname
+	Orgname string `json:"orgname,omitempty"`
+
 	// priority
 	// Enum: [Low Medium High]
 	Priority string `json:"priority,omitempty"`
+
+	// pw reset
+	PwReset string `json:"pwReset,omitempty"`
+
+	// role
+	Role string `json:"role,omitempty"`
 
 	// username
 	Username string `json:"username,omitempty"`
