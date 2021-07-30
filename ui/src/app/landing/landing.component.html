@@ -135,15 +135,15 @@
       <!-- Start & Learn More -->
       <br>
       <div class="card-container">
-        <a class="get-start" target="_blank" rel="noopener" href="#">
+        <a class="get-start" target="_blank" rel="noopener" (click)="appcomponent.routeToVcpp()">
           <span>{{'home-main.card-1' | translate}}</span>
         </a>
   
-        <a class="learn-more" target="_blank" rel="noopener" href="#">
+        <a class="learn-more hidden" target="_blank" rel="noopener" href="#">
           <span>{{'home-main.card-2' | translate}}</span>
         </a>
   
-        <a class="learn-more" target="_blank" rel="noopener" href="#">
+        <a class="learn-more" target="_blank" rel="noopener" href="https://github.com/cloudtides/CloudTides/wiki">
           <span>{{'home-main.card-3' | translate}}</span>
         </a>
       </div>
@@ -177,7 +177,7 @@
             <div class="card__content">
               <i class="fa fa-tachometer fa-3x" aria-hidden="true"></i> 
               <p class="card__header">{{'home-main.part1-card1' | translate}}</p>
-              <button href="/vcpp" class="card__button">{{'home-main.readnow' | translate}}</button>
+              <button (click)="appcomponent.routeToVcpp()" class="card__button">{{'home-main.readnow' | translate}}</button>
             </div>
           </div>
   
@@ -185,7 +185,7 @@
             <div class="card__content">
               <i class="fa fa-bar-chart fa-3x" aria-hidden="true"></i>
               <p class="card__header">{{'home-main.part1-card2' | translate}}</p>
-              <button class="card__button">{{'home-main.readnow' | translate}}</button>
+              <button (click)="appcomponent.routeToVcpp()" class="card__button">{{'home-main.readnow' | translate}}</button>
             </div>
           </div>
   
@@ -193,7 +193,7 @@
             <div class="card__content">
               <i class="fa fa-industry fa-3x" aria-hidden="true"></i>
               <p class="card__header">{{'home-main.part1-card3' | translate}}</p>
-              <button class="card__button">{{'home-main.readnow' | translate}}</button>
+              <button (click)="appcomponent.routeToVcpp()" class="card__button">{{'home-main.readnow' | translate}}</button>
             </div>
   
           </div>
@@ -212,7 +212,7 @@
             <div class="card__content">
               <i class="fa fa-bolt fa-3x" aria-hidden="true"></i>
               <p class="card__header">{{'home-main.part2-card1' | translate}}</p>
-              <button class="card__button">{{'home-main.readnow' | translate}}</button>
+              <button class="card__button">{{'home-main.wait' | translate}}</button>
             </div>
           </div>
   
@@ -220,7 +220,7 @@
             <div class="card__content">
               <i class="fa fa-hand-pointer-o fa-3x" aria-hidden="true"></i>
               <p class="card__header">{{'home-main.part2-card2' | translate}}</p>
-              <button class="card__button">{{'home-main.readnow' | translate}}</button>
+              <button class="card__button">{{'home-main.wait' | translate}}</button>
             </div>
           </div>
   
@@ -228,7 +228,7 @@
             <div class="card__content">
               <i class="fa fa-user-plus fa-3x" aria-hidden="true"></i>
               <p class="card__header">{{'home-main.part2-card3' | translate}}</p>
-              <button class="card__button">{{'home-main.readnow' | translate}}</button>
+              <button class="card__button">{{'home-main.wait' | translate}}</button>
             </div>
   
           </div>
@@ -247,7 +247,7 @@
             <div class="card__content">
               <i class="fa fa-history fa-3x" aria-hidden="true"></i>
               <p class="card__header">{{'home-main.part3-card1' | translate}}</p>
-              <button class="card__button">{{'home-main.readnow' | translate}}</button>
+              <button (click)="goCTwiki()" href="https://github.com/cloudtides/CloudTides/wiki"  class="card__button">{{'home-main.readnow' | translate}}</button>
             </div>
           </div>
   
@@ -255,7 +255,7 @@
             <div class="card__content">
               <i class="fa fa-users fa-3x" aria-hidden="true"></i>
               <p class="card__header">{{'home-main.part3-card2' | translate}}</p>
-              <button class="card__button">{{'home-main.readnow' | translate}}</button>
+              <button (click)="goCTwiki()" href="https://github.com/cloudtides/CloudTides/wiki" class="card__button">{{'home-main.readnow' | translate}}</button>
             </div>
           </div>
   
@@ -263,7 +263,7 @@
             <div class="card__content">
               <i class="fa fa-globe fa-3x" aria-hidden="true"></i>
               <p class="card__header">{{'home-main.part3-card3' | translate}}</p>
-              <button class="card__button">{{'home-main.readnow' | translate}}</button>
+              <button (click)="goCTwiki()" class="card__button">{{'home-main.readnow' | translate}}</button>
             </div>
           </div>
 

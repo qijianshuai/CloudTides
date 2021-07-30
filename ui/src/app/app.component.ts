@@ -57,6 +57,10 @@ export class AppComponent implements OnInit {
     })
   }
 
+  routeToVcpp() {
+    this.router.navigate(['/vcpp'])
+  }
+
   reloadCurrentPage() {
     window.location.reload();
     }

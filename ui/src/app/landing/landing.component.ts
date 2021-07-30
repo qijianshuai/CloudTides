@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'tide-landing',
@@ -7,7 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LandingComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    readonly appcomponent: AppComponent,
+  ) { }
+
+  goCTwiki(){
+    window.location.href = 'https://github.com/cloudtides/CloudTides/wiki'
+  }
 
   ngOnInit(): void {
   }
