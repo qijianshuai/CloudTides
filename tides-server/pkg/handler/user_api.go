@@ -44,7 +44,7 @@ func SendVerificationHandler(params user.SendVerificationParams) middleware.Resp
   m := gomail.NewMessage()
 	m.SetHeader("From", OFFICIAL_EMAIL)
 	// m.SetHeader("To", u.Email)
-  m.SetHeader("To", u.email)
+  m.SetHeader("To", u.Email)
   fmt.Println(code)
 	m.SetHeader("Subject", "CloudTides Verification Code")
 	m.SetBody("text/plain", "Your are resetting your password. Your verification code is: " + code)
