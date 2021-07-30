@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"strconv"
 	"time"
+  "os"
+  "github.com/joho/godotenv"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/go-openapi/runtime/middleware"
@@ -17,10 +19,12 @@ import (
 	gomail "gopkg.in/mail.v2"
 	"github.com/sethvargo/go-password/password"
 )
-const OFFICIAL_EMAIL = "cloudtest2021abc@gmail.com"
-const OFFICIAL_PASSWORD = "cloudtides"
+
 
 func SendVerificationHandler(params user.SendVerificationParams) middleware.Responder {
+  godotenv.Load("/.env")
+  OFFICIAL_EMAIL := os.Getenv("OFFICIAL_EMAIL")
+  OFFICIAL_PASSWORD := os.Getenv("OFFICIAL_PASSWORD")
 	fmt.Println("verification entered!")
 	// uid, _ := ParseUserIDFromToken(params.HTTPRequest)
 	body := params.ReqBody
@@ -248,6 +252,9 @@ func UpdateUserProfileHandler(params user.UpdateUserProfileParams) middleware.Re
 }
 
 func AddUserHandler(params user.AddUserParams) middleware.Responder {
+  godotenv.Load("/.env")
+  OFFICIAL_EMAIL := os.Getenv("OFFICIAL_EMAIL")
+  OFFICIAL_PASSWORD := os.Getenv("OFFICIAL_PASSWORD")
 	if !VerifyUser(params.HTTPRequest) {
 		return user.NewAddUserUnauthorized()
 	}
