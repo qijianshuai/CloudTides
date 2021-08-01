@@ -87,7 +87,7 @@ func UserLoginHandler(params user.UserLoginParams) middleware.Responder {
 	signedToken, _ := token.SignedString([]byte(secretKey))
 
 	res := user.UserLoginOKBodyUserInfo{Priority: queryUser.Priority, Username: queryUser.Username,
-		Orgname: queryUser.OrgName, PwReset: fmt.Sprintf("%t", queryUser.PwReset), Role: queryUser.Role}
+		OrgName: queryUser.OrgName, PwReset: fmt.Sprintf("%t", queryUser.PwReset), Role: queryUser.Role}
 
 	return user.NewUserLoginOK().WithPayload(&user.UserLoginOKBody{Token: signedToken, UserInfo: &res})
 }

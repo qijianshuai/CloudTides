@@ -631,7 +631,7 @@ paths:
                       - 'High'
                   username:
                     type: string
-                  orgname:
+                  orgName:
                     type: string
                   pwReset:
                     type: string

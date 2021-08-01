@@ -2467,7 +2467,7 @@ func init() {
                 "userInfo": {
                   "type": "object",
                   "properties": {
-                    "orgname": {
+                    "orgName": {
                       "type": "string"
                     },
                     "priority": {
@@ -5797,7 +5797,7 @@ func init() {
                 "userInfo": {
                   "type": "object",
                   "properties": {
-                    "orgname": {
+                    "orgName": {
                       "type": "string"
                     },
                     "priority": {
@@ -7311,7 +7311,7 @@ func init() {
     "UserLoginOKBodyUserInfo": {
       "type": "object",
       "properties": {
-        "orgname": {
+        "orgName": {
           "type": "string"
         },
         "priority": {
