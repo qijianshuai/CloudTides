@@ -610,7 +610,7 @@ paths:
           schema:
             type: object
             properties:
-              username:
+              userName:
                 type: string
               password:
                 type: string

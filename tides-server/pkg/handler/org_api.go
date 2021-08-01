@@ -22,8 +22,8 @@ func AddOrgHandler(params org.AddOrgParams) middleware.Responder {
 	}
 	var orgOld models.Org;
 	if db.Unscoped().Where("org_name = ?", body.Name).First(&orgOld).RowsAffected == 1 {
-		//delete user permently when new user created
-		db.Unscoped().Delete(&orgOld)
+		//if new org name is the same as old one, just forbid it
+		return org.NewAddOrgUnauthorized()
 	}
 	if db.Create(&newOrg).Error != nil {
 		return org.NewAddOrgUnauthorized()

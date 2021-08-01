@@ -66,7 +66,7 @@ func UserLoginHandler(params user.UserLoginParams) middleware.Responder {
 
 	db := config.GetDB()
 	var queryUser models.User
-	db.Where("Username = ?", body.Username).First(&queryUser)
+	db.Where("Username = ?", body.UserName).First(&queryUser)
 	if queryUser.Username == "" {
 		return user.NewUserLoginUnauthorized()
 	} else if queryUser.Password != body.Password {
