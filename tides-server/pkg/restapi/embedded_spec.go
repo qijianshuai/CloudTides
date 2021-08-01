@@ -2448,7 +2448,7 @@ func init() {
                 "password": {
                   "type": "string"
                 },
-                "userName": {
+                "username": {
                   "type": "string"
                 }
               }
@@ -5778,7 +5778,7 @@ func init() {
                 "password": {
                   "type": "string"
                 },
-                "userName": {
+                "username": {
                   "type": "string"
                 }
               }

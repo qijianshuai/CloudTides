@@ -69,8 +69,8 @@ type UserLoginBody struct {
 	// password
 	Password string `json:"password,omitempty"`
 
-	// user name
-	UserName string `json:"userName,omitempty"`
+	// username
+	Username string `json:"username,omitempty"`
 }
 
 // Validate validates this user login body
