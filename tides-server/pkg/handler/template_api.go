@@ -207,7 +207,7 @@ func ListVMTemplateHandler(params vmtemp.ListVMTempParams) middleware.Responder 
 
 	for _, vmt := range vmtemps {
 		newItem := vmtemp.ListVMTempOKBodyItems0{
-			ID: int64(vmt.ID),
+			ID:   int64(vmt.ID),
 			Name: vmt.VMName,
 			Vmem: int64(vmt.VMem),
 			Vcpu: int64(vmt.VCPU),

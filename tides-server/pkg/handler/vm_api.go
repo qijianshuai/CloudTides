@@ -21,17 +21,17 @@ func ListVMHandler(params vm.ListVMParams) middleware.Responder {
 
 	for _, VM := range VMs {
 		newItem := vm.ListVMOKBodyItems0{
-			Disk: int64(VM.Disk),
-			Vmem: int64(VM.VMem),
-			Vcpu: int64(VM.VCPU),
-			ID: int64(VM.ID),
-			IPAddress: VM.IPAddress,
+			Disk:              int64(VM.Disk),
+			Vmem:              int64(VM.VMem),
+			Vcpu:              int64(VM.VCPU),
+			ID:                int64(VM.ID),
+			IPAddress:         VM.IPAddress,
 			ExternalIPAddress: VM.ExternalIPAddress,
-			Name: VM.Name,
-			Username: VM.UserName,
-			Password: VM.PassWord,
-			Status: VM.Status,
-			UsedMoney: VM.UsedMoney,
+			Name:              VM.Name,
+			Username:          VM.UserName,
+			Password:          VM.PassWord,
+			Status:            VM.Status,
+			UsedMoney:         VM.UsedMoney,
 		}
 		result = append(result, &newItem)
 	}

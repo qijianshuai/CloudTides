@@ -36,6 +36,9 @@ type Vapp struct {
 	Status string `json:"status"`
 
 	VMs []VMachine
+
+// 	// vappID
+// 	VappID uint `gorm:"primary_key" json:"vappID,omitempty"`
 }
 
 // Validate validates this VM

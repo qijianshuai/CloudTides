@@ -5,6 +5,7 @@ package restapi
 import (
 	"crypto/tls"
 	"net/http"
+	"tides-server/pkg/restapi/operations/org"
 	"tides-server/pkg/restapi/operations/port"
 	"tides-server/pkg/restapi/operations/vapp"
 	"tides-server/pkg/restapi/operations/vendor_swagger"
@@ -81,6 +82,10 @@ func configureAPI(api *operations.CloudTidesAPI) http.Handler {
 
 	api.UserUserLoginHandler = user.UserLoginHandlerFunc(handler.UserLoginHandler)
 
+	api.UserResetPasswordHandler = user.ResetPasswordHandlerFunc(handler.ResetPasswordHandler)
+
+	api.UserSendVerificationHandler = user.SendVerificationHandlerFunc(handler.SendVerificationHandler)
+
 	api.ResourceValidateVsphereResourceHandler = resource.ValidateVsphereResourceHandlerFunc(handler.ValidateVsphereResourceHandler)
 
 	api.ProjectAddProjectHandler = project.AddProjectHandlerFunc(handler.AddProjectHandler)
@@ -140,6 +145,22 @@ func configureAPI(api *operations.CloudTidesAPI) http.Handler {
 	api.PreServerShutdown = func() {}
 
 	api.ServerShutdown = func() {}
+
+	api.OrgAddOrgHandler = org.AddOrgHandlerFunc(handler.AddOrgHandler)
+
+	api.OrgListOrgHandler= org.ListOrgHandlerFunc(handler.ListOrgHandler)
+
+	api.OrgDeleteOrgHandler= org.DeleteOrgHandlerFunc(handler.DeleteOrgHandler)
+
+	api.UserAddUserHandler = user.AddUserHandlerFunc(handler.AddUserHandler)
+
+	api.UserDeleteUserHandler = user.DeleteUserHandlerFunc(handler.DeleteUserHandler)
+
+	api.UserListUserHandler = user.ListUserHandlerFunc(handler.ListUserHandler)
+
+	api.UserListUserOfOrgHandler = user.ListUserOfOrgHandlerFunc(handler.ListUserOfOrgHandler)
+
+	api.UserModifyUserHandler = user.ModifyUserHandlerFunc(handler.ModifyUserHandler)
 
 	return setupGlobalMiddleware(api.Serve(setupMiddlewares))
 }
