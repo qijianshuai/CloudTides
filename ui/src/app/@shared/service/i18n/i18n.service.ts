@@ -18,7 +18,7 @@ export class I18nService {
 
   resetLanguage(): any {
     if (!localStorage.getItem(LOCAL_STORAGE_KEY.I18N)) {
-      localStorage.setItem(LOCAL_STORAGE_KEY.I18N, 'en');
+      localStorage.setItem(LOCAL_STORAGE_KEY.I18N, 'zh-CN');
     }
     this.i18nChoice = localStorage.getItem(LOCAL_STORAGE_KEY.I18N);
   }
@@ -32,4 +32,9 @@ export class I18nService {
     localStorage.setItem(LOCAL_STORAGE_KEY.I18N, this.i18nChoice);
     this.translate.use(this.i18nChoice);
   }
+
+  useLanguage(language: string): void {
+    this.translate.use(language)
+  }
+
 }

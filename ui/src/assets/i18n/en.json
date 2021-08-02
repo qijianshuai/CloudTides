@@ -1,8 +1,56 @@
 {
+  "language-name":{
+    "name" : "English",
+    "cn" : "简体中文",
+    "en" : "英语"
+  },  
+  "nav": {
+    "title":"OpenCloudService",
+    "first": "Home",
+    "second": "VCPP",
+    "third" : "VIN",
+    "fourth" : "CloudTides",
+    "fifth" : "News",
+    "sixth" : "About Us"
+  },
+  "home-main": {
+    "main-1":"提升VCPP云端资源",
+    "main-2":"加速VIN伙伴事业",
+    "main-3":"助力公益 持续发展",
+    "card-1": "了解更多VCPP",
+    "card-2": "了解更多VIN创新网络",
+    "card-3": "了解更多企云公益",
+    "part1-title": "为VCPP提供更多云端服务",
+    "part1-card1": "丰富企业级应用目录",
+    "part1-card2": "加速数字化转型",
+    "part1-card3": "触及更多新客户新行业",
+    "part2-card1": "企业级应用快速上云",
+    "part2-card2": "一键部署演示环境",
+    "part2-card3": "拓展销售渠道",
+    "part3-card1": "提升资源利用率",
+    "part3-card2": "参与公益科研",
+    "part3-card3": "ESG",
+    "part2-title": "加快VIN合作伙伴的业务发展",
+    "part3-title": "助力公益 提升企业社会形象",
+    "readnow": "了解更多",
+    "wait": "敬请期待"
+  },
+  "vcpp-main":{
+    "part1-title": "VCPP - Vmware Cloud Provider Program",
+    "part1-content": "The VMware Cloud Provider Program is comprised of VMware software-as-a-service offerings and our global ecosystem of VMware Service Provider Partners. It is the ideal solution for all companies that offer hosted services to third parties, including infrastructure as a service (IaaS) providers, cloud service providers (CSPs), application service providers (ASPs), Internet service providers (ISPs) and platform as a service (PaaS) providers.",
+    "part1-list1": "VMware Cloud Provider Program Overview",
+    "part1-list2": "VMware Cloud Provider Program Guide",
+    "part1-list3": "VMware Cloud Provider Managed Services Provider",
+    "part2-title": "Vmware Cloud Verified Provider",
+    "part2-content": "Featuring the VMware Cloud Verified logo in your marketing campaigns and content signals to your customers and prospects that your foundational cloud technologies and services are based on VMware Cloud Infrastructure.",
+    "part3-title": "大中华区VCPP名录",
+    "part3-learnmore": "more.."
+  },
   "LOGIN": {
     "SUBMITTING": "Submitting...",
     "LOGIN": "Login",
     "LOGIN_TITLE": "CloudTides 云汐",
+    "USERNAME":"Username",
     "EMAIL": "Email",
     "PASSWORD": "Password",
     "SIGNUP": "Sign up"
@@ -29,6 +77,23 @@
     "COMPANY": "Company Name",
     "COMPANY_MISSING": "Company Name is required",
     "SUBMITTING": "Register"
+  },
+  "RESET": {
+    "RESET": "Reset Password",
+    "USERNAME": "Username",
+    "USERNAME_MISSING": "Username is required",
+    "USERNAME_TOO_SHORT": "Username is too short",
+    "PASSWORD": "Password",
+    "NEW_PASSWORD": "New Password",
+    "CONFIRMED_PASSWORD": "Confirm Password",
+    "PASSWORD_MISSING": "Password is required",
+    "PASSWORD_TOO_SHORT": "Password is too short",
+    "PASSWORD_TOO_LONG": "Password is too long",
+    "PASSWORD_CONFIRM": "Confirm Password",
+    "PASSWORD_NOT_MATCH": "Password does not match",
+    "VERIFICATION_CODE": "Verification code emailed",
+    "VERIFICATION_MISSING": "Verification code is required",
+    "SUBMITTING": "Reset"
   },
   "HOME": {
     "RESOURCE": {

@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"strconv"
 	"time"
+  "os"
+  "github.com/joho/godotenv"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/go-openapi/runtime/middleware"
@@ -12,7 +14,96 @@ import (
 
 	"tides-server/pkg/config"
 	"tides-server/pkg/models"
+
+	"crypto/tls"
+	gomail "gopkg.in/mail.v2"
+	"github.com/sethvargo/go-password/password"
 )
+
+
+func SendVerificationHandler(params user.SendVerificationParams) middleware.Responder {
+  godotenv.Load("/.env")
+  OFFICIAL_EMAIL := os.Getenv("OFFICIAL_EMAIL")
+  OFFICIAL_PASSWORD := os.Getenv("OFFICIAL_PASSWORD")
+	fmt.Println("verification entered!")
+	// uid, _ := ParseUserIDFromToken(params.HTTPRequest)
+	body := params.ReqBody
+  fmt.Println(body.Message)
+	db := config.GetDB()
+	var u models.User
+	if db.Where("username = ?", body.Message).First(&u).RowsAffected == 0 {
+		return user.NewSendVerificationBadRequest().WithPayload(&user.SendVerificationBadRequestBody {
+			Message: "null user",
+		})
+	}
+	code, _ := password.Generate(6,6,0,false,false)
+	u.Temp = code
+	err := db.Save(&u).Error
+	if err != nil {
+		return user.NewSendVerificationBadRequest().WithPayload(&user.SendVerificationBadRequestBody{
+			Message: err.Error(),
+		})
+	}
+  
+  m := gomail.NewMessage()
+	m.SetHeader("From", OFFICIAL_EMAIL)
+	// m.SetHeader("To", u.Email)
+  m.SetHeader("To", u.Email)
+  fmt.Println(code)
+	m.SetHeader("Subject", "CloudTides Verification Code")
+	m.SetBody("text/plain", "Your are resetting your password. Your verification code is: " + code)
+	d := gomail.NewDialer("smtp.gmail.com", 587, OFFICIAL_EMAIL, OFFICIAL_PASSWORD)
+	d.TLSConfig = &tls.Config{InsecureSkipVerify: true}
+	if err := d.DialAndSend(m); err != nil {
+		fmt.Println(err)
+		panic(err)
+	}
+	fmt.Println("success!!!")
+
+	return user.NewSendVerificationOK().WithPayload(&user.SendVerificationOKBody {
+		Message:"success",
+	})
+
+
+}
+
+// ResetPasswordHandler is the API for /users/reset POST
+func ResetPasswordHandler(params user.ResetPasswordParams) middleware.Responder {
+  fmt.Println("entered!")
+  body := params.ReqBody
+  db := config.GetDB()
+  var u models.User
+//   fmt.Println(body.Username + ", " + body.Password + ", " + body.NewPassword)
+  if db.Where("username = ?", body.Username).First(&u).RowsAffected == 0 {
+		return user.NewResetPasswordBadRequest().WithPayload(&user.ResetPasswordBadRequestBody{
+      Message: "null user",
+    })
+	}
+
+  if u.Password != body.Password {
+    return user.NewResetPasswordBadRequest().WithPayload(&user.ResetPasswordBadRequestBody{
+      Message: "wrong password",
+    })
+  }
+  // u.Temp = "111111"
+  if u.Temp != body.VerificationCode {
+    return user.NewResetPasswordBadRequest().WithPayload(&user.ResetPasswordBadRequestBody{
+      Message: "wrong verification code",
+    })
+  }
+
+  u.Password = body.NewPassword
+  u.PwReset = true
+  err := db.Save(&u).Error
+	if err != nil {
+		return user.NewResetPasswordBadRequest().WithPayload(&user.ResetPasswordBadRequestBody{
+			Message: err.Error(),
+		})
+	}
+  return user.NewResetPasswordOK().WithPayload(&user.ResetPasswordOKBody{
+    Message: "success",
+  })
+}
 
 // RegisterUserHandler is API handler for /users/register POST
 func RegisterUserHandler(params user.RegisterUserParams) middleware.Responder {
@@ -36,6 +127,7 @@ func RegisterUserHandler(params user.RegisterUserParams) middleware.Responder {
 		Position:    body.Position,
 		Priority:    models.UserPriorityLow,
 		Username:    body.Username,
+    PwReset:     false,
 	}
 
 	err := db.Create(&newUser).Error
@@ -154,12 +246,17 @@ func UpdateUserProfileHandler(params user.UpdateUserProfileParams) middleware.Re
 		})
 	}
 
+	
+
 	return user.NewUpdateUserProfileOK().WithPayload(&user.UpdateUserProfileOKBody{
 		Message: "success",
 	})
 }
 
 func AddUserHandler(params user.AddUserParams) middleware.Responder {
+  godotenv.Load("/.env")
+  OFFICIAL_EMAIL := os.Getenv("OFFICIAL_EMAIL")
+  OFFICIAL_PASSWORD := os.Getenv("OFFICIAL_PASSWORD")
 	if !VerifyUser(params.HTTPRequest) {
 		return user.NewAddUserUnauthorized()
 	}
@@ -181,6 +278,10 @@ func AddUserHandler(params user.AddUserParams) middleware.Responder {
 			Message: "Org Name Invalid.",
 		})
 	}
+	
+	pw, _ := password.Generate(10, 4, 0, false, false)
+  code, _ := password.Generate(6,6,0,false,false)
+	fmt.Println("password generated!!!")
 	newUser := models.User{
 		Username: body.Name,
 		Role:     body.Role,
@@ -188,6 +289,8 @@ func AddUserHandler(params user.AddUserParams) middleware.Responder {
 		PwReset:  false,
 		Phone:    body.Phone,
 		OrgName:    body.OrgName,
+		Password:	pw,
+    Temp:     code,
 	}
 	var userOld models.User;
 	if db.Unscoped().Where("username = ?", body.Name).First(&userOld).RowsAffected == 1 {
@@ -206,10 +309,25 @@ func AddUserHandler(params user.AddUserParams) middleware.Responder {
 		Time: time.Now(),
 		Status: "Succeed",
 	}
+	fmt.Println("test add user!!!")
+	fmt.Println("start send!!!")
+	m := gomail.NewMessage()
+	m.SetHeader("From", OFFICIAL_EMAIL)
+	m.SetHeader("To", body.Email)
+	m.SetHeader("Subject", "CloudTides Default Password")
+	m.SetBody("text/plain", "CloudTides has registered an account for you. Your login password for CloudTides is: " + pw + "\nPlease login to CloudTides platform and reset the password. Your verification code is: " + code)
+	fmt.Println("m set!!!")
+	d := gomail.NewDialer("smtp.gmail.com", 587, OFFICIAL_EMAIL, OFFICIAL_PASSWORD)
+	d.TLSConfig = &tls.Config{InsecureSkipVerify: true}
+	if err := d.DialAndSend(m); err != nil {
+		fmt.Println(err)
+		panic(err)
+	}
+	fmt.Println("success!!!")
+
 	if db.Create(&newLog).Error != nil {
 		return user.NewModifyUserForbidden()
 	}
-
 	return user.NewAddUserOK().WithPayload(&user.AddUserOKBody{
 		Message: "succeed",
 	})
@@ -263,6 +381,8 @@ func ListUserOfOrgHandler(params user.ListUserOfOrgParams) middleware.Responder 
 
 
 func ModifyUserHandler(params user.ModifyUserParams) middleware.Responder {
+	OFFICIAL_EMAIL := os.Getenv("OFFICIAL_EMAIL")
+  	OFFICIAL_PASSWORD := os.Getenv("OFFICIAL_PASSWORD")
 	if !VerifyUser(params.HTTPRequest) {
 		return user.NewModifyUserUnauthorized()
 	}
@@ -298,6 +418,22 @@ func ModifyUserHandler(params user.ModifyUserParams) middleware.Responder {
 	if db.Create(&newLog).Error != nil {
 		return user.NewModifyUserForbidden()
 	}
+
+	fmt.Println("test update user!!!")
+	fmt.Println("start send!!!")
+	m := gomail.NewMessage()
+	m.SetHeader("From", OFFICIAL_EMAIL)
+	m.SetHeader("To", body.Email)
+	m.SetHeader("Subject", "CloudTides User Information Updated")
+	m.SetBody("text/plain", "Your Cloudtides account has been updated. Your username is " + body.Name + " and your email is " + body.Email + ".")
+	fmt.Println("m set!!!")
+	d := gomail.NewDialer("smtp.gmail.com", 587, OFFICIAL_EMAIL, OFFICIAL_PASSWORD)
+	d.TLSConfig = &tls.Config{InsecureSkipVerify: true}
+	if err := d.DialAndSend(m); err != nil {
+		fmt.Println(err)
+		panic(err)
+	}
+	fmt.Println("success!!!")
 
 	return user.NewModifyUserOK().WithPayload(&user.ModifyUserOKBody{
 		Message: "success",

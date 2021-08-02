@@ -10,6 +10,11 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppRoutingModule, declarations, providers } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { I18nService } from '@tide-shared/service/i18n';
+import { LandingComponent } from './landing/landing.component';
+import { MyLandingFooterComponent } from './layout/my-landing-footer/my-landing-footer.component';
+import { VinComponent } from './vin/vin.component';
+import { VcppComponent } from './vcpp/vcpp.component';
+import { ResetComponent } from './reset/reset.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -17,10 +22,15 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [
+  declarations: [	
     AppComponent,
     ...declarations,
-  ],
+    LandingComponent,
+    MyLandingFooterComponent,
+    VinComponent,
+    VcppComponent,
+      ResetComponent
+   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

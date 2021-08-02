@@ -29,8 +29,18 @@
           clrInput />
       </clr-input-container>
 
+      <clr-input-container *ngIf=this.loginService.inOrgAdminView()>
+        <label for="orgName1">Orgnization</label>
+        <input id="orgName1"
+          class="clr-col-12 clr-col-md-8"
+          type="text"
+          formControlName="orgName"
+          clrInput 
+          readonly="readonly"/>
+      </clr-input-container>
 
-      <clr-select-container>
+
+      <clr-select-container *ngIf=this.loginService.inSiteAdminView()>
         <label for="orgName">Orgnization</label>
         <select
           clrSelect
@@ -41,8 +51,10 @@
           <option *ngFor="let item of orgNames"
             [ngValue]="item"> {{ item }}</option>
         </select>
-        <clr-control-error>{{ "HOME.RESOURCE.DIALOG.REQUIRED" | translate:{item: 'Username'} }}</clr-control-error>
+        <clr-control-error>{{ "HOME.RESOURCE.DIALOG.REQUIRED" | translate:{item: 'Orgnization'} }}</clr-control-error>
       </clr-select-container>
+
+     
 
       <clr-select-container>
         <label for="role">Role</label>
@@ -53,9 +65,9 @@
           formControlName="role"
         >
         <option *ngFor="let role of roleTypeList"
-          [ngValue]="roleType[role]"> {{ role }}</option>
+          [ngValue]=role> {{ roleType[role] }}</option>
         </select>
-        <clr-control-error>{{ "HOME.RESOURCE.DIALOG.REQUIRED" | translate:{item: 'orgnization'} }}</clr-control-error>
+        <clr-control-error>{{ "HOME.RESOURCE.DIALOG.REQUIRED" | translate:{item: 'Role'} }}</clr-control-error>
       </clr-select-container>
 
       <clr-input-container>

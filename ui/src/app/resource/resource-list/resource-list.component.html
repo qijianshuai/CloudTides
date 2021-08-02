@@ -55,7 +55,7 @@
         <button
           class="btn btn-sm btn-link"
           (click)="this.activate(item.id)"
-          *ngIf="this.loginService.inAdminView()"
+          *ngIf="this.loginService.inSiteAdminView()||this.loginService.inOrgAdminView"
         >{{ "HOME.RESOURCE.CARD.FOOTER.ACTIVATE" | translate:{} }}</button>
         <button
           class="btn btn-sm btn-link"
