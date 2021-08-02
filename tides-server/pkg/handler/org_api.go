@@ -16,14 +16,17 @@ func AddOrgHandler(params org.AddOrgParams) middleware.Responder {
 	uid, _ := ParseUserIDFromToken(params.HTTPRequest)
 	body := params.ReqBody
 	db := config.GetDB()
-
-	newOrg := models.Org{
-		OrgName: body.Name,
-	}
 	var orgOld models.Org;
-	if db.Unscoped().Where("org_name = ?", body.Name).First(&orgOld).RowsAffected == 1 {
+	if db.Where("org_name = ?", body.Name).First(&orgOld).RowsAffected == 1 {
 		//if new org name is the same as old one, just forbid it
 		return org.NewAddOrgUnauthorized()
+	}
+	if db.Unscoped().Where("org_name = ?", body.Name).First(&orgOld).RowsAffected == 1 {
+		// if repeat with deleted org, just delete it
+		db.Unscoped().Delete(&orgOld)
+	}
+	newOrg := models.Org{
+		OrgName: body.Name,
 	}
 	if db.Create(&newOrg).Error != nil {
 		return org.NewAddOrgUnauthorized()
@@ -55,7 +58,7 @@ func ListOrgHandler(params org.ListOrgParams) middleware.Responder {
 	for _, tmpOrg := range orgs {
 		// get resource id  from resource new table
 		var resources []*models.ResourceNew
-		db.Where("org_id = ? ", tmpOrg.ID).Find(&resources)
+		db.Where("org_id = ? ", tmpOrg.ID).Order("id").Find(&resources)
 		var totalCpu, totalRAM, totalDisk, curCpu, curRAM, curDisk float64
 		for _, tmpRes :=  range resources{
 			var resUsages models.ResourceUsage
