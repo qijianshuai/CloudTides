@@ -30,6 +30,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const data = get(next, 'data', {}) as RouterData;
+    console.log(data)
 
     if (data.anonymous === true) {
       return true;

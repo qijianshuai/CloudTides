@@ -594,6 +594,39 @@ paths:
             properties:
               message:
                 type: string
+  /users/reset/verify:
+    post:
+      operationId: 'sendVerification'
+      description: 'send verification'
+      tags:
+        - 'user'
+      produces:
+        - 'application/json'
+      consumes:
+        - 'application/json'
+      parameters:
+        - in: body
+          name: reqBody
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+      responses:
+        200:
+          description: 'OK'
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+        400:
+          description: 'bad request'
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
   /users/login:
     post:
       operationId: 'userLogin'
@@ -648,6 +681,46 @@ paths:
                 type: string
                 enum:
                   - 'Unauthorized'
+
+  /users/reset:
+    post:
+      operationId: 'resetPassword'
+      description: 'reset password'
+      tags:
+        - 'user'
+      produces:
+        - 'application/json'
+      consumes:
+        - 'application/json'
+      parameters:
+        - in: body
+          name: reqBody
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+              password:
+                type: string
+              newPassword:
+                type: string
+              verificationCode:
+                type: string
+      responses:
+        200:
+          description: 'OK'
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+        400:
+          description: 'bad request'
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
   /users/register:
     post:
       operationId: 'registerUser'

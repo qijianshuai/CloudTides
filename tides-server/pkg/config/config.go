@@ -18,6 +18,8 @@ var (
 
 const (
 	URLSuffix = "cloudtides.vthink.cloud"
+	ROLE_HIGHEST = "SITE_ADMIN"
+	ORG_HIGHEST = "SITE"
 )
 
 func init() {
@@ -102,9 +104,16 @@ func CreateAdmin() {
 			Username: config.AdminUser,
 			Password: config.AdminPassword,
 			Priority: models.UserPriorityHigh,
+			Role: ROLE_HIGHEST,
+			OrgName: ORG_HIGHEST,
+			PwReset: true,
 		}
 		db.Create(&admin)
 	}
+
+	db.Create(&models.Org{
+		OrgName: ORG_HIGHEST,
+	})
 }
 
 // TemplateSetup sets up a VM template instance
@@ -118,6 +127,7 @@ func TemplateSetup() {
 			Name:             "tides-boinc-attached",
 			ProvisionedSpace: 16,
 			VMName:           "tides-gromacs",
+			
 		}
 		db.Create(&newTem)
 	}

@@ -1,6 +1,7 @@
 // Path Name
 export const LOGIN_PATH_NAME = 'login';
 export const REGISTER_PATH_NAME = 'register';
+export const RESET_PATH_NAME = 'reset';
 export const HOME_PATH_NAME = 'home';
 export const RESOURCE_PATH_NAME = 'resource';
 export const POLICY_PATH_NAME = 'policy';
@@ -21,6 +22,10 @@ export const LOGIN_API_URL = `/users/login`;
 
 export const REGISTER_PATH = `/register`;
 export const REGISTER_API_URL = `/users/register`;
+
+export const RESET_PATH = `/reset`;
+export const RESET_API_URL = `/users/reset`;
+export const RESET_VERIFY_API_URL = `/users/reset/verify`;
 
 export const PROFILE_API_URL = `/users/profile`;
 

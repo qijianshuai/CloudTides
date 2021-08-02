@@ -82,6 +82,10 @@ func configureAPI(api *operations.CloudTidesAPI) http.Handler {
 
 	api.UserUserLoginHandler = user.UserLoginHandlerFunc(handler.UserLoginHandler)
 
+	api.UserResetPasswordHandler = user.ResetPasswordHandlerFunc(handler.ResetPasswordHandler)
+
+	api.UserSendVerificationHandler = user.SendVerificationHandlerFunc(handler.SendVerificationHandler)
+
 	api.ResourceValidateVsphereResourceHandler = resource.ValidateVsphereResourceHandlerFunc(handler.ValidateVsphereResourceHandler)
 
 	api.ProjectAddProjectHandler = project.AddProjectHandlerFunc(handler.AddProjectHandler)

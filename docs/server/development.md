@@ -23,6 +23,8 @@ POSTGRES_DB=
 ADMIN_USER=
 ADMIN_PASSWORD=
 SECRET_KEY=
+OFFICIAL_EMAIL=
+OFFICIAL_PASSWORD=
 ```
 
 If running in local environment, `SERVER_IP` and `POSTGRES_HOST` would be `localhost`. Then start the server:

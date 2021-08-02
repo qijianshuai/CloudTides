@@ -11,11 +11,16 @@ export const resTypes = {
 };
 
 export const roleTypes = {
-  SiteAdmin: 'SiteAdmin',
-  OrgAdmin: 'OrgAdmin',
-  User: 'User',
+  SITE_ADMIN: 'Site Admin',
+  ORG_ADMIN: 'Org Admin',
+  USER: 'User',
+};
+
+export const roleTypes4Org = {
+  ORG_ADMIN: 'Org Admin',
+  USER: 'User',
 };
 
 export const defaultResType = resTypes.Fixed;
-export const defaultRoleType4Site = roleTypes.OrgAdmin;
-export const defaultRoleType4Org = roleTypes.User;
+export const defaultRoleType4Site = 'ORG_ADMIN';
+export const defaultRoleType4Org = 'USER';

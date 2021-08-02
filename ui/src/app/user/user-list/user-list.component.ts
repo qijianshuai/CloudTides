@@ -4,6 +4,7 @@ import { Item, UserService } from '../user.service';
 import { TranslateService } from '@ngx-translate/core';
 import { NOTIFICATION_EXIST_TIME, RESOURCE_USAGE_REFRESH_PERIOD } from '@tide-config/const';
 import { LoginService } from 'src/app/login/login.service';
+import { roleTypes, roleTypes4Org } from '@tide-config/cloudPlatform';
 
 @Component({
   selector: 'tide-user-list',
@@ -17,6 +18,7 @@ export class UserListComponent implements OnInit, OnDestroy {
     public readonly translate: TranslateService,
     public readonly loginService: LoginService,
   ) {
+    this.roleTypes = loginService.inSiteAdminView ? roleTypes: roleTypes4Org;
 
   }
 
@@ -53,9 +55,12 @@ export class UserListComponent implements OnInit, OnDestroy {
   UpdateOpened = false;
   UserId = 1;
   updateName: string;
+  updateOrg: string;
   updateRole: string;
   updateEmail: string;
   updatePhone: string;
+  roleTypes: any;
+
 
 
   async save() {
@@ -64,6 +69,7 @@ export class UserListComponent implements OnInit, OnDestroy {
 
   cancel() {
     this.opened = false;
+    this.UpdateOpened = false;
   }
 
   async ngOnInit() {
@@ -71,19 +77,23 @@ export class UserListComponent implements OnInit, OnDestroy {
   }
 
   async refreshList() {
-    this.list$ = of(await this.userService.getUserList());
+    this.list$ = this.loginService.inSiteAdminView() ? of(await this.userService.getUserList()) : of(await this.userService.getUserList4Org(localStorage.getItem('orgName')));
     this.refreshInterval = window.setInterval(async () => {
-      this.list$ = of(await this.userService.getUserList());
+      this.list$ = this.loginService.inSiteAdminView() ? of(await this.userService.getUserList()) : of(await this.userService.getUserList4Org(localStorage.getItem('orgName')));
     }, RESOURCE_USAGE_REFRESH_PERIOD);
-    this.orgList = Object(await this.userService.getOrgList())
+    if (this.loginService.inSiteAdminView()){
+      this.orgList = Object(await this.userService.getOrgList());
+    }
   }
 
-  async displayDetail(id: number, name: string, role:string, email: string, phone: string){
+  async displayDetail(id: number, name: string, org: string, role:string, email: string, phone: string){
     this.UserId = id;
     this.updateName = name;
+    this.updateOrg = org;
     this.updateRole = role;
     this.updateEmail = email;
     this.updatePhone = phone;
+    this.UpdateOpened = true;
   }
 
   ngOnDestroy(): void {

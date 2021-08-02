@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { LoginService } from './login/login.service';
 import { RegisterComponent } from './register/register.component';
+import { ResetComponent } from './reset/reset.component';
 
 import {
   LOGIN_PATH_NAME,
@@ -12,18 +13,48 @@ import {
   TEMPLATE_PATH_NAME,
   POLICY_PATH_NAME,
   REGISTER_PATH_NAME,
+  RESET_PATH_NAME,
   VENDOR_PATH_NAME,
   VAPP_PATH_NAME,
   ORG_PATH_NAME,
   USER_PATH_NAME
 } from '@tide-config/path';
 
+
 import { AuthGuard } from '@tide-guard/auth.guard';
 import { RegisterService } from './register/register.service';
+import { ResetService } from './reset/reset.service';
+import { LandingComponent } from './landing/landing.component';
+import { VinComponent } from './vin/vin.component';
+import { VcppComponent } from './vcpp/vcpp.component';
 
 const routes: Routes = [
+  { 
+    path: '', 
+    pathMatch: 'full',
+    redirectTo: 'home'
+  },
   {
-    path: '',
+    path: 'home',
+    component: LandingComponent
+  },
+  {
+    path: 'vin',
+    component: VinComponent
+  },
+  {
+    path: 'vcpp',
+    component: VcppComponent
+  },
+  {
+    path: LOGIN_PATH_NAME,
+    component: LoginComponent,
+    data: {
+      anonymous: true,
+    } as RouterData,
+  },
+  {
+    path: 'cloudtides',
     canActivateChild: [AuthGuard],
     children: [
       {
@@ -32,16 +63,23 @@ const routes: Routes = [
         // redirectTo: HOME_PATH_NAME,
         redirectTo: RESOURCE_PATH_NAME
       },
+      // {
+      //   path: LOGIN_PATH_NAME,
+      //   component: LoginComponent,
+      //   data: {
+      //     anonymous: true,
+      //   } as RouterData,
+      // },
       {
-        path: LOGIN_PATH_NAME,
-        component: LoginComponent,
+        path: REGISTER_PATH_NAME,
+        component: RegisterComponent,
         data: {
           anonymous: true,
         } as RouterData,
       },
       {
-        path: REGISTER_PATH_NAME,
-        component: RegisterComponent,
+        path: RESET_PATH_NAME,
+        component: ResetComponent,
         data: {
           anonymous: true,
         } as RouterData,
@@ -85,16 +123,23 @@ const routes: Routes = [
 export const declarations = [
   LoginComponent,
   RegisterComponent,
+  LandingComponent,
+  ResetComponent,
 ];
 
 export const providers = [
   AuthGuard,
   LoginService,
   RegisterService,
+  ResetService,
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {
+    scrollPositionRestoration: 'enabled',
+    anchorScrolling: 'enabled',
+    scrollOffset: [0, 0],
+  })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
