@@ -2,7 +2,7 @@
   [clrModalSize]="'lg'"
   [clrModalClosable]="false">
   <h3 class="modal-title">
-    Add User
+    {{ "HOME.USER.ADD_USER" | translate:{} }}
   </h3>
   <div class="modal-body">
     <form clrForm [formGroup]="this.userForm">
@@ -20,17 +20,17 @@
 
 
       <clr-input-container>
-        <label for="username">Username</label>
+        <label for="username">{{ "HOME.USER.DIALOG.USERNAME" | translate:{} }}</label>
         <input id="username"
           class="clr-col-12 clr-col-md-8"
           type="text"
-          [placeholder]="'Username'"
+          [placeholder]="'HOME.USER.DIALOG.USERNAME' | translate:{} "
           formControlName="name"
           clrInput />
       </clr-input-container>
 
       <clr-input-container *ngIf=this.loginService.inOrgAdminView()>
-        <label for="orgName1">Orgnization</label>
+        <label for="orgName1">{{ "HOME.USER.DIALOG.ORGANIZATION" | translate:{} }}</label>
         <input id="orgName1"
           class="clr-col-12 clr-col-md-8"
           type="text"
@@ -41,7 +41,7 @@
 
 
       <clr-select-container *ngIf=this.loginService.inSiteAdminView()>
-        <label for="orgName">Orgnization</label>
+        <label for="orgName">{{ "HOME.USER.DIALOG.ORGANIZATION" | translate:{} }}</label>
         <select
           clrSelect
           id="orgName"
@@ -57,7 +57,7 @@
      
 
       <clr-select-container>
-        <label for="role">Role</label>
+        <label for="role">{{ "HOME.USER.DIALOG.ROLE" | translate:{} }}</label>
         <select
           clrSelect
           id="role"
@@ -71,22 +71,22 @@
       </clr-select-container>
 
       <clr-input-container>
-        <label for="email">Email</label>
+        <label for="email">{{ "HOME.USER.DIALOG.EMAIL" | translate:{} }}</label>
         <input id="email"
           class="clr-col-12 clr-col-md-8"
           type="text"
-          [placeholder]="'Email'"
+          [placeholder]="'HOME.USER.DIALOG.EMAIL' | translate:{} "
           formControlName="email"
           clrInput />
           <clr-control-error *clrIfError="'email'">{{ 'REGISTER.EMAIL_WRONG_FORMAT' | translate:{} }}</clr-control-error>
       </clr-input-container>
 
       <clr-input-container>
-        <label for="phone">Phone</label>
+        <label for="phone">{{ "HOME.USER.DIALOG.PHONE" | translate:{} }}</label>
         <input id="phone"
           class="clr-col-12 clr-col-md-8"
           type="text"
-          [placeholder]="'Phone'"
+          [placeholder]="'HOME.USER.DIALOG.PHONE' | translate:{} "
           formControlName="phone"
           clrInput />
           <clr-control-error *clrIfError="'pattern'">Phone Number is not in the correct format</clr-control-error>

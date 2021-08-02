@@ -44,11 +44,11 @@
         <button
           class="btn btn-sm btn-link"
           (click)="this.displayDetail(item.id, item.name, item.orgName, item.role, item.email, item.phone)"
-        >Detail</button>
+        >{{ "HOME.USER.EDIT" | translate:{} }}</button>
         <button
           class="btn btn-sm btn-link"
           (click)="this.delete(item.id)"
-        >Delete</button>
+        >{{ "HOME.USER.DELETE" | translate:{} }}</button>
       </clr-dg-action-overflow>
       <clr-dg-cell><div class="value">{{item?.id}}</div></clr-dg-cell>
       <clr-dg-cell><div class="value">{{item?.name}}</div></clr-dg-cell>

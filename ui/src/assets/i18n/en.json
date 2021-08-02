@@ -193,13 +193,25 @@
         "CCPU": "CPU Usage",
         "CMEMORY": "Memory Usage",
         "CDISK": "Disk Usage"
-      }
+      },
+      "DIALOG":{
+        "NAME": "Name",
+        "NAME_PLACEHOLDER": "Org Name"
+      },
+      "DELETE":"Delete"
     },
     "USER":{
       "USER": "User",
       "ADD_USER": "Add User",
-      "UPGRADE": "Upgrade",
-      "DOWNGRADE": "Downgrade"
+      "DELETE": "Delete",
+      "EDIT": "Edit",
+      "DIALOG":{
+        "USERNAME": "Username",
+        "ORGANIZATION": "Organization",
+        "ROLE": "Role",
+        "EMAIL":"Email",
+        "PHONE":"Phone Number"
+      }
     },
     "PRODUCT_NAME": "CloudTides",
     "PROFILE": "Profile",

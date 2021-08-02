@@ -201,13 +201,25 @@
         "CCPU": "CPU使用量",
         "CMEMORY": "内存使用量",
         "CDISK": "存储使用量"
-      }
+      },
+      "DIALOG":{
+        "NAME": "名称",
+        "NAME_PLACEHOLDER": "组织名称"
+      },
+      "DELETE":"删除"
     },
     "USER":{
       "USER": "用户",
       "ADD_USER": "添加用户",
-      "UPGRADE": "升级",
-      "DOWNGRADE": "降级"
+      "DELETE":"删除",
+      "EDIT":"编辑用户",
+      "DIALOG":{
+        "USERNAME": "用户名",
+        "ORGANIZATION": "组织",
+        "ROLE": "职位",
+        "EMAIL": "邮箱",
+        "PHONE": "联系电话"
+      }
     },
     "PRODUCT_NAME": "云汐",
     "PROFILE": "个人信息",
