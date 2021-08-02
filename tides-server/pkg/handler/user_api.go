@@ -2,10 +2,10 @@ package handler
 
 import (
 	"fmt"
+	"github.com/joho/godotenv"
+	"os"
 	"strconv"
 	"time"
-  "os"
-  "github.com/joho/godotenv"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/go-openapi/runtime/middleware"
@@ -16,8 +16,8 @@ import (
 	"tides-server/pkg/models"
 
 	"crypto/tls"
-	gomail "gopkg.in/mail.v2"
 	"github.com/sethvargo/go-password/password"
+	gomail "gopkg.in/mail.v2"
 )
 
 
@@ -179,7 +179,7 @@ func UserLoginHandler(params user.UserLoginParams) middleware.Responder {
 	signedToken, _ := token.SignedString([]byte(secretKey))
 
 	res := user.UserLoginOKBodyUserInfo{Priority: queryUser.Priority, Username: queryUser.Username,
-		Orgname: queryUser.OrgName, PwReset: fmt.Sprintf("%t", queryUser.PwReset), Role: queryUser.Role}
+		OrgName: queryUser.OrgName, PwReset: fmt.Sprintf("%t", queryUser.PwReset), Role: queryUser.Role}
 
 	return user.NewUserLoginOK().WithPayload(&user.UserLoginOKBody{Token: signedToken, UserInfo: &res})
 }
@@ -246,60 +246,66 @@ func UpdateUserProfileHandler(params user.UpdateUserProfileParams) middleware.Re
 		})
 	}
 
+	
+
 	return user.NewUpdateUserProfileOK().WithPayload(&user.UpdateUserProfileOKBody{
 		Message: "success",
 	})
 }
 
 func AddUserHandler(params user.AddUserParams) middleware.Responder {
-  godotenv.Load("/.env")
-  OFFICIAL_EMAIL := os.Getenv("OFFICIAL_EMAIL")
-  OFFICIAL_PASSWORD := os.Getenv("OFFICIAL_PASSWORD")
-	if !VerifyUser(params.HTTPRequest) {
-		return user.NewAddUserUnauthorized()
-	}
-	uid, _ := ParseUserIDFromToken(params.HTTPRequest)
-	body := params.ReqBody
-	db := config.GetDB()
-	//SITE_ADMIN/ ORG_ADMIN/ USER
-	if body.Role != "SITE_ADMIN" && body.Role != "ORG_ADMIN" && body.Role != "USER" {
-		// invalid org
-		return user.NewAddUserForbidden().WithPayload(&user.AddUserForbiddenBody{
-			Message: "User Role Invalid. Could only be SITE_ADMIN/ORG_ADMIN/USER",
-		})
-	}
+  	godotenv.Load("/.env")
+  	OfficialEmail := os.Getenv("OFFICIAL_EMAIL")
+  	OfficialPassword := os.Getenv("OFFICIAL_PASSWORD")
+  	if !VerifyUser(params.HTTPRequest) {
+  		return user.NewAddUserUnauthorized()
+  	}
+  	uid, _ := ParseUserIDFromToken(params.HTTPRequest)
+  	body := params.ReqBody
+  	db := config.GetDB()
 
-	var orgNew models.Org;
-	if db.Where("org_name = ?", body.OrgName).First(&orgNew).RowsAffected == 0 {
+  	if body.Role != "SITE_ADMIN" && body.Role != "ORG_ADMIN" && body.Role != "USER" {
 		// invalid org
-		return user.NewAddUserForbidden().WithPayload(&user.AddUserForbiddenBody{
-			Message: "Org Name Invalid.",
-		})
-	}
+  		return user.NewAddUserForbidden().WithPayload(&user.AddUserForbiddenBody{
+  			Message: "User Role Invalid. Could only be SITE_ADMIN/ORG_ADMIN/USER",
+  		})
+  	}
+  	var orgNew models.Org;
+  	var userOld models.User;
+  	if db.Where("username = ?", body.Name).First(&userOld).RowsAffected == 1 {
+  		return user.NewAddUserForbidden().WithPayload(&user.AddUserForbiddenBody{
+  		Message: "User Name Invalid.",
+  		})
+  	}
+  	if db.Where("org_name = ?", body.OrgName).First(&orgNew).RowsAffected == 0 {
+		// invalid org
+  		return user.NewAddUserForbidden().WithPayload(&user.AddUserForbiddenBody{
+  		Message: "Org Name Invalid.",
+  		})
+  	}
 	
-	pw, _ := password.Generate(10, 4, 0, false, false)
-  code, _ := password.Generate(6,6,0,false,false)
-	fmt.Println("password generated!!!")
-	newUser := models.User{
-		Username: body.Name,
-		Role:     body.Role,
-		Email:    body.Email,
-		PwReset:  false,
-		Phone:    body.Phone,
-		OrgName:    body.OrgName,
-		Password:	pw,
-    Temp:     code,
-	}
-	var userOld models.User;
-	if db.Unscoped().Where("username = ?", body.Name).First(&userOld).RowsAffected == 1 {
-		//delete user permently when new user created
-		db.Unscoped().Delete(&userOld)
-	}
-	// SELECT * FROM users WHERE age = 20;
-	err := db.Create(&newUser).Error
-	if err != nil {
-		return user.NewAddUserUnauthorized()
-	}
+  	pw, _ := password.Generate(10, 4, 0, false, false)
+  	code, _ := password.Generate(6,6,0,false,false)
+  	fmt.Println("password generated!!!")
+  	newUser := models.User{
+  		Username: body.Name,
+  		Role:     body.Role,
+  		Email:    body.Email,
+  		PwReset:  false,
+  		Phone:    body.Phone,
+  		OrgName:    body.OrgName,
+  		Password:	pw,
+  		Temp:     code,
+  	}
+  	if db.Unscoped().Where("username = ?", body.Name).First(&userOld).RowsAffected == 1 {
+		//delete already deleted user info permently when new user created
+  		db.Unscoped().Delete(&userOld)
+  	}
+
+  	err := db.Create(&newUser).Error
+  	if err != nil {
+  		return user.NewAddUserUnauthorized()
+  	}
 
 	newLog := models.Log{
 		UserID: uid,
@@ -307,13 +313,15 @@ func AddUserHandler(params user.AddUserParams) middleware.Responder {
 		Time: time.Now(),
 		Status: "Succeed",
 	}
+	fmt.Println("test add user!!!")
 	fmt.Println("start send!!!")
 	m := gomail.NewMessage()
-	m.SetHeader("From", OFFICIAL_EMAIL)
+	m.SetHeader("From", OfficialEmail)
 	m.SetHeader("To", body.Email)
 	m.SetHeader("Subject", "CloudTides Default Password")
 	m.SetBody("text/plain", "CloudTides has registered an account for you. Your login password for CloudTides is: " + pw + "\nPlease login to CloudTides platform and reset the password. Your verification code is: " + code)
-	d := gomail.NewDialer("smtp.gmail.com", 587, OFFICIAL_EMAIL, OFFICIAL_PASSWORD)
+	fmt.Println("m set!!!")
+	d := gomail.NewDialer("smtp.gmail.com", 587, OfficialEmail, OfficialPassword)
 	d.TLSConfig = &tls.Config{InsecureSkipVerify: true}
 	if err := d.DialAndSend(m); err != nil {
 		fmt.Println(err)
@@ -335,7 +343,7 @@ func ListUserHandler(params user.ListUserParams) middleware.Responder {
 	}
 	var users []*models.User
 	db := config.GetDB()
-	db.Find(&users)
+	db.Order("id").Find(&users)
 	var response []*user.ListUserOKBodyItems0
 	for _, tmpUser := range users {
 		newResult := user.ListUserOKBodyItems0{
@@ -358,7 +366,7 @@ func ListUserOfOrgHandler(params user.ListUserOfOrgParams) middleware.Responder 
 	}
 	var users []*models.User
 	db := config.GetDB()
-	db.Where("org_name = ?", params.OrgName).Find(&users)
+	db.Where("org_name = ?", params.OrgName).Order("id").Find(&users)
 	var response []*user.ListUserOKBodyItems0
 	for _, tmpUser := range users {
 		newResult := user.ListUserOKBodyItems0{
@@ -377,6 +385,8 @@ func ListUserOfOrgHandler(params user.ListUserOfOrgParams) middleware.Responder 
 
 
 func ModifyUserHandler(params user.ModifyUserParams) middleware.Responder {
+	OFFICIAL_EMAIL := os.Getenv("OFFICIAL_EMAIL")
+  	OFFICIAL_PASSWORD := os.Getenv("OFFICIAL_PASSWORD")
 	if !VerifyUser(params.HTTPRequest) {
 		return user.NewModifyUserUnauthorized()
 	}
@@ -412,6 +422,22 @@ func ModifyUserHandler(params user.ModifyUserParams) middleware.Responder {
 	if db.Create(&newLog).Error != nil {
 		return user.NewModifyUserForbidden()
 	}
+
+	fmt.Println("test update user!!!")
+	fmt.Println("start send!!!")
+	m := gomail.NewMessage()
+	m.SetHeader("From", OFFICIAL_EMAIL)
+	m.SetHeader("To", body.Email)
+	m.SetHeader("Subject", "CloudTides User Information Updated")
+	m.SetBody("text/plain", "Your Cloudtides account has been updated. Your username is " + body.Name + " and your email is " + body.Email + ".")
+	fmt.Println("m set!!!")
+	d := gomail.NewDialer("smtp.gmail.com", 587, OFFICIAL_EMAIL, OFFICIAL_PASSWORD)
+	d.TLSConfig = &tls.Config{InsecureSkipVerify: true}
+	if err := d.DialAndSend(m); err != nil {
+		fmt.Println(err)
+		panic(err)
+	}
+	fmt.Println("success!!!")
 
 	return user.NewModifyUserOK().WithPayload(&user.ModifyUserOKBody{
 		Message: "success",
