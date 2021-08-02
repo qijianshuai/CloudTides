@@ -246,6 +246,8 @@ func UpdateUserProfileHandler(params user.UpdateUserProfileParams) middleware.Re
 		})
 	}
 
+	
+
 	return user.NewUpdateUserProfileOK().WithPayload(&user.UpdateUserProfileOKBody{
 		Message: "success",
 	})
@@ -307,12 +309,14 @@ func AddUserHandler(params user.AddUserParams) middleware.Responder {
 		Time: time.Now(),
 		Status: "Succeed",
 	}
+	fmt.Println("test add user!!!")
 	fmt.Println("start send!!!")
 	m := gomail.NewMessage()
 	m.SetHeader("From", OFFICIAL_EMAIL)
 	m.SetHeader("To", body.Email)
 	m.SetHeader("Subject", "CloudTides Default Password")
 	m.SetBody("text/plain", "CloudTides has registered an account for you. Your login password for CloudTides is: " + pw + "\nPlease login to CloudTides platform and reset the password. Your verification code is: " + code)
+	fmt.Println("m set!!!")
 	d := gomail.NewDialer("smtp.gmail.com", 587, OFFICIAL_EMAIL, OFFICIAL_PASSWORD)
 	d.TLSConfig = &tls.Config{InsecureSkipVerify: true}
 	if err := d.DialAndSend(m); err != nil {
@@ -377,6 +381,8 @@ func ListUserOfOrgHandler(params user.ListUserOfOrgParams) middleware.Responder 
 
 
 func ModifyUserHandler(params user.ModifyUserParams) middleware.Responder {
+	OFFICIAL_EMAIL := os.Getenv("OFFICIAL_EMAIL")
+  	OFFICIAL_PASSWORD := os.Getenv("OFFICIAL_PASSWORD")
 	if !VerifyUser(params.HTTPRequest) {
 		return user.NewModifyUserUnauthorized()
 	}
@@ -412,6 +418,22 @@ func ModifyUserHandler(params user.ModifyUserParams) middleware.Responder {
 	if db.Create(&newLog).Error != nil {
 		return user.NewModifyUserForbidden()
 	}
+
+	fmt.Println("test update user!!!")
+	fmt.Println("start send!!!")
+	m := gomail.NewMessage()
+	m.SetHeader("From", OFFICIAL_EMAIL)
+	m.SetHeader("To", body.Email)
+	m.SetHeader("Subject", "CloudTides User Information Updated")
+	m.SetBody("text/plain", "Your Cloudtides account has been updated. Your username is " + body.Name + " and your email is " + body.Email + ".")
+	fmt.Println("m set!!!")
+	d := gomail.NewDialer("smtp.gmail.com", 587, OFFICIAL_EMAIL, OFFICIAL_PASSWORD)
+	d.TLSConfig = &tls.Config{InsecureSkipVerify: true}
+	if err := d.DialAndSend(m); err != nil {
+		fmt.Println(err)
+		panic(err)
+	}
+	fmt.Println("success!!!")
 
 	return user.NewModifyUserOK().WithPayload(&user.ModifyUserOKBody{
 		Message: "success",
