@@ -51,7 +51,6 @@ export class LoginService {
   }
 
   async loginNavigate() {
-    console.log("line53")
     if (this.hasLoggedIn) {
       
       // if (!this.session.pwReset) {
@@ -60,12 +59,10 @@ export class LoginService {
       this.current().subscribe(
         () => {},
         async error => {
-          console.log("line62")
           await this.logout();
         });
     } else {
       if (!this.inLoginPage() && !this.registerService.inRegisterPage() && !this.resetService.inResetPage()) {
-        console.log("hahaha")
         await this.logout();
       }
       // else if (!this.inLoginPage() && !this.registerService.inRegisterPage() && !this.session.pwReset) {
@@ -131,9 +128,7 @@ export class LoginService {
 
 
   storePwReset(pwReset: string){
-    console.log("555: "+pwReset)
     localStorage.setItem('pwReset', pwReset);
-    console.log("444: "+localStorage.getItem("pwReset"));
   }
 
   removeInfo() {
