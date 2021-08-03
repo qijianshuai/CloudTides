@@ -54,10 +54,20 @@ h6 {
     padding-right: 12px;
   }
   
-  .branding{
+  /* .branding{
     position: relative;
     margin-right: 5%;
+  } */
+
+  .branding{
+    position: absolute;
+    left: 2%;
   }
+/* 
+  .branding .title{
+    display: none;
+    visibility: hidden;
+  } */
 
   .header-nav {
     position: absolute;
@@ -96,16 +106,6 @@ h6 {
     margin-left: 50px;
     margin-top: 20px;
   }
- 
-  /* .selected-lang:before {
-    content: '';
-    display: block;
-    width: 64px;
-    height: 64px;
-    background-image: url('../assets/img/language.svg');
-    background-size:contain;
-    margin-left: 0px;
-  }  */
 
   .dropdown.bottom-left.open .dropdown-menu {
     display: none;
@@ -141,46 +141,6 @@ h6 {
   .dropdown.bottom-left.open .dropdown-item {
     justify-content: space-between;
   }
-
-  /* .my-clr-dropdown {
-    right: 100px;
-    top: -2px;
-    position: absolute;
-    display: flex;
-    content: '';
-    width: 64px;
-    height: 64px;
-    cursor: pointer;
-  } */
-
-  /* clr-dropdown:hover clr-dropdown-menu{
-    display: inline;
-  } */
-
-  /* .user-dropdown-menu {
-      display: none;
-  }
-
-  .user-dropdown-menu:before{
-    background-color: #ffffff;
-    border-radius: 3px 0 20px;
-    bottom: calc(100% - 10px);
-    content: '';
-    height: 20px;
-    pointer-events: none;
-    position: absolute;
-    transform: rotate(45deg);
-    width: 20px;
-    z-index: -1;
-    left: 23px;
-  }
-
-  .user-dropdown-menu a{
-    color: black;
-    text-decoration: none;
-    margin-left: 5px;
-  } */
-
 
   .header-actions #settings {
     margin: 18px 16px;
@@ -404,3 +364,23 @@ h6 {
   }
 }
 
+.fa-cloud {
+  display: none;
+  color: white;
+  position: absolute;
+  left: 30%;
+  /* visibility: hidden; */
+}
+
+/* 把浏览器的宽度拖动到小于1000px时触发 */
+@media screen and (max-width: 1191px){
+  .branding .title{
+      display: none;
+      visibility: hidden;
+  }
+
+  .branding .fa-cloud{
+    display: block;
+    transition: 0.5s all ease;
+  }
+}
