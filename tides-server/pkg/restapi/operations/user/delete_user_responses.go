@@ -63,6 +63,11 @@ const DeleteUserUnauthorizedCode int = 401
 swagger:response deleteUserUnauthorized
 */
 type DeleteUserUnauthorized struct {
+
+	/*
+	  In: Body
+	*/
+	Payload *DeleteUserUnauthorizedBody `json:"body,omitempty"`
 }
 
 // NewDeleteUserUnauthorized creates DeleteUserUnauthorized with default headers values
@@ -71,12 +76,27 @@ func NewDeleteUserUnauthorized() *DeleteUserUnauthorized {
 	return &DeleteUserUnauthorized{}
 }
 
+// WithPayload adds the payload to the delete user unauthorized response
+func (o *DeleteUserUnauthorized) WithPayload(payload *DeleteUserUnauthorizedBody) *DeleteUserUnauthorized {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the delete user unauthorized response
+func (o *DeleteUserUnauthorized) SetPayload(payload *DeleteUserUnauthorizedBody) {
+	o.Payload = payload
+}
+
 // WriteResponse to the client
 func (o *DeleteUserUnauthorized) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
-	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
-
 	rw.WriteHeader(401)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
 }
 
 // DeleteUserForbiddenCode is the HTTP code returned for type DeleteUserForbidden
@@ -87,6 +107,11 @@ const DeleteUserForbiddenCode int = 403
 swagger:response deleteUserForbidden
 */
 type DeleteUserForbidden struct {
+
+	/*
+	  In: Body
+	*/
+	Payload *DeleteUserForbiddenBody `json:"body,omitempty"`
 }
 
 // NewDeleteUserForbidden creates DeleteUserForbidden with default headers values
@@ -95,12 +120,27 @@ func NewDeleteUserForbidden() *DeleteUserForbidden {
 	return &DeleteUserForbidden{}
 }
 
+// WithPayload adds the payload to the delete user forbidden response
+func (o *DeleteUserForbidden) WithPayload(payload *DeleteUserForbiddenBody) *DeleteUserForbidden {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the delete user forbidden response
+func (o *DeleteUserForbidden) SetPayload(payload *DeleteUserForbiddenBody) {
+	o.Payload = payload
+}
+
 // WriteResponse to the client
 func (o *DeleteUserForbidden) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
-	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
-
 	rw.WriteHeader(403)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
 }
 
 // DeleteUserNotFoundCode is the HTTP code returned for type DeleteUserNotFound

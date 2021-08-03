@@ -107,6 +107,43 @@ func (o *ModifyUserBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
+// ModifyUserForbiddenBody modify user forbidden body
+//
+// swagger:model ModifyUserForbiddenBody
+type ModifyUserForbiddenBody struct {
+
+	// message
+	Message string `json:"message,omitempty"`
+}
+
+// Validate validates this modify user forbidden body
+func (o *ModifyUserForbiddenBody) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this modify user forbidden body based on context it is used
+func (o *ModifyUserForbiddenBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *ModifyUserForbiddenBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *ModifyUserForbiddenBody) UnmarshalBinary(b []byte) error {
+	var res ModifyUserForbiddenBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
 // ModifyUserNotFoundBody modify user not found body
 //
 // swagger:model ModifyUserNotFoundBody
@@ -174,6 +211,43 @@ func (o *ModifyUserOKBody) MarshalBinary() ([]byte, error) {
 // UnmarshalBinary interface implementation
 func (o *ModifyUserOKBody) UnmarshalBinary(b []byte) error {
 	var res ModifyUserOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+// ModifyUserUnauthorizedBody modify user unauthorized body
+//
+// swagger:model ModifyUserUnauthorizedBody
+type ModifyUserUnauthorizedBody struct {
+
+	// message
+	Message string `json:"message,omitempty"`
+}
+
+// Validate validates this modify user unauthorized body
+func (o *ModifyUserUnauthorizedBody) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this modify user unauthorized body based on context it is used
+func (o *ModifyUserUnauthorizedBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *ModifyUserUnauthorizedBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *ModifyUserUnauthorizedBody) UnmarshalBinary(b []byte) error {
+	var res ModifyUserUnauthorizedBody
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

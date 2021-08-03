@@ -14,7 +14,7 @@ import (
 // ModifyUserOKCode is the HTTP code returned for type ModifyUserOK
 const ModifyUserOKCode int = 200
 
-/*ModifyUserOK deletion success
+/*ModifyUserOK update success
 
 swagger:response modifyUserOK
 */
@@ -63,6 +63,11 @@ const ModifyUserUnauthorizedCode int = 401
 swagger:response modifyUserUnauthorized
 */
 type ModifyUserUnauthorized struct {
+
+	/*
+	  In: Body
+	*/
+	Payload *ModifyUserUnauthorizedBody `json:"body,omitempty"`
 }
 
 // NewModifyUserUnauthorized creates ModifyUserUnauthorized with default headers values
@@ -71,12 +76,27 @@ func NewModifyUserUnauthorized() *ModifyUserUnauthorized {
 	return &ModifyUserUnauthorized{}
 }
 
+// WithPayload adds the payload to the modify user unauthorized response
+func (o *ModifyUserUnauthorized) WithPayload(payload *ModifyUserUnauthorizedBody) *ModifyUserUnauthorized {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the modify user unauthorized response
+func (o *ModifyUserUnauthorized) SetPayload(payload *ModifyUserUnauthorizedBody) {
+	o.Payload = payload
+}
+
 // WriteResponse to the client
 func (o *ModifyUserUnauthorized) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
-	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
-
 	rw.WriteHeader(401)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
 }
 
 // ModifyUserForbiddenCode is the HTTP code returned for type ModifyUserForbidden
@@ -87,6 +107,11 @@ const ModifyUserForbiddenCode int = 403
 swagger:response modifyUserForbidden
 */
 type ModifyUserForbidden struct {
+
+	/*
+	  In: Body
+	*/
+	Payload *ModifyUserForbiddenBody `json:"body,omitempty"`
 }
 
 // NewModifyUserForbidden creates ModifyUserForbidden with default headers values
@@ -95,12 +120,27 @@ func NewModifyUserForbidden() *ModifyUserForbidden {
 	return &ModifyUserForbidden{}
 }
 
+// WithPayload adds the payload to the modify user forbidden response
+func (o *ModifyUserForbidden) WithPayload(payload *ModifyUserForbiddenBody) *ModifyUserForbidden {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the modify user forbidden response
+func (o *ModifyUserForbidden) SetPayload(payload *ModifyUserForbiddenBody) {
+	o.Payload = payload
+}
+
 // WriteResponse to the client
 func (o *ModifyUserForbidden) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
-	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
-
 	rw.WriteHeader(403)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
 }
 
 // ModifyUserNotFoundCode is the HTTP code returned for type ModifyUserNotFound

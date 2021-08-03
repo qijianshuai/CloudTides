@@ -2073,8 +2073,18 @@ paths:
                 type: string
         401:
           description: 'Unauthorized'
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
         403:
           description: 'Forbidden'
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
   /org/{id}:
     delete:
       operationId: 'delete Org'
@@ -2239,8 +2249,18 @@ paths:
                 type: string
         401:
           description: 'Unauthorized'
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
         403:
           description: 'Forbidden'
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
         404:
           description: 'resource not found'
           schema:
@@ -2277,7 +2297,7 @@ paths:
                 type: string
       responses:
         200:
-          description: 'deletion success'
+          description: 'update success'
           schema:
             type: object
             properties:
@@ -2285,8 +2305,18 @@ paths:
                 type: string
         401:
           description: 'Unauthorized'
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
         403:
           description: 'Forbidden'
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
         404:
           description: 'resource not found'
           schema:
