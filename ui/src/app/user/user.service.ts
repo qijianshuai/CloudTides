@@ -56,7 +56,7 @@ export class UserService {
   }
 
   async getOrgList() {
-    console.log("getOrgList");
+    // console.log("getOrgList");
     const OrgList = await this.http
       .get<ItemOrg[]>(environment.apiPrefix + ORG_PATH, {
         headers: {
@@ -73,7 +73,7 @@ export class UserService {
   }
 
   addUser(payload: ItemAddUser) {
-    console.log(payload);
+    // console.log(payload);
     const body = {
       ...payload,
     };
@@ -89,7 +89,8 @@ export class UserService {
           return Promise.resolve();
         },
         (errResp) => {
-          return Promise.reject(`HTTP ${errResp.status}: ${errResp.message}`);
+          // console.log(errResp);
+          return Promise.reject(`HTTP ${errResp.status}: ${errResp.error.message}`);
         }
       );
   }

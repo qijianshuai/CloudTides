@@ -53,8 +53,8 @@ export class OrgService {
     .then(() => {
       return Promise.resolve();
     }, (errResp) => {
-      console.log(errResp)
-      return Promise.reject(`HTTP ${errResp.status}: ${errResp.message}`);
+      // console.log(errResp)
+      return Promise.reject(`HTTP ${errResp.status}: ${errResp.error.message}`);
     });
   }
 
