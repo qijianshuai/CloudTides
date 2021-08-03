@@ -400,7 +400,7 @@ func ModifyUserHandler(params user.ModifyUserParams) middleware.Responder {
 
 	//pol.Org.OrgName = body.Org
 	if body.Role != "SITE_ADMIN" && body.Role != "ORG_ADMIN" && body.Role != "USER" {
-		return user.NewAddUserForbidden().WithPayload(&user.AddUserForbiddenBody{
+		return user.NewModifyUserForbidden().WithPayload(&user.ModifyUserForbiddenBody{
 			Message: "User Role Invalid. Could only be SITE_ADMIN/ORG_ADMIN/USER",
 		})
 	}
@@ -410,7 +410,9 @@ func ModifyUserHandler(params user.ModifyUserParams) middleware.Responder {
 	pol.Role = body.Role
 	err := db.Save(&pol).Error
 	if err != nil {
-		return user.NewModifyUserForbidden()
+		return user.NewModifyUserForbidden().WithPayload(&user.ModifyUserForbiddenBody{
+			Message: "Insert row DB error: " + err.Error(),
+		})
 	}
 
 	newLog := models.Log{
@@ -419,8 +421,10 @@ func ModifyUserHandler(params user.ModifyUserParams) middleware.Responder {
 		Time: time.Now(),
 		Status: "Succeed",
 	}
-	if db.Create(&newLog).Error != nil {
-		return user.NewModifyUserForbidden()
+	if err = db.Create(&newLog).Error; err != nil {
+		return user.NewModifyUserForbidden().WithPayload(&user.ModifyUserForbiddenBody{
+			Message: "Insert Log DB error: " + err.Error(),
+		})
 	}
 
 	fmt.Println("test update user!!!")

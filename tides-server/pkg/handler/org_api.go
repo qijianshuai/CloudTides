@@ -28,8 +28,10 @@ func AddOrgHandler(params org.AddOrgParams) middleware.Responder {
 	newOrg := models.Org{
 		OrgName: body.Name,
 	}
-	if db.Create(&newOrg).Error != nil {
-		return org.NewAddOrgUnauthorized()
+	if err := db.Create(&newOrg).Error; err != nil {
+		return org.NewAddOrgUnauthorized().WithPayload(&org.AddOrgUnauthorizedBody{
+			Message: "Insert DB error:" + err.Error(),
+		})
 	}
 
 	newLog := models.Log{
@@ -38,8 +40,10 @@ func AddOrgHandler(params org.AddOrgParams) middleware.Responder {
 		Time: time.Now(),
 		Status: "Succeed",
 	}
-	if db.Create(&newLog).Error != nil {
-		return org.NewAddOrgForbidden()
+	if err := db.Create(&newLog).Error; err != nil {
+		return org.NewAddOrgForbidden().WithPayload(&org.AddOrgForbiddenBody{
+			Message: "Insert Log DB error:" + err.Error(),
+		})
 	}
 
 	return org.NewAddOrgOK().WithPayload(&org.AddOrgOKBody{

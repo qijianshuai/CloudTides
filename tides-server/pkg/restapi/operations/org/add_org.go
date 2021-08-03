@@ -95,6 +95,43 @@ func (o *AddOrgBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
+// AddOrgForbiddenBody add org forbidden body
+//
+// swagger:model AddOrgForbiddenBody
+type AddOrgForbiddenBody struct {
+
+	// message
+	Message string `json:"message,omitempty"`
+}
+
+// Validate validates this add org forbidden body
+func (o *AddOrgForbiddenBody) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this add org forbidden body based on context it is used
+func (o *AddOrgForbiddenBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *AddOrgForbiddenBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *AddOrgForbiddenBody) UnmarshalBinary(b []byte) error {
+	var res AddOrgForbiddenBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
 // AddOrgOKBody add org o k body
 //
 // swagger:model AddOrgOKBody
@@ -125,6 +162,43 @@ func (o *AddOrgOKBody) MarshalBinary() ([]byte, error) {
 // UnmarshalBinary interface implementation
 func (o *AddOrgOKBody) UnmarshalBinary(b []byte) error {
 	var res AddOrgOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+// AddOrgUnauthorizedBody add org unauthorized body
+//
+// swagger:model AddOrgUnauthorizedBody
+type AddOrgUnauthorizedBody struct {
+
+	// message
+	Message string `json:"message,omitempty"`
+}
+
+// Validate validates this add org unauthorized body
+func (o *AddOrgUnauthorizedBody) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this add org unauthorized body based on context it is used
+func (o *AddOrgUnauthorizedBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *AddOrgUnauthorizedBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *AddOrgUnauthorizedBody) UnmarshalBinary(b []byte) error {
+	var res AddOrgUnauthorizedBody
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

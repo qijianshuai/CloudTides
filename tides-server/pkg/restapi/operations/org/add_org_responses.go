@@ -63,6 +63,11 @@ const AddOrgUnauthorizedCode int = 401
 swagger:response addOrgUnauthorized
 */
 type AddOrgUnauthorized struct {
+
+	/*
+	  In: Body
+	*/
+	Payload *AddOrgUnauthorizedBody `json:"body,omitempty"`
 }
 
 // NewAddOrgUnauthorized creates AddOrgUnauthorized with default headers values
@@ -71,12 +76,27 @@ func NewAddOrgUnauthorized() *AddOrgUnauthorized {
 	return &AddOrgUnauthorized{}
 }
 
+// WithPayload adds the payload to the add org unauthorized response
+func (o *AddOrgUnauthorized) WithPayload(payload *AddOrgUnauthorizedBody) *AddOrgUnauthorized {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the add org unauthorized response
+func (o *AddOrgUnauthorized) SetPayload(payload *AddOrgUnauthorizedBody) {
+	o.Payload = payload
+}
+
 // WriteResponse to the client
 func (o *AddOrgUnauthorized) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
-	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
-
 	rw.WriteHeader(401)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
 }
 
 // AddOrgForbiddenCode is the HTTP code returned for type AddOrgForbidden
@@ -87,6 +107,11 @@ const AddOrgForbiddenCode int = 403
 swagger:response addOrgForbidden
 */
 type AddOrgForbidden struct {
+
+	/*
+	  In: Body
+	*/
+	Payload *AddOrgForbiddenBody `json:"body,omitempty"`
 }
 
 // NewAddOrgForbidden creates AddOrgForbidden with default headers values
@@ -95,10 +120,25 @@ func NewAddOrgForbidden() *AddOrgForbidden {
 	return &AddOrgForbidden{}
 }
 
+// WithPayload adds the payload to the add org forbidden response
+func (o *AddOrgForbidden) WithPayload(payload *AddOrgForbiddenBody) *AddOrgForbidden {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the add org forbidden response
+func (o *AddOrgForbidden) SetPayload(payload *AddOrgForbiddenBody) {
+	o.Payload = payload
+}
+
 // WriteResponse to the client
 func (o *AddOrgForbidden) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
-	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
-
 	rw.WriteHeader(403)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
 }
