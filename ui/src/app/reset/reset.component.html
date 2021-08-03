@@ -43,6 +43,8 @@
             *clrIfError="'minlength'">{{ 'RESET.PASSWORD_TOO_SHORT' | translate:{} }}</clr-control-error>
           <clr-control-error
             *clrIfError="'maxlength'">{{ 'RESET.PASSWORD_TOO_LONG' | translate:{} }}</clr-control-error>
+            <clr-control-error
+            *clrIfError="'same'">{{ 'RESET.PASSWORD_SAME' | translate:{} }}</clr-control-error>
         </clr-password-container>
 
         <clr-password-container>
