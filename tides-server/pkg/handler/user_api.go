@@ -2,10 +2,11 @@ package handler
 
 import (
 	"fmt"
-	"github.com/joho/godotenv"
 	"os"
 	"strconv"
 	"time"
+
+	"github.com/joho/godotenv"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/go-openapi/runtime/middleware"
@@ -16,27 +17,27 @@ import (
 	"tides-server/pkg/models"
 
 	"crypto/tls"
+
 	"github.com/sethvargo/go-password/password"
 	gomail "gopkg.in/mail.v2"
 )
 
-
 func SendVerificationHandler(params user.SendVerificationParams) middleware.Responder {
-  godotenv.Load("/.env")
-  OFFICIAL_EMAIL := os.Getenv("OFFICIAL_EMAIL")
-  OFFICIAL_PASSWORD := os.Getenv("OFFICIAL_PASSWORD")
+	godotenv.Load("/.env")
+	OFFICIAL_EMAIL := os.Getenv("OFFICIAL_EMAIL")
+	OFFICIAL_PASSWORD := os.Getenv("OFFICIAL_PASSWORD")
 	fmt.Println("verification entered!")
 	// uid, _ := ParseUserIDFromToken(params.HTTPRequest)
 	body := params.ReqBody
-  fmt.Println(body.Message)
+	fmt.Println(body.Message)
 	db := config.GetDB()
 	var u models.User
 	if db.Where("username = ?", body.Message).First(&u).RowsAffected == 0 {
-		return user.NewSendVerificationBadRequest().WithPayload(&user.SendVerificationBadRequestBody {
+		return user.NewSendVerificationBadRequest().WithPayload(&user.SendVerificationBadRequestBody{
 			Message: "null user",
 		})
 	}
-	code, _ := password.Generate(6,6,0,false,false)
+	code, _ := password.Generate(6, 6, 0, false, false)
 	u.Temp = code
 	err := db.Save(&u).Error
 	if err != nil {
@@ -44,76 +45,75 @@ func SendVerificationHandler(params user.SendVerificationParams) middleware.Resp
 			Message: err.Error(),
 		})
 	}
-  
-  m := gomail.NewMessage()
+
+	m := gomail.NewMessage()
 	m.SetHeader("From", OFFICIAL_EMAIL)
 	// m.SetHeader("To", u.Email)
-  m.SetHeader("To", u.Email)
-  fmt.Println(code)
+	m.SetHeader("To", u.Email)
+	fmt.Println(code)
 	m.SetHeader("Subject", "CloudTides Verification Code")
-	m.SetBody("text/plain", "Your are resetting your password. Your verification code is: " + code)
+	m.SetBody("text/plain", "Your are resetting your password. Your verification code is: "+code)
 	d := gomail.NewDialer("smtp.gmail.com", 587, OFFICIAL_EMAIL, OFFICIAL_PASSWORD)
 	d.TLSConfig = &tls.Config{InsecureSkipVerify: true}
 	i := 0
-	for ; i < 3; i++ {
+	for ; i < 5; i++ {
 		if err := d.DialAndSend(m); err != nil {
 			fmt.Println(err)
-			continue;
+			continue
 		}
-		break;
+		break
 	}
-	if i == 3 {
+	if i == 5 {
 		fmt.Println("fail")
 		return user.NewSendVerificationBadRequest().WithPayload(&user.SendVerificationBadRequestBody{
 			Message: "fail!!!",
 		})
 	}
-	
+
 	fmt.Println("success!!!")
 
-	return user.NewSendVerificationOK().WithPayload(&user.SendVerificationOKBody {
-		Message:"success",
+	return user.NewSendVerificationOK().WithPayload(&user.SendVerificationOKBody{
+		Message: "success",
 	})
-
 
 }
 
 // ResetPasswordHandler is the API for /users/reset POST
 func ResetPasswordHandler(params user.ResetPasswordParams) middleware.Responder {
-  fmt.Println("entered!")
-  body := params.ReqBody
-  db := config.GetDB()
-  var u models.User
-//   fmt.Println(body.Username + ", " + body.Password + ", " + body.NewPassword)
-  if db.Where("username = ?", body.Username).First(&u).RowsAffected == 0 {
+	fmt.Println("entered!")
+	body := params.ReqBody
+	db := config.GetDB()
+	var u models.User
+	//   fmt.Println(body.Username + ", " + body.Password + ", " + body.NewPassword)
+	if db.Where("username = ?", body.Username).First(&u).RowsAffected == 0 {
 		return user.NewResetPasswordBadRequest().WithPayload(&user.ResetPasswordBadRequestBody{
-      Message: "null user",
-    })
+			Message: "null user",
+		})
 	}
 
-  if u.Password != body.Password {
-    return user.NewResetPasswordBadRequest().WithPayload(&user.ResetPasswordBadRequestBody{
-      Message: "wrong password",
-    })
-  }
-  // u.Temp = "111111"
-  if u.Temp != body.VerificationCode {
-    return user.NewResetPasswordBadRequest().WithPayload(&user.ResetPasswordBadRequestBody{
-      Message: "wrong verification code",
-    })
-  }
+	if u.Password != body.Password {
+		return user.NewResetPasswordBadRequest().WithPayload(&user.ResetPasswordBadRequestBody{
+			Message: "wrong password",
+		})
+	}
+	// u.Temp = "111111"
+	if u.Temp != body.VerificationCode {
+		return user.NewResetPasswordBadRequest().WithPayload(&user.ResetPasswordBadRequestBody{
+			Message: "wrong verification code",
+		})
+	}
 
-  u.Password = body.NewPassword
-  u.PwReset = true
-  err := db.Save(&u).Error
+	u.Password = body.NewPassword
+	u.PwReset = true
+	err := db.Save(&u).Error
 	if err != nil {
 		return user.NewResetPasswordBadRequest().WithPayload(&user.ResetPasswordBadRequestBody{
 			Message: err.Error(),
 		})
 	}
-  return user.NewResetPasswordOK().WithPayload(&user.ResetPasswordOKBody{
-    Message: "success",
-  })
+	return user.NewResetPasswordOK().WithPayload(&user.ResetPasswordOKBody{
+		Message: "success",
+	})
 }
 
 // RegisterUserHandler is API handler for /users/register POST
@@ -138,7 +138,7 @@ func RegisterUserHandler(params user.RegisterUserParams) middleware.Responder {
 		Position:    body.Position,
 		Priority:    models.UserPriorityLow,
 		Username:    body.Username,
-    PwReset:     false,
+		PwReset:     false,
 	}
 
 	err := db.Create(&newUser).Error
@@ -257,73 +257,71 @@ func UpdateUserProfileHandler(params user.UpdateUserProfileParams) middleware.Re
 		})
 	}
 
-	
-
 	return user.NewUpdateUserProfileOK().WithPayload(&user.UpdateUserProfileOKBody{
 		Message: "success",
 	})
 }
 
 func AddUserHandler(params user.AddUserParams) middleware.Responder {
-  	godotenv.Load("/.env")
-  	OfficialEmail := os.Getenv("OFFICIAL_EMAIL")
-  	OfficialPassword := os.Getenv("OFFICIAL_PASSWORD")
-  	if !VerifyUser(params.HTTPRequest) {
-  		return user.NewAddUserUnauthorized()
-  	}
-  	uid, _ := ParseUserIDFromToken(params.HTTPRequest)
-  	body := params.ReqBody
-  	db := config.GetDB()
+	godotenv.Load("/.env")
+	OfficialEmail := os.Getenv("OFFICIAL_EMAIL")
+	OfficialPassword := os.Getenv("OFFICIAL_PASSWORD")
+	if !VerifyUser(params.HTTPRequest) {
+		return user.NewAddUserUnauthorized()
+	}
+	uid, _ := ParseUserIDFromToken(params.HTTPRequest)
+	body := params.ReqBody
+	db := config.GetDB()
 
-  	if body.Role != "SITE_ADMIN" && body.Role != "ORG_ADMIN" && body.Role != "USER" {
+	if body.Role != "SITE_ADMIN" && body.Role != "ORG_ADMIN" && body.Role != "USER" {
 		// invalid org
-  		return user.NewAddUserForbidden().WithPayload(&user.AddUserForbiddenBody{
-  			Message: "User Role Invalid. Could only be SITE_ADMIN/ORG_ADMIN/USER",
-  		})
-  	}
-  	var orgNew models.Org;
-  	var userOld models.User;
-  	if db.Where("username = ?", body.Name).First(&userOld).RowsAffected == 1 {
-  		return user.NewAddUserForbidden().WithPayload(&user.AddUserForbiddenBody{
-  		Message: "User Name Invalid.",
-  		})
-  	}
-  	if db.Where("org_name = ?", body.OrgName).First(&orgNew).RowsAffected == 0 {
+		return user.NewAddUserForbidden().WithPayload(&user.AddUserForbiddenBody{
+			Message: "User Role Invalid. Could only be SITE_ADMIN/ORG_ADMIN/USER",
+		})
+	}
+	var orgNew models.Org
+	var userOld models.User
+	if db.Where("username = ?", body.Name).First(&userOld).RowsAffected == 1 {
+		return user.NewAddUserForbidden().WithPayload(&user.AddUserForbiddenBody{
+			Message: "User Name Invalid.",
+		})
+	}
+	if db.Where("org_name = ?", body.OrgName).First(&orgNew).RowsAffected == 0 {
 		// invalid org
-  		return user.NewAddUserForbidden().WithPayload(&user.AddUserForbiddenBody{
-  		Message: "Org Name Invalid.",
-  		})
-  	}
-	
-  	pw, _ := password.Generate(10, 4, 0, false, false)
-  	code, _ := password.Generate(6,6,0,false,false)
-  	fmt.Println("password generated!!!")
-  	newUser := models.User{
-  		Username: body.Name,
-  		Role:     body.Role,
-  		Email:    body.Email,
-  		PwReset:  false,
-  		Phone:    body.Phone,
-  		OrgName:    body.OrgName,
-  		Password:	pw,
-  		Temp:     code,
-  	}
-  	if db.Unscoped().Where("username = ?", body.Name).First(&userOld).RowsAffected == 1 {
+		return user.NewAddUserForbidden().WithPayload(&user.AddUserForbiddenBody{
+			Message: "Org Name Invalid.",
+		})
+	}
+
+	pw, _ := password.Generate(10, 4, 0, false, false)
+	code, _ := password.Generate(6, 6, 0, false, false)
+	fmt.Println("password generated!!!")
+	newUser := models.User{
+		Username: body.Name,
+		Role:     body.Role,
+		Email:    body.Email,
+		PwReset:  false,
+		Phone:    body.Phone,
+		OrgName:  body.OrgName,
+		Password: pw,
+		Temp:     code,
+	}
+	if db.Unscoped().Where("username = ?", body.Name).First(&userOld).RowsAffected == 1 {
 		//delete already deleted user info permently when new user created
-  		db.Unscoped().Delete(&userOld)
-  	}
+		db.Unscoped().Delete(&userOld)
+	}
 
-  	if err := db.Create(&newUser).Error; err != nil {
-  		return user.NewAddUserForbidden().WithPayload(&user.AddUserForbiddenBody{
+	if err := db.Create(&newUser).Error; err != nil {
+		return user.NewAddUserForbidden().WithPayload(&user.AddUserForbiddenBody{
 			Message: "Insert row DB error: " + err.Error(),
 		})
-  	}
+	}
 
 	newLog := models.Log{
-		UserID: uid,
+		UserID:    uid,
 		Operation: "Add User:" + body.Name,
-		Time: time.Now(),
-		Status: "Succeed",
+		Time:      time.Now(),
+		Status:    "Succeed",
 	}
 	fmt.Println("test add user!!!")
 	fmt.Println("start send!!!")
@@ -331,19 +329,19 @@ func AddUserHandler(params user.AddUserParams) middleware.Responder {
 	m.SetHeader("From", OfficialEmail)
 	m.SetHeader("To", body.Email)
 	m.SetHeader("Subject", "CloudTides Default Password")
-	m.SetBody("text/plain", "CloudTides has registered an account for you. Your login password for CloudTides is: " + pw + "\nPlease login to CloudTides platform and reset the password. Your verification code is: " + code)
+	m.SetBody("text/plain", "CloudTides has registered an account for you. Your login password for CloudTides is: "+pw+"\nPlease login to CloudTides platform and reset the password. Your verification code is: "+code)
 	fmt.Println("m set!!!")
 	d := gomail.NewDialer("smtp.gmail.com", 587, OfficialEmail, OfficialPassword)
 	d.TLSConfig = &tls.Config{InsecureSkipVerify: true}
 	i := 0
-	for ; i < 3; i++ {
+	for ; i < 5; i++ {
 		if err := d.DialAndSend(m); err != nil {
 			fmt.Println(err)
-			continue;
+			continue
 		}
-		break;
+		break
 	}
-	if i == 3 {
+	if i == 5 {
 		fmt.Println("fail")
 		return user.NewSendVerificationBadRequest().WithPayload(&user.SendVerificationBadRequestBody{
 			Message: "fail!!!",
@@ -375,11 +373,11 @@ func ListUserHandler(params user.ListUserParams) middleware.Responder {
 	var response []*user.ListUserOKBodyItems0
 	for _, tmpUser := range users {
 		newResult := user.ListUserOKBodyItems0{
-			Email: tmpUser.Email,
-			ID: int64(tmpUser.ID),
-			Name: tmpUser.Username,
-			Phone: tmpUser.Phone,
-			Role: tmpUser.Role,
+			Email:   tmpUser.Email,
+			ID:      int64(tmpUser.ID),
+			Name:    tmpUser.Username,
+			Phone:   tmpUser.Phone,
+			Role:    tmpUser.Role,
 			OrgName: tmpUser.OrgName,
 		}
 
@@ -398,11 +396,11 @@ func ListUserOfOrgHandler(params user.ListUserOfOrgParams) middleware.Responder 
 	var response []*user.ListUserOKBodyItems0
 	for _, tmpUser := range users {
 		newResult := user.ListUserOKBodyItems0{
-			Email: tmpUser.Email,
-			ID: int64(tmpUser.ID),
-			Name: tmpUser.Username,
-			Phone: tmpUser.Phone,
-			Role: tmpUser.Role,
+			Email:   tmpUser.Email,
+			ID:      int64(tmpUser.ID),
+			Name:    tmpUser.Username,
+			Phone:   tmpUser.Phone,
+			Role:    tmpUser.Role,
 			OrgName: tmpUser.OrgName,
 		}
 
@@ -411,10 +409,9 @@ func ListUserOfOrgHandler(params user.ListUserOfOrgParams) middleware.Responder 
 	return user.NewListUserOK().WithPayload(response)
 }
 
-
 func ModifyUserHandler(params user.ModifyUserParams) middleware.Responder {
 	OFFICIAL_EMAIL := os.Getenv("OFFICIAL_EMAIL")
-  	OFFICIAL_PASSWORD := os.Getenv("OFFICIAL_PASSWORD")
+	OFFICIAL_PASSWORD := os.Getenv("OFFICIAL_PASSWORD")
 	if !VerifyUser(params.HTTPRequest) {
 		return user.NewModifyUserUnauthorized()
 	}
@@ -446,10 +443,10 @@ func ModifyUserHandler(params user.ModifyUserParams) middleware.Responder {
 	}
 
 	newLog := models.Log{
-		UserID: uid,
+		UserID:    uid,
 		Operation: "Modify User:" + body.Name,
-		Time: time.Now(),
-		Status: "Succeed",
+		Time:      time.Now(),
+		Status:    "Succeed",
 	}
 	if err = db.Create(&newLog).Error; err != nil {
 		return user.NewModifyUserForbidden().WithPayload(&user.ModifyUserForbiddenBody{
@@ -463,7 +460,7 @@ func ModifyUserHandler(params user.ModifyUserParams) middleware.Responder {
 	m.SetHeader("From", OFFICIAL_EMAIL)
 	m.SetHeader("To", body.Email)
 	m.SetHeader("Subject", "CloudTides User Information Updated")
-	m.SetBody("text/plain", "Your Cloudtides account has been updated. Your username is " + body.Name + " and your email is " + body.Email + ".")
+	m.SetBody("text/plain", "Your Cloudtides account has been updated. Your username is "+body.Name+" and your email is "+body.Email+".")
 	fmt.Println("m set!!!")
 	d := gomail.NewDialer("smtp.gmail.com", 587, OFFICIAL_EMAIL, OFFICIAL_PASSWORD)
 	d.TLSConfig = &tls.Config{InsecureSkipVerify: true}
@@ -472,14 +469,14 @@ func ModifyUserHandler(params user.ModifyUserParams) middleware.Responder {
 	// 	panic(err)
 	// }
 	i := 0
-	for ; i < 3; i++ {
+	for ; i < 5; i++ {
 		if err := d.DialAndSend(m); err != nil {
 			fmt.Println(err)
-			continue;
+			continue
 		}
-		break;
+		break
 	}
-	if i == 3 {
+	if i == 5 {
 		fmt.Println("fail")
 		return user.NewSendVerificationBadRequest().WithPayload(&user.SendVerificationBadRequestBody{
 			Message: "fail!!!",
@@ -507,10 +504,10 @@ func DeleteUserHandler(params user.DeleteUserParams) middleware.Responder {
 	}
 
 	newLog := models.Log{
-		UserID: uid,
+		UserID:    uid,
 		Operation: "Delete User with Id: " + strconv.FormatInt(params.ID, 10),
-		Time: time.Now(),
-		Status: "Succeed",
+		Time:      time.Now(),
+		Status:    "Succeed",
 	}
 
 	if err := db.Create(&newLog).Error; err != nil {
