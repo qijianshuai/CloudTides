@@ -54,10 +54,21 @@ func SendVerificationHandler(params user.SendVerificationParams) middleware.Resp
 	m.SetBody("text/plain", "Your are resetting your password. Your verification code is: " + code)
 	d := gomail.NewDialer("smtp.gmail.com", 587, OFFICIAL_EMAIL, OFFICIAL_PASSWORD)
 	d.TLSConfig = &tls.Config{InsecureSkipVerify: true}
-	if err := d.DialAndSend(m); err != nil {
-		fmt.Println(err)
-		panic(err)
+	i := 0
+	for ; i < 3; i++ {
+		if err := d.DialAndSend(m); err != nil {
+			fmt.Println(err)
+			continue;
+		}
+		break;
 	}
+	if i == 3 {
+		fmt.Println("fail")
+		return user.NewSendVerificationBadRequest().WithPayload(&user.SendVerificationBadRequestBody{
+			Message: "fail!!!",
+		})
+	}
+	
 	fmt.Println("success!!!")
 
 	return user.NewSendVerificationOK().WithPayload(&user.SendVerificationOKBody {
@@ -324,10 +335,24 @@ func AddUserHandler(params user.AddUserParams) middleware.Responder {
 	fmt.Println("m set!!!")
 	d := gomail.NewDialer("smtp.gmail.com", 587, OfficialEmail, OfficialPassword)
 	d.TLSConfig = &tls.Config{InsecureSkipVerify: true}
-	if err := d.DialAndSend(m); err != nil {
-		fmt.Println(err)
-		panic(err)
+	i := 0
+	for ; i < 3; i++ {
+		if err := d.DialAndSend(m); err != nil {
+			fmt.Println(err)
+			continue;
+		}
+		break;
 	}
+	if i == 3 {
+		fmt.Println("fail")
+		return user.NewSendVerificationBadRequest().WithPayload(&user.SendVerificationBadRequestBody{
+			Message: "fail!!!",
+		})
+	}
+	// if err := d.DialAndSend(m); err != nil {
+	// 	fmt.Println(err)
+	// 	panic(err)
+	// }
 	fmt.Println("success!!!")
 
 	if err := db.Create(&newLog).Error; err != nil {
@@ -442,9 +467,23 @@ func ModifyUserHandler(params user.ModifyUserParams) middleware.Responder {
 	fmt.Println("m set!!!")
 	d := gomail.NewDialer("smtp.gmail.com", 587, OFFICIAL_EMAIL, OFFICIAL_PASSWORD)
 	d.TLSConfig = &tls.Config{InsecureSkipVerify: true}
-	if err := d.DialAndSend(m); err != nil {
-		fmt.Println(err)
-		panic(err)
+	// if err := d.DialAndSend(m); err != nil {
+	// 	fmt.Println(err)
+	// 	panic(err)
+	// }
+	i := 0
+	for ; i < 3; i++ {
+		if err := d.DialAndSend(m); err != nil {
+			fmt.Println(err)
+			continue;
+		}
+		break;
+	}
+	if i == 3 {
+		fmt.Println("fail")
+		return user.NewSendVerificationBadRequest().WithPayload(&user.SendVerificationBadRequestBody{
+			Message: "fail!!!",
+		})
 	}
 	fmt.Println("success!!!")
 
