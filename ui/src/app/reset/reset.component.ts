@@ -19,6 +19,15 @@ function passwordMatchValidator(password: string): ValidatorFn {
   };
 }
 
+function passwordUnmatchValidator(password: string): ValidatorFn {
+  return (control: FormControl) => {
+    if (!control || !control.parent) {
+      return null;
+    }
+    return control.parent.get(password).value === control.value ? {mismatch: true} : null;
+  };
+}
+
 @Component({
   selector: 'tide-reset',
   templateUrl: './reset.component.html',
@@ -56,6 +65,7 @@ export class ResetComponent implements OnInit {
           Validators.required,
           Validators.minLength(6),            
           Validators.maxLength(16),
+          passwordUnmatchValidator('password'),
         ]],
       confirmPassword: [
         '', [

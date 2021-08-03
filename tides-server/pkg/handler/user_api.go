@@ -53,7 +53,8 @@ func SendVerificationHandler(params user.SendVerificationParams) middleware.Resp
 	fmt.Println(code)
 	m.SetHeader("Subject", "CloudTides Verification Code")
 	m.SetBody("text/plain", "Your are resetting your password. Your verification code is: "+code)
-	d := gomail.NewDialer("smtp.gmail.com", 587, OFFICIAL_EMAIL, OFFICIAL_PASSWORD)
+	// d := gomail.NewDialer("smtp.gmail.com", 587, OFFICIAL_EMAIL, OFFICIAL_PASSWORD)
+	d := gomail.NewDialer("smtp.qiye.aliyun.com", 25, OFFICIAL_EMAIL, OFFICIAL_PASSWORD)
 	d.TLSConfig = &tls.Config{InsecureSkipVerify: true}
 	i := 0
 	for ; i < 5; i++ {
@@ -264,8 +265,8 @@ func UpdateUserProfileHandler(params user.UpdateUserProfileParams) middleware.Re
 
 func AddUserHandler(params user.AddUserParams) middleware.Responder {
 	godotenv.Load("/.env")
-	OfficialEmail := os.Getenv("OFFICIAL_EMAIL")
-	OfficialPassword := os.Getenv("OFFICIAL_PASSWORD")
+	OFFICIAL_EMAIL := os.Getenv("OFFICIAL_EMAIL")
+	OFFICIAL_PASSWORD := os.Getenv("OFFICIAL_PASSWORD")
 	if !VerifyUser(params.HTTPRequest) {
 		return user.NewAddUserUnauthorized()
 	}
@@ -326,12 +327,13 @@ func AddUserHandler(params user.AddUserParams) middleware.Responder {
 	fmt.Println("test add user!!!")
 	fmt.Println("start send!!!")
 	m := gomail.NewMessage()
-	m.SetHeader("From", OfficialEmail)
+	m.SetHeader("From", OFFICIAL_EMAIL)
 	m.SetHeader("To", body.Email)
 	m.SetHeader("Subject", "CloudTides Default Password")
-	m.SetBody("text/plain", "CloudTides has registered an account for you. Your login password for CloudTides is: "+pw+"\nPlease login to CloudTides platform and reset the password. Your verification code is: "+code)
+	m.SetBody("text/plain", "CloudTides has registered an account for you. Your username is: " + body.Name + "\nYour login password for CloudTides is: "+pw+"\nPlease login to CloudTides platform and reset the password. Your verification code is: "+code)
 	fmt.Println("m set!!!")
-	d := gomail.NewDialer("smtp.gmail.com", 587, OfficialEmail, OfficialPassword)
+	// d := gomail.NewDialer("smtp.gmail.com", 587, OfficialEmail, OfficialPassword)
+	d := gomail.NewDialer("smtp.qiye.aliyun.com", 25, OFFICIAL_EMAIL, OFFICIAL_PASSWORD)
 	d.TLSConfig = &tls.Config{InsecureSkipVerify: true}
 	i := 0
 	for ; i < 5; i++ {
@@ -343,7 +345,8 @@ func AddUserHandler(params user.AddUserParams) middleware.Responder {
 	}
 	if i == 5 {
 		fmt.Println("fail")
-		return user.NewSendVerificationBadRequest().WithPayload(&user.SendVerificationBadRequestBody{
+		db.Delete(&newUser)
+		return user.NewAddUserForbidden().WithPayload(&user.AddUserForbiddenBody{
 			Message: "fail!!!",
 		})
 	}
@@ -462,7 +465,8 @@ func ModifyUserHandler(params user.ModifyUserParams) middleware.Responder {
 	m.SetHeader("Subject", "CloudTides User Information Updated")
 	m.SetBody("text/plain", "Your Cloudtides account has been updated. Your username is "+body.Name+" and your email is "+body.Email+".")
 	fmt.Println("m set!!!")
-	d := gomail.NewDialer("smtp.gmail.com", 587, OFFICIAL_EMAIL, OFFICIAL_PASSWORD)
+	// d := gomail.NewDialer("smtp.gmail.com", 587, OFFICIAL_EMAIL, OFFICIAL_PASSWORD)
+	d := gomail.NewDialer("smtp.qiye.aliyun.com", 25, OFFICIAL_EMAIL, OFFICIAL_PASSWORD)
 	d.TLSConfig = &tls.Config{InsecureSkipVerify: true}
 	// if err := d.DialAndSend(m); err != nil {
 	// 	fmt.Println(err)
