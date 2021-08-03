@@ -302,9 +302,10 @@ func AddUserHandler(params user.AddUserParams) middleware.Responder {
   		db.Unscoped().Delete(&userOld)
   	}
 
-  	err := db.Create(&newUser).Error
-  	if err != nil {
-  		return user.NewAddUserUnauthorized()
+  	if err := db.Create(&newUser).Error; err != nil {
+  		return user.NewAddUserForbidden().WithPayload(&user.AddUserForbiddenBody{
+			Message: "Insert row DB error: " + err.Error(),
+		})
   	}
 
 	newLog := models.Log{
@@ -329,8 +330,10 @@ func AddUserHandler(params user.AddUserParams) middleware.Responder {
 	}
 	fmt.Println("success!!!")
 
-	if db.Create(&newLog).Error != nil {
-		return user.NewModifyUserForbidden()
+	if err := db.Create(&newLog).Error; err != nil {
+		return user.NewAddUserForbidden().WithPayload(&user.AddUserForbiddenBody{
+			Message: "Insert Log DB error: " + err.Error(),
+		})
 	}
 	return user.NewAddUserOK().WithPayload(&user.AddUserOKBody{
 		Message: "succeed",
@@ -395,7 +398,9 @@ func ModifyUserHandler(params user.ModifyUserParams) middleware.Responder {
 	var pol models.User
 	db := config.GetDB()
 	if db.Where("id = ?", params.ID).First(&pol).RowsAffected == 0 {
-		return user.NewModifyUserNotFound()
+		return user.NewModifyUserNotFound().WithPayload(&user.ModifyUserNotFoundBody{
+			Message: "user with id " + strconv.FormatInt(params.ID, 10) + " is not found in database",
+		})
 	}
 
 	//pol.Org.OrgName = body.Org
@@ -457,7 +462,9 @@ func DeleteUserHandler(params user.DeleteUserParams) middleware.Responder {
 	db := config.GetDB()
 	var pol models.User
 	if db.Where("id = ? ", params.ID).Delete(&pol).RowsAffected == 0 {
-		return user.NewDeleteUserNotFound()
+		return user.NewDeleteUserNotFound().WithPayload(&user.DeleteUserNotFoundBody{
+			Message: "user with id " + strconv.FormatInt(params.ID, 10) + " is not found in database",
+		})
 	}
 
 	newLog := models.Log{
@@ -466,8 +473,11 @@ func DeleteUserHandler(params user.DeleteUserParams) middleware.Responder {
 		Time: time.Now(),
 		Status: "Succeed",
 	}
-	if db.Create(&newLog).Error != nil {
-		return user.NewDeleteUserForbidden()
+
+	if err := db.Create(&newLog).Error; err != nil {
+		return user.NewDeleteUserForbidden().WithPayload(&user.DeleteUserForbiddenBody{
+			Message: "delete user failed: " + err.Error(),
+		})
 	}
 
 	return user.NewDeleteUserOK().WithPayload(&user.DeleteUserOKBody{
