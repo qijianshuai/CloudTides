@@ -2,7 +2,7 @@
   [clrModalSize]="'lg'"
   [clrModalClosable]="false">
   <h3 class="modal-title">
-    Add org
+    {{ "HOME.ORGNIZATION.ADD_ORGNIZATION" | translate:{} }}
   </h3>
   <div class="modal-body">
     <form clrForm [formGroup]="this.orgForm">
@@ -19,11 +19,11 @@
       </clr-alert>
 
       <clr-input-container>
-        <label for="name">Name</label>
+        <label for="name">{{ "HOME.ORGNIZATION.DIALOG.NAME" | translate:{} }}</label>
         <input id="name"
           class="clr-col-12 clr-col-md-8"
           type="text"
-          [placeholder]="'Org Name'"
+          [placeholder]="'HOME.ORGNIZATION.DIALOG.NAME_PLACEHOLDER' | translate:{} "
           formControlName="name"
           clrInput />
       </clr-input-container>

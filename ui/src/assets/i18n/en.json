@@ -26,14 +26,14 @@
     "part1-card3": "Reach more new customers and new industries",
     "part2-card1": "Enterprise applications quickly move to the cloud",
     "part2-card2": "One-click deployment of the demo environment",
-    "part2-card3": "Expand sales channels",
-    "part3-card1": "Improving resource utilization",
+    "part2-card3": "Expand market saling channels",
+    "part3-card1": "Improving the resource utilization",
     "part3-card2": "Participating in public scientific research",
-    "part3-card3": "ESG",
+    "part3-card3": "Environmental, Social, and Governance",
     "part2-title": "Accelerate the business development of VIN partners",
     "part3-title": "Help public welfare to improve corporate social image",
-    "readnow": "了解更多",
-    "wait": "敬请期待"
+    "readnow": "Learn More",
+    "wait": "Coming Soon"
   },
   "vcpp-main":{
     "part1-title": "VCPP - Vmware Cloud Provider Program",
@@ -43,7 +43,7 @@
     "part1-list3": "VMware Cloud Provider Managed Services Provider",
     "part2-title": "Vmware Cloud Verified Provider",
     "part2-content": "Featuring the VMware Cloud Verified logo in your marketing campaigns and content signals to your customers and prospects that your foundational cloud technologies and services are based on VMware Cloud Infrastructure.",
-    "part3-title": "大中华区VCPP名录",
+    "part3-title": "VCPP List in China",
     "part3-learnmore": "more.."
   },
   "LOGIN": {
@@ -193,13 +193,25 @@
         "CCPU": "CPU Usage",
         "CMEMORY": "Memory Usage",
         "CDISK": "Disk Usage"
-      }
+      },
+      "DIALOG":{
+        "NAME": "Name",
+        "NAME_PLACEHOLDER": "Org Name"
+      },
+      "DELETE":"Delete"
     },
     "USER":{
       "USER": "User",
       "ADD_USER": "Add User",
-      "UPGRADE": "Upgrade",
-      "DOWNGRADE": "Downgrade"
+      "DELETE": "Delete",
+      "EDIT": "Edit",
+      "DIALOG":{
+        "USERNAME": "Username",
+        "ORGANIZATION": "Organization",
+        "ROLE": "Role",
+        "EMAIL":"Email",
+        "PHONE":"Phone Number"
+      }
     },
     "PRODUCT_NAME": "CloudTides",
     "PROFILE": "Profile",
