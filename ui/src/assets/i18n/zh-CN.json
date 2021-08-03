@@ -96,6 +96,7 @@
     "NEW_PASSWORD": "新密码",
     "CONFIRMED_PASSWORD": "确认密码",
     "PASSWORD_MISSING": "请填写密码",
+    "PASSWORD_SAME": "与原密码相同",
     "PASSWORD_TOO_SHORT": "密码长度过短",
     "PASSWORD_TOO_LONG": "密码长度过长",
     "PASSWORD_CONFIRM": "确认密码",

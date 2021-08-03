@@ -24,7 +24,7 @@ function passwordUnmatchValidator(password: string): ValidatorFn {
     if (!control || !control.parent) {
       return null;
     }
-    return control.parent.get(password).value === control.value ? {mismatch: true} : null;
+    return control.parent.get(password).value === control.value ? {same: true} : null;
   };
 }
 
