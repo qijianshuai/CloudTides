@@ -87,6 +87,7 @@
     "NEW_PASSWORD": "New Password",
     "CONFIRMED_PASSWORD": "Confirm Password",
     "PASSWORD_MISSING": "Password is required",
+    "PASSWORD_SAME": "Password is same as old password",
     "PASSWORD_TOO_SHORT": "Password is too short",
     "PASSWORD_TOO_LONG": "Password is too long",
     "PASSWORD_CONFIRM": "Confirm Password",
