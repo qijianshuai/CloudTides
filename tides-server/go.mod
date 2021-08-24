@@ -29,21 +29,26 @@ require (
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/joho/godotenv v1.3.0
 	github.com/justinas/nosurf v1.1.1 // indirect
+	github.com/karrick/godirwalk v1.16.1 // indirect
 	github.com/kr/pretty v0.2.1 // indirect
 	github.com/lib/pq v1.3.0
 	github.com/mailru/easyjson v0.7.7 // indirect
+	github.com/mdempsky/gocode v0.0.0-20200405233807-4acdcbdea79d // indirect
 	github.com/meatballhat/negroni-logrus v1.1.0 // indirect
 	github.com/phyber/negroni-gzip v1.0.0 // indirect
+	github.com/ramya-rao-a/go-outline v0.0.0-20210608161538-9736a4bde949 // indirect
 	github.com/robfig/cron/v3 v3.0.0
 	github.com/rs/cors v1.7.0
 	github.com/sethvargo/go-password v0.2.0
 	github.com/sirupsen/logrus v1.6.0
+	github.com/uudashr/gopkgs/v2 v2.1.2 // indirect
 	github.com/vmware/go-vcloud-director/v2 v2.10.0-alpha.3
 	github.com/vmware/govmomi v0.23.1
 	go.mongodb.org/mongo-driver v1.5.4 // indirect
 	golang.org/x/crypto v0.0.0-20210322153248-0c34fe9e7dc2 // indirect
 	golang.org/x/net v0.0.0-20210614182718-04defd469f4e
 	golang.org/x/sys v0.0.0-20210630005230-0f9fa26af87c // indirect
+	golang.org/x/tools v0.1.5 // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
 	gopkg.in/check.v1 v1.0.0-20200902074654-038fdea0a05b // indirect
