@@ -15,7 +15,6 @@ import { MyLandingFooterComponent } from './layout/my-landing-footer/my-landing-
 import { VinComponent } from './vin/vin.component';
 import { VcppComponent } from './vcpp/vcpp.component';
 import { ResetComponent } from './reset/reset.component';
-
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);

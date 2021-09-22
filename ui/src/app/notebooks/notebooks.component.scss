@@ -1,0 +1,15 @@
+.note-wrap {
+  display: flex;
+  height: 100%;
+  .note-nav {
+    .active {
+      background-color: #ccc;
+    }
+    .clr-vertical-nav {
+      height: 100%;
+    }
+  }
+  .note-container {
+    flex: 1;
+  }
+}

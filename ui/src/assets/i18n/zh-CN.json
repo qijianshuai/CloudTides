@@ -223,6 +223,15 @@
         "PHONE": "联系电话"
       }
     },
+    "NOTEBOOKS": {
+      "NOTEBOOKS": "笔记本",
+      "NEW_INSTANCE": "创建新实例",
+      "REFRESH": "刷新",
+      "START": "启动",
+      "STOP": "停止",
+      "RESET": "重置",
+      "DELETE": "删除"
+    },
     "PRODUCT_NAME": "云汐",
     "PROFILE": "个人信息",
     "LOGOUT": "登出"

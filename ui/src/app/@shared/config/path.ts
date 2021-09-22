@@ -13,6 +13,7 @@ export const VM_PATH_NAME = 'vm'
 export const PORT_PATH_NAME = 'ports'
 export const ORG_PATH_NAME = 'org'
 export const USER_PATH_NAME = 'user'
+export const NOTEBOOKS_PATH_NAME = 'notebooks'
 
 // Path
 export const BASE_PATH = `/`;

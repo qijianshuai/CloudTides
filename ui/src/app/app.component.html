@@ -164,6 +164,13 @@
               {{ "HOME.USER.USER" | translate:{} }}
             </a>
           </li> 
+          <li *ngIf=this.loginService.inSiteAdminView()||this.loginService.inOrgAdminView() class="nav-item">
+            <a class="nav-link"
+              routerLink="/cloudtides/notebooks"
+              routerLinkActive="active">
+              {{ "HOME.NOTEBOOKS.NOTEBOOKS" | translate:{} }}
+            </a>
+          </li> 
         </ul>
       </nav>
     </ng-container>
@@ -171,9 +178,7 @@
     <!-- content for cloudtides -->
     <div class="main-container" *ngIf="path.startsWith('/cloudtides')">
       <div class="content-container">
-        <div class="content-area">
           <router-outlet></router-outlet>
-        </div>
       </div>
     </div>
 

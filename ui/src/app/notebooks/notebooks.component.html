@@ -1,0 +1,45 @@
+<div class="note-wrap">
+  <div class="note-nav">
+    <clr-vertical-nav [clrVerticalNavCollapsible]="true">
+      <a clrVerticalNavLink routerLink="/cloudtides/notebooks" routerLinkActive="active">
+        <cds-icon clrVerticalNavIcon shape="list" solid></cds-icon>
+        {{'HOME.NOTEBOOKS.NOTEBOOKS' | translate}}
+      </a>
+      <clr-vertical-nav-group routerLinkActive="active">
+        <cds-icon clrVerticalNavIcon shape="plus-circle" solid></cds-icon>
+        {{'HOME.NOTEBOOKS.NEW_INSTANCE' | translate}}
+        <clr-vertical-nav-group-children>
+          <a clrVerticalNavLink routerLink="./normal/pidgey" routerLinkActive="active">
+            Pidgey
+          </a>
+          <a clrVerticalNavLink routerLink="./normal/snorlax" routerLinkActive="active">
+            Snorlax
+          </a>
+        </clr-vertical-nav-group-children>
+      </clr-vertical-nav-group>
+      <a clrVerticalNavLink href="javascript:;" routerLinkActive="active">
+        <cds-icon clrVerticalNavIcon shape="refresh"></cds-icon>
+        {{'HOME.NOTEBOOKS.REFRESH' | translate}}
+      </a>
+      <a clrVerticalNavLink href="javascript:;">
+        <cds-icon clrVerticalNavIcon shape="play" solid></cds-icon>
+        {{'HOME.NOTEBOOKS.START' | translate}}
+      </a>
+      <a clrVerticalNavLink href="javascript:;">
+        <cds-icon clrVerticalNavIcon shape="stop" solid></cds-icon>
+        {{'HOME.NOTEBOOKS.STOP' | translate}}
+      </a>
+      <a clrVerticalNavLink href="javascript:;">
+        <cds-icon clrVerticalNavIcon shape="power" badge="inherit-triangle"></cds-icon>
+        {{'HOME.NOTEBOOKS.RESET' | translate}}
+      </a>
+      <a clrVerticalNavLink href="javascript:;">
+        <cds-icon clrVerticalNavIcon shape="trash" solid></cds-icon>
+        {{'HOME.NOTEBOOKS.DELETE' | translate}}
+      </a>
+    </clr-vertical-nav>
+  </div>
+  <div class="note-container">
+    <router-outlet></router-outlet>
+  </div>
+</div>

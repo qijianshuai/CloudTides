@@ -17,7 +17,8 @@ import {
   VENDOR_PATH_NAME,
   VAPP_PATH_NAME,
   ORG_PATH_NAME,
-  USER_PATH_NAME
+  USER_PATH_NAME,
+  NOTEBOOKS_PATH_NAME
 } from '@tide-config/path';
 
 
@@ -115,6 +116,10 @@ const routes: Routes = [
       {
         path: USER_PATH_NAME,
         loadChildren: () => import('./user/user.module').then(m => m.UserModule),
+      },
+      {
+        path: NOTEBOOKS_PATH_NAME,
+        loadChildren: () => import('./notebooks/notebooks.module').then(m => m.NotebooksModule),
       }
     ],
   },

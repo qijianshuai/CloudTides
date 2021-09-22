@@ -214,6 +214,15 @@
         "PHONE":"Phone Number"
       }
     },
+    "NOTEBOOKS": {
+      "NOTEBOOKS": "notebooks",
+      "NEW_INSTANCE": "NEW_INSTANCE",
+      "REFRESH": "REFRESH",
+      "START": "START",
+      "STOP": "STOP",
+      "RESET": "RESET",
+      "DELETE": "DELETE"
+    },
     "PRODUCT_NAME": "CloudTides",
     "PROFILE": "Profile",
     "LOGOUT": "Log out"

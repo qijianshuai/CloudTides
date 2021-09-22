@@ -3,7 +3,12 @@
 @import '~@cds/core/global.min'; 
 @import '~@cds/core/styles/module.shims.min'; 
 @import '~@cds/city/css/bundles/default.min';
-
+.content-container {
+  display: block;
+}
+.content-container .content-area {
+  padding: 24px;
+}
 .i18n-select {
     color: white;
   }
