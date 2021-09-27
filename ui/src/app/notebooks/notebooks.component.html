@@ -1,40 +1,78 @@
 <div class="note-wrap">
   <div class="note-nav">
+    <p  (click)="aa()">888888</p>
+    <!-- <a href="http://www.w3schools.com" target="_blank">88888</a> -->
     <clr-vertical-nav [clrVerticalNavCollapsible]="true">
-      <a clrVerticalNavLink routerLink="/cloudtides/notebooks" routerLinkActive="active">
-        <cds-icon clrVerticalNavIcon shape="list" solid></cds-icon>
+      <a clrVerticalNavLink routerLink="/cloudtides/notebooks/list" routerLinkActive="active">
+        <clr-icon shape="list" solid></clr-icon>
         {{'HOME.NOTEBOOKS.NOTEBOOKS' | translate}}
       </a>
       <clr-vertical-nav-group routerLinkActive="active">
-        <cds-icon clrVerticalNavIcon shape="plus-circle" solid></cds-icon>
-        {{'HOME.NOTEBOOKS.NEW_INSTANCE' | translate}}
+        <clr-icon shape="plus-circle" solid></clr-icon>
+        {{'HOME.NOTEBOOKS.NEW_INSTANCE.NEW_INSTANCE' | translate}}
         <clr-vertical-nav-group-children>
-          <a clrVerticalNavLink routerLink="./normal/pidgey" routerLinkActive="active">
-            Pidgey
-          </a>
-          <a clrVerticalNavLink routerLink="./normal/snorlax" routerLinkActive="active">
-            Snorlax
-          </a>
+          <!-- default -->
+          <p *ngIf="router.url.indexOf('newInstance') === -1" (click)="createInstanceHandle()" class="customize-instance">Customize instance</p>
+          <p *ngIf="router.url.indexOf('newInstance') !== -1" clrVerticalNavLink routerLink="/cloudtides/notebooks/newInstance" routerLinkActive="active" class="customize-instance">Customize instance</p>
+          <!-- dynamic -->
+          <div class="version-lange">
+            <p class="title">Python 3</p>
+            <p class="desc">Includes scikit-learn, pandas and more</p>
+          </div>
+          <clr-vertical-nav-group routerLinkActive="active">
+            <div class="version-lange">
+              <p class="title" title="Python 3(CUDA Toolkit 11.0)">Python 3(CUDA Toolkit 11.0)</p>
+              <p class="desc">Optimized for NVIDIA CPUs</p>
+            </div>  
+            <clr-vertical-nav-group-children>
+              <div class="version-lange">
+                <p class="title">TensorFlow 1.15</p>
+              </div>  
+              </clr-vertical-nav-group-children>
+          </clr-vertical-nav-group>
+          <clr-vertical-nav-group routerLinkActive="active">
+            <div class="version-lange">
+              <p class="title">TensorFlow Enterprise</p>
+              <p class="desc">Includes keras,scikit,pandas,NLTK and more</p>
+            </div>  
+            <clr-vertical-nav-group-children>
+              <clr-vertical-nav-group routerLinkActive="active">
+                <div class="version-lange bnt2">
+                  <p class="title" title="TensorFlow Enterprise 1.15(with LTS)">TensorFlow Enterprise 1.15(with LTS)</p>
+                </div>  
+                <clr-vertical-nav-group-children>
+                  <div class="version-lange bnt3">
+                    <p class="title">TensorFlow 1.15</p>
+                  </div>  
+                  </clr-vertical-nav-group-children>
+              </clr-vertical-nav-group>    
+              </clr-vertical-nav-group-children>
+          </clr-vertical-nav-group>
+            <a clrVerticalNavLink href="javascript:;">Snorlax</a>
         </clr-vertical-nav-group-children>
       </clr-vertical-nav-group>
       <a clrVerticalNavLink href="javascript:;" routerLinkActive="active">
-        <cds-icon clrVerticalNavIcon shape="refresh"></cds-icon>
+        <clr-icon shape="refresh" solid></clr-icon>
         {{'HOME.NOTEBOOKS.REFRESH' | translate}}
       </a>
       <a clrVerticalNavLink href="javascript:;">
-        <cds-icon clrVerticalNavIcon shape="play" solid></cds-icon>
+        <clr-icon shape="play" solid></clr-icon>
+
         {{'HOME.NOTEBOOKS.START' | translate}}
       </a>
       <a clrVerticalNavLink href="javascript:;">
-        <cds-icon clrVerticalNavIcon shape="stop" solid></cds-icon>
+        <clr-icon shape="stop" solid></clr-icon>
+
         {{'HOME.NOTEBOOKS.STOP' | translate}}
       </a>
       <a clrVerticalNavLink href="javascript:;">
-        <cds-icon clrVerticalNavIcon shape="power" badge="inherit-triangle"></cds-icon>
+        <clr-icon shape="power" solid badge="inherit-triangle"></clr-icon>
+
         {{'HOME.NOTEBOOKS.RESET' | translate}}
       </a>
       <a clrVerticalNavLink href="javascript:;">
-        <cds-icon clrVerticalNavIcon shape="trash" solid></cds-icon>
+        <clr-icon shape="trash" solid badge="inherit-triangle"></clr-icon>
+
         {{'HOME.NOTEBOOKS.DELETE' | translate}}
       </a>
     </clr-vertical-nav>
@@ -42,4 +80,105 @@
   <div class="note-container">
     <router-outlet></router-outlet>
   </div>
+
+  <div class="modal" *ngIf="noteBook.createInstance">
+    <div class="modal-dialog fadeDown in" role="dialog" aria-hidden="true">
+      <div class="modal-content">
+        <p class="create-title">{{'HOME.NOTEBOOKS.NEW_INSTANCE.NEW_NOTEBOOK_INSTANCE' | translate}}</p>
+        <form class="clr-form clr-form-horizontal">
+          <div class="clr-form-control">
+            <label for="example1" class="clr-control-label">{{'HOME.NOTEBOOKS.LIST.INSTANCE_NAME' | translate}}</label>
+            <div class="clr-control-container">
+              <div class="clr-input-wrapper">
+                <input name="instance-name" type="text" id="example1" [(ngModel)]="noteBook.form.name" placeholder="Placeholder" class="clr-input" />
+              </div>
+            </div>
+          </div>
+          <div class="clr-form-control">
+            <label for="example2" class="clr-control-label">{{'HOME.NOTEBOOKS.NEW_INSTANCE.REGION' | translate}}</label>
+            <div class="clr-control-container">
+              <div class="clr-select-wrapper">
+                <select placeholder="Select Option" id="example2">
+                  <option>Option 1</option>
+                  <option>Option 2</option>
+                  <option>Option 3</option>
+                </select>
+                <clr-signpost>
+                  <clr-signpost-content *clrIfOpen>
+                    <h3>Default Signpost</h3>
+                    <p>Position: <code class="clr-code">right-middle</code></p>
+                  </clr-signpost-content>
+                </clr-signpost>
+              </div>
+            </div>
+            <label for="example3" class="clr-control-label label2">{{'HOME.NOTEBOOKS.LIST.ZONE' | translate}}</label>
+            <div class="clr-control-container">
+              <div class="clr-select-wrapper">
+                <select placeholder="Select Option" id="example3">
+                  <option>Option 1</option>
+                  <option>Option 2</option>
+                  <option>Option 3</option>
+                </select>
+                <clr-signpost>
+                  <clr-signpost-content *clrIfOpen>
+                    <h3>Default Signpost</h3>
+                    <p>Position: <code class="clr-code">right-middle</code></p>
+                  </clr-signpost-content>
+                </clr-signpost>
+              </div>
+            </div>
+          </div>
+          <div class="option">
+            <p class="option-title">
+              {{'HOME.NOTEBOOKS.NEW_INSTANCE.INSTANCE_PROPERTIES' | translate}}
+              <clr-icon shape="pencil" solid></clr-icon>
+
+            </p>
+            <ul class="option-list">
+              <li>
+                <label class="clr-control-label" for="input1">{{'HOME.NOTEBOOKS.LIST.ENVIRONMENT' | translate}}</label>
+                <input clrInput type="text" name="" id="input1">
+              </li>
+              <li>
+                <label class="clr-control-label" for="input2">{{'HOME.NOTEBOOKS.LIST.MACHINE_TYPE' | translate}}</label>
+                <input clrInput type="text" name="" id="input2">
+              </li>
+              <li>
+                <label class="clr-control-label" for="input3">{{'HOME.NOTEBOOKS.NEW_INSTANCE.BOOT_DISK' | translate}}</label>
+                <input clrInput type="text" name="" id="input3">
+              </li>
+              <li>
+                <label for="example4" class="clr-control-label">{{'HOME.NOTEBOOKS.NEW_INSTANCE.SUBNETWORK' | translate}}</label>
+                <div class="clr-control-container">
+                  <div class="clr-select-wrapper">
+                    <select placeholder="Select Option" id="example4">
+                      <option>Option 1</option>
+                      <option>Option 2</option>
+                      <option>Option 3</option>
+                    </select>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <label class="clr-control-label" for="input4">{{'HOME.NOTEBOOKS.NEW_INSTANCE.EXTERNAL_IP' | translate}}</label>
+                <input clrInput type="text" name="" id="input4">
+              </li>
+              <li>
+                <label class="clr-control-label" for="input5">{{'HOME.NOTEBOOKS.LIST.PERMISSION' | translate}}</label>
+                <input clrInput type="text" name="" id="input5">
+              </li>
+            </ul>
+            <div class="footer">
+              <p (click)="advancedOptions()" class="other-option">{{'HOME.NOTEBOOKS.NEW_INSTANCE.ADVANCED_OPTIONS' | translate}}</p>
+              <div>
+                <button (click)="cancel()" class="btn btn-outline">{{'HOME.POLICY.DIALOG.CANCEL' | translate}}</button>
+                <button (click)="create()" class="btn btn-info-outline">{{'HOME.NOTEBOOKS.CREATE' | translate}}</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="noteBook.createInstance" class="modal-backdrop fade in" aria-hidden="true"></div>
 </div>

@@ -1,3 +1,26 @@
 .table-list {
   width: 100%;
 }
+.clr-form  {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  .clr-control-container ::ng-deep {
+    margin-left: 20px;
+    .searchinput  {
+      width: 300px;
+    }
+    .clr-input-wrapper {
+      position: relative;
+      .clr-form-control  {
+        margin-top: 0px;
+      }
+      .btn {
+        margin-top: 0px;
+        position: absolute;
+        top: -6px;
+        right: -30px;
+      }
+    }
+  }
+}

@@ -225,12 +225,36 @@
     },
     "NOTEBOOKS": {
       "NOTEBOOKS": "笔记本",
-      "NEW_INSTANCE": "创建新实例",
+      "NEW_INSTANCE": {
+        "NEW_INSTANCE" : "创建新实例",
+        "NEW_NOTEBOOK_INSTANCE": "新建计算机实例",
+        "REGION": "行政区",
+        "INSTANCE_PROPERTIES": "实例属性",
+        "BOOT_DISK": "启动盘",
+        "SUBNETWORK": "代理地址",
+        "EXTERNAL_IP": "外部IP",
+        "ADVANCED_OPTIONS": "高级选项"
+
+      },
       "REFRESH": "刷新",
+      "CREATE": "创建",
       "START": "启动",
       "STOP": "停止",
       "RESET": "重置",
-      "DELETE": "删除"
+      "DELETE": "删除",
+      "FILTER": "筛选",
+      "PLACEHOLDER": {
+        "SEARCH": "输入名称或者值"
+      },
+      "LIST": {
+        "INSTANCE_NAME": "实例名称",
+        "ZONE": "地区",
+        "AUTO_UPGRADE": "自动升级",
+        "ENVIRONMENT": "环境",
+        "MACHINE_TYPE": "机器类型",
+        "PERMISSION": "许可",
+        "LAST_MODIFIED": "最后修改"
+      }
     },
     "PRODUCT_NAME": "云汐",
     "PROFILE": "个人信息",

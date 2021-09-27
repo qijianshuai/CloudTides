@@ -5,14 +5,19 @@ import { NotebooksService } from './notebooks.service'
 import { NotebooksRoutingModule, declarations, providers } from './notebooks-routing.module';
 import { NotebooksComponent } from './notebooks.component';
 import { ListComponent } from './list/list.component'
+import { RouteReuseStrategyService } from '@tide-shared/service/route-reuse-stratety.service'
+import { RouteReuseStrategy } from '@angular/router';
+import { CreateInsranceComponent } from './create-insrance/create-insrance.component';
 @NgModule({
   declarations: [
     // ...declarations
     NotebooksComponent,
-    ListComponent
+    ListComponent,
+    CreateInsranceComponent
   ],
   providers: [
     NotebooksService,
+    { provide: RouteReuseStrategy, useClass: RouteReuseStrategyService },
     ...providers,
   ],
   imports: [

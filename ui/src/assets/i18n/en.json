@@ -216,12 +216,36 @@
     },
     "NOTEBOOKS": {
       "NOTEBOOKS": "notebooks",
-      "NEW_INSTANCE": "NEW_INSTANCE",
+      "NEW_INSTANCE": {
+        "NEW_INSTANCE": "NEW_INSTANCE",
+        "NEW_NOTEBOOK_INSTANCE": "New notebook instance",
+        "REGION": "Region",
+        "INSTANCE_PROPERTIES": "Instance properties",
+        "BOOT_DISK": "Boot disk",
+        "SUBNETWORK": "Subnetwork",
+        "EXTERNAL_IP": "External IP",
+        "ADVANCED_OPTIONS": "ADVANCED_OPTIONS"
+      },
       "REFRESH": "REFRESH",
+      "CREATE": "CREATE",
       "START": "START",
       "STOP": "STOP",
       "RESET": "RESET",
-      "DELETE": "DELETE"
+      "DELETE": "DELETE",
+      "FILTER": "Filter",
+      "PLACEHOLDER": {
+        "SEARCH": "Enter property name or value"
+      },
+      "LIST": {
+        "INSTANCE_NAME": "Instance name",
+        "ZONE": "Zone",
+        "AUTO_UPGRADE": "Auto-upgrade",
+        "ENVIRONMENT": "Environment",
+        "MACHINE_TYPE": "Machine type",
+        "PERMISSION": "Permission",
+        "LAST_MODIFIED": "Last modified"
+      }
+
     },
     "PRODUCT_NAME": "CloudTides",
     "PROFILE": "Profile",
