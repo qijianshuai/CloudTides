@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NotebooksService } from '../notebooks.service'
 import { Router } from '@angular/router'
+interface InstanceModel {
+  name: string
+}
 @Component({
   selector: 'tide-create-insrance',
   templateUrl: './create-insrance.component.html',
@@ -14,8 +17,25 @@ export class CreateInsranceComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  currentButton = true
+  createInstanceFlag = false
+  instanceForm:InstanceModel = {
+    name:""
+  }
   backCreateInstance () {
     this.router.navigate(['/cloudtides/notebooks/list'])
     this.noteBook.createInstance = true
+  }
+  openInstanceModal () {
+    this.createInstanceFlag = true
+  }
+  cancel () {
+    this.createInstanceFlag = false
+  }
+  create () {
+    this.createInstanceFlag = false
+  }
+  toggleCurrentButton () {
+    this.currentButton = !this.currentButton
   }
 }

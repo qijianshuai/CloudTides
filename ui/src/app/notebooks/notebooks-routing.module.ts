@@ -14,7 +14,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'list'
+        redirectTo: 'newInstance'
       },
       {
         path: 'list',

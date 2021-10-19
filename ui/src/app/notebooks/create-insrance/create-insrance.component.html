@@ -1,5 +1,147 @@
 <div class="instanc-warp">
-  <h4 (click)="backCreateInstance()">
+  <div class="btn-group">
+    <button class="btn" [ngClass]="{'btn-primary': currentButton}" (click)="toggleCurrentButton()">实例</button>
+    <button class="btn" [ngClass]="{'btn-primary': !currentButton}" (click)="toggleCurrentButton()">集群</button>
+  </div>
+  <div class="instanc-content" [hidden]="!currentButton">
+    <div class="python" (click)="openInstanceModal()">
+      <img src="assets/img/python.png" alt="">
+      <p>Python 3</p>
+    </div>
+    <div class="python-crud" (click)="openInstanceModal()">
+      <img src="assets/img/python.png" alt="">
+      <p>Python 3(CRUD Toolkit 11.0)</p>
+    </div>
+    <div class="tensorflow" (click)="openInstanceModal()">
+      <img src="assets/img/tensorflow.png" alt="">
+      <p>TensorTlow EnterPrise</p>
+    </div>
+    <div class="pytorch" (click)="openInstanceModal()">
+      <img src="assets/img/pytorch.png" alt="">
+      <p>Pytorch</p>
+    </div>
+    <div class="Rlogo" (click)="openInstanceModal()">
+      <img src="assets/img/Rlogo.png" alt="">
+      <p>R 4.0</p>
+    </div>
+    <div class="rapids" (click)="openInstanceModal()">
+      <img src="assets/img/rapids.png" alt="">
+      <p>RAPIDS 0.18[EXPERIMENTAL]</p>
+    </div>
+    <div class="kaggle" (click)="openInstanceModal()">
+      <img src="assets/img/kaggle.png" alt="">
+      <p>Kaggle Python[BETA]</p>
+    </div>
+    <div class="theia" (click)="openInstanceModal()">
+      <img src="assets/img/theia.svg" alt="">
+      <p>Theia IDE[EXPERIMENTAL]</p>
+    </div>
+    <div class="smart" (click)="openInstanceModal()">
+      <img src="assets/img/smart.svg" alt="">
+      <p>Smart Analytics Frameworks</p>
+    </div>
+  </div>
+  <div class="modal" *ngIf="createInstanceFlag">
+    <div class="modal-dialog fadeDown in" role="dialog" aria-hidden="true">
+      <div class="modal-content">
+        <p class="create-title">{{'HOME.NOTEBOOKS.NEW_INSTANCE.NEW_NOTEBOOK_INSTANCE' | translate}}</p>
+        <form class="clr-form clr-form-horizontal">
+          <div class="clr-form-control">
+            <label for="example1" class="clr-control-label">{{'HOME.NOTEBOOKS.LIST.INSTANCE_NAME' | translate}}</label>
+            <div class="clr-control-container">
+              <div class="clr-input-wrapper">
+                <input name="instance-name" type="text" id="example1" [(ngModel)]="instanceForm.name" placeholder="Placeholder" class="clr-input" />
+              </div>
+            </div>
+          </div>
+          <div class="clr-form-control">
+            <label for="example2" class="clr-control-label">{{'HOME.NOTEBOOKS.NEW_INSTANCE.REGION' | translate}}</label>
+            <div class="clr-control-container">
+              <div class="clr-select-wrapper">
+                <select placeholder="Select Option" id="example2">
+                  <option>Option 1</option>
+                  <option>Option 2</option>
+                  <option>Option 3</option>
+                </select>
+                <clr-signpost>
+                  <clr-signpost-content *clrIfOpen>
+                    <h3>Default Signpost</h3>
+                    <p>Position: <code class="clr-code">right-middle</code></p>
+                  </clr-signpost-content>
+                </clr-signpost>
+              </div>
+            </div>
+            <label for="example3" class="clr-control-label label2">{{'HOME.NOTEBOOKS.LIST.ZONE' | translate}}</label>
+            <div class="clr-control-container">
+              <div class="clr-select-wrapper">
+                <select placeholder="Select Option" id="example3">
+                  <option>Option 1</option>
+                  <option>Option 2</option>
+                  <option>Option 3</option>
+                </select>
+                <clr-signpost>
+                  <clr-signpost-content *clrIfOpen>
+                    <h3>Default Signpost</h3>
+                    <p>Position: <code class="clr-code">right-middle</code></p>
+                  </clr-signpost-content>
+                </clr-signpost>
+              </div>
+            </div>
+          </div>
+          <div class="option">
+            <p class="option-title">
+              {{'HOME.NOTEBOOKS.NEW_INSTANCE.INSTANCE_PROPERTIES' | translate}}
+              <clr-icon shape="pencil" solid></clr-icon>
+
+            </p>
+            <ul class="option-list">
+              <li>
+                <label class="clr-control-label" for="input1">{{'HOME.NOTEBOOKS.LIST.ENVIRONMENT' | translate}}</label>
+                <input clrInput type="text" name="" id="input1">
+              </li>
+              <li>
+                <label class="clr-control-label" for="input2">{{'HOME.NOTEBOOKS.LIST.MACHINE_TYPE' | translate}}</label>
+                <input clrInput type="text" name="" id="input2">
+              </li>
+              <li>
+                <label class="clr-control-label" for="input3">{{'HOME.NOTEBOOKS.NEW_INSTANCE.BOOT_DISK' | translate}}</label>
+                <input clrInput type="text" name="" id="input3">
+              </li>
+              <li>
+                <label for="example4" class="clr-control-label">{{'HOME.NOTEBOOKS.NEW_INSTANCE.SUBNETWORK' | translate}}</label>
+                <div class="clr-control-container">
+                  <div class="clr-select-wrapper">
+                    <select placeholder="Select Option" id="example4">
+                      <option>Option 1</option>
+                      <option>Option 2</option>
+                      <option>Option 3</option>
+                    </select>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <label class="clr-control-label" for="input4">{{'HOME.NOTEBOOKS.NEW_INSTANCE.EXTERNAL_IP' | translate}}</label>
+                <input clrInput type="text" name="" id="input4">
+              </li>
+              <li>
+                <label class="clr-control-label" for="input5">{{'HOME.NOTEBOOKS.LIST.PERMISSION' | translate}}</label>
+                <input clrInput type="text" name="" id="input5">
+              </li>
+            </ul>
+            <div class="footer">
+              <!-- <p (click)="advancedOptions()" class="other-option">{{'HOME.NOTEBOOKS.NEW_INSTANCE.ADVANCED_OPTIONS' | translate}}</p> -->
+              <div>
+                <button (click)="cancel()" class="btn btn-outline">{{'HOME.POLICY.DIALOG.CANCEL' | translate}}</button>
+                <button (click)="create()" class="btn btn-info-outline">{{'HOME.NOTEBOOKS.CREATE' | translate}}</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="createInstanceFlag" class="modal-backdrop fade in" aria-hidden="true"></div>  
+ <!--  <h4 (click)="backCreateInstance()">
     <clr-icon class="back" size="md" shape="undo"></clr-icon>
     Create a note instance
   </h4>
@@ -91,11 +233,6 @@
           </li>
         </ul>
         <div class="footer">
-          <!-- <p (click)="advancedOptions()" class="other-option">{{'HOME.NOTEBOOKS.NEW_INSTANCE.ADVANCED_OPTIONS' | translate}}</p>
-          <div>
-            <button (click)="cancel()" class="btn btn-outline">{{'HOME.POLICY.DIALOG.CANCEL' | translate}}</button>
-            <button (click)="create()" class="btn btn-info-outline">{{'HOME.NOTEBOOKS.CREATE' | translate}}</button>
-          </div> -->
         </div>
       </div>
     </form>
@@ -117,5 +254,5 @@
         DETALS
       </h5>
     </div>
-  </div>
+  </div> -->
 </div>

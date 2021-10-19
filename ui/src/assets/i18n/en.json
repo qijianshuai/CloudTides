@@ -237,13 +237,15 @@
         "SEARCH": "Enter property name or value"
       },
       "LIST": {
+        "INSTANCE_LIST": "instance list",
         "INSTANCE_NAME": "Instance name",
         "ZONE": "Zone",
         "AUTO_UPGRADE": "Auto-upgrade",
         "ENVIRONMENT": "Environment",
         "MACHINE_TYPE": "Machine type",
         "PERMISSION": "Permission",
-        "LAST_MODIFIED": "Last modified"
+        "LAST_MODIFIED": "Last modified",
+        "OPERATE": "operate"
       }
 
     },

@@ -224,7 +224,7 @@
       }
     },
     "NOTEBOOKS": {
-      "NOTEBOOKS": "笔记本",
+      "NOTEBOOKS": "notebooks",
       "NEW_INSTANCE": {
         "NEW_INSTANCE" : "创建新实例",
         "NEW_NOTEBOOK_INSTANCE": "新建计算机实例",
@@ -234,7 +234,6 @@
         "SUBNETWORK": "代理地址",
         "EXTERNAL_IP": "外部IP",
         "ADVANCED_OPTIONS": "高级选项"
-
       },
       "REFRESH": "刷新",
       "CREATE": "创建",
@@ -247,13 +246,15 @@
         "SEARCH": "输入名称或者值"
       },
       "LIST": {
+        "INSTANCE_LIST": "实例列表",
         "INSTANCE_NAME": "实例名称",
         "ZONE": "地区",
         "AUTO_UPGRADE": "自动升级",
         "ENVIRONMENT": "环境",
         "MACHINE_TYPE": "机器类型",
         "PERMISSION": "许可",
-        "LAST_MODIFIED": "最后修改"
+        "LAST_MODIFIED": "最后修改",
+        "OPERATE": "操作"
       }
     },
     "PRODUCT_NAME": "云汐",

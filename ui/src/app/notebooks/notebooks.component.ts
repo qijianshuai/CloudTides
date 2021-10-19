@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router'
-// import '@cds/core/icon/register.js';
 import { NotebooksService } from './notebooks.service'
 // import { ClarityIcons, plusCircleIcon, refreshIcon, playIcon, stopIcon, powerIcon, trashIcon, listIcon, pencilIcon, searchIcon, filter2Icon, undoIcon, angleIcon} from '@cds/core/icon'
 // ClarityIcons.addIcons(plusCircleIcon)
@@ -24,6 +23,10 @@ export class NotebooksComponent implements OnInit {
 
   constructor(public router: Router, private noteBooks: NotebooksService) {
     this.noteBook = this.noteBooks
+    // const iframe = document.getElementById('inner') as HTMLIFrameElement
+    // iframe.onload = () => {
+    //   iframe.contentWindow.postMessage('数据', '')
+    // }
   }
   ngOnInit(): void {
   }
@@ -44,24 +47,6 @@ export class NotebooksComponent implements OnInit {
     }
   }
   flag = false
-  aa () {
-    let form = document.createElement('form')
-    form.action="http://120.133.15.12:8888/lab"
-    form.method='get'
-    form.target = '_blank'
-    const body = document.documentElement
-    body.appendChild(form)
-    const input = document.createElement('input')
-    input.type = 'hidden'
-    input.name = 'token'
-    input.value = '1dc53b34f46aff0f91f8c65ec96f55eb3057d3770e2253b8'
-    form.appendChild(input)
-    setTimeout(() => {
-      form.submit()
-      form = null
-    }, 1000)
-  }
-
   requestFullScreen(element) {
     // 判断各种浏览器，找到正确的方法
     let requestMethod = element.requestFullScreen || //W3C
