@@ -32,19 +32,19 @@ export class NotebooksComponent implements OnInit {
   }
   noteBook: NotebooksService
   cancel () {
-    this.noteBook.createInstance = false
+    // this.noteBook.createInstance = false
   }
   create () {
-    this.noteBook.createInstance = false
+    // this.noteBook.createInstance = false
   }
   advancedOptions () {
-    this.noteBook.createInstance = false
+    // this.noteBook.createInstance = false
     this.router.navigate(['/cloudtides/notebooks/newInstance'])
   }
   createInstanceHandle () {
-    if (!this.noteBook.createInstance) {
-      this.noteBook.createInstance = true
-    }
+    // if (!this.noteBook.createInstance) {
+    //   this.noteBook.createInstance = true
+    // }
   }
   flag = false
   requestFullScreen(element) {

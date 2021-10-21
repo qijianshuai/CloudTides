@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NotebooksService } from '../notebooks.service'
 import { Router } from '@angular/router'
-interface InstanceModel {
-  name: string
-}
 @Component({
   selector: 'tide-create-insrance',
   templateUrl: './create-insrance.component.html',
@@ -11,6 +8,18 @@ interface InstanceModel {
 })
 export class CreateInsranceComponent implements OnInit {
   noteBook: NotebooksService
+  instanceForm:NotebookModel = {
+    name: '',
+    region: '',
+    zone: '',
+    environment: '',
+    machineType: '',
+    bootDisk: '',
+    subnetwork:'',
+    externalIp:'',
+    permission: '',
+    GPU: ''
+  }
   constructor(private noteBooks: NotebooksService, private router: Router) {
     this.noteBook = this.noteBooks
   }
@@ -19,12 +28,9 @@ export class CreateInsranceComponent implements OnInit {
   }
   currentButton = true
   createInstanceFlag = false
-  instanceForm:InstanceModel = {
-    name:""
-  }
   backCreateInstance () {
     this.router.navigate(['/cloudtides/notebooks/list'])
-    this.noteBook.createInstance = true
+    // this.noteBook.createInstance = true
   }
   openInstanceModal () {
     this.createInstanceFlag = true
@@ -38,4 +44,16 @@ export class CreateInsranceComponent implements OnInit {
   toggleCurrentButton () {
     this.currentButton = !this.currentButton
   }
+}
+export interface NotebookModel {
+  name: string
+  region: string
+  zone: string
+  environment: string
+  machineType: string|number
+  bootDisk: string
+  subnetwork:string
+  externalIp:string
+  permission: string
+  GPU: string
 }

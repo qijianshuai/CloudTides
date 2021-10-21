@@ -227,13 +227,15 @@
       "NOTEBOOKS": "notebooks",
       "NEW_INSTANCE": {
         "NEW_INSTANCE" : "创建新实例",
-        "NEW_NOTEBOOK_INSTANCE": "新建计算机实例",
+        "NEW_NOTEBOOK_INSTANCE": "新建notebooks实例",
         "REGION": "行政区",
         "INSTANCE_PROPERTIES": "实例属性",
         "BOOT_DISK": "启动盘",
         "SUBNETWORK": "代理地址",
         "EXTERNAL_IP": "外部IP",
-        "ADVANCED_OPTIONS": "高级选项"
+        "ADVANCED_OPTIONS": "高级选项",
+        "GPU_TYPE": "GPU类型",
+        "Machine_TYPE": "机器类型"
       },
       "REFRESH": "刷新",
       "CREATE": "创建",
